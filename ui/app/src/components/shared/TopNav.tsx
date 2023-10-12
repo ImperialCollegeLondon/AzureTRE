@@ -2,6 +2,7 @@ import React from 'react';
 import { getTheme, Icon, mergeStyles, Stack } from '@fluentui/react';
 import { Link } from 'react-router-dom';
 import { UserMenu } from './UserMenu';
+import logo from "../../assets/imperial_college_logo.svg";
 import { NotificationPanel } from './notifications/NotificationPanel';
 
 export const TopNav: React.FunctionComponent = () => {
@@ -11,8 +12,8 @@ export const TopNav: React.FunctionComponent = () => {
         <Stack horizontal>
           <Stack.Item grow={100}>
             <Link to='/' className='tre-home-link'>
-              <Icon iconName="TestBeakerSolid" style={{ marginLeft: '10px', marginRight: '10px', verticalAlign: 'middle' }} />
-              <h5 style={{display: 'inline'}}>Azure TRE</h5>
+              <img src={logo} alt="Imperial College London" style={{ marginLeft: '10px', marginRight: '10px', verticalAlign: 'middle' }} />
+              <h5 style={{display: 'inline'}}>Imperial TRE</h5>
             </Link>
           </Stack.Item>
           <Stack.Item>
