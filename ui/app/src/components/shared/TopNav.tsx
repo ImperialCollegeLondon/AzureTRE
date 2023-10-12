@@ -12,6 +12,7 @@ export const TopNav: React.FunctionComponent = () => {
         <Stack horizontal>
           <Stack.Item grow={100}>
             <Link to='/' className='tre-home-link'>
+              <img src={logo} alt="Imperial College London" style={{ marginLeft: '10px', marginRight: '10px', verticalAlign: 'middle' }} />
               <h5 style={{display: 'inline'}}>Imperial TRE</h5>
             </Link>
           </Stack.Item>
