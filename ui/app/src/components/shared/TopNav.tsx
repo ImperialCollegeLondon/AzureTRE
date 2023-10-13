@@ -3,7 +3,7 @@ import { getTheme, mergeStyles, Stack } from '@fluentui/react';
 import { Link } from 'react-router-dom';
 import { UserMenu } from './UserMenu';
 import { NotificationPanel } from './notifications/NotificationPanel';
-import { imperialLogo } from '../../assets/IMP_ML_W_N.png'
+import { IMP_ML_W_N } from '../../assets/IMP_ML_W_N.png'
 
 export const TopNav: React.FunctionComponent = () => {
   return (
@@ -12,7 +12,7 @@ export const TopNav: React.FunctionComponent = () => {
         <Stack horizontal>
           <Stack.Item grow={100}>
             <Link to='/' className='tre-home-link'>
-              <img src={imperialLogo} alt="Imperial College Logo" style={{ marginLeft: '10px', marginRight: '10px', verticalAlign: 'middle' }} />
+              <img src={IMP_ML_W_N} alt="Imperial College Logo" style={{ marginLeft: '10px', marginRight: '10px', verticalAlign: 'middle' }} />
               <h5 style={{display: 'inline'}}>Imperial TRE</h5>
             </Link>
           </Stack.Item>
