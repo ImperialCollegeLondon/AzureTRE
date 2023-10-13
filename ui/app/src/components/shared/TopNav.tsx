@@ -3,7 +3,7 @@ import { getTheme, mergeStyles, Stack } from '@fluentui/react';
 import { Link } from 'react-router-dom';
 import { UserMenu } from './UserMenu';
 import { NotificationPanel } from './notifications/NotificationPanel';
-import { IMP_ML_W_N } from '../../assets/IMP_ML_W_N.png'
+import { IMP_ML_W_N } from '../../assets/IMP_ML_W_N.svg'
 
 export const TopNav: React.FunctionComponent = () => {
   return (
