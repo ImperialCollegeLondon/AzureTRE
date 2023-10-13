@@ -54,7 +54,7 @@ export const Footer: React.FunctionComponent = () => {
           setInitialFocus
         >
           <Text block variant="xLarge" className={styles.title} id="info-label">
-            Azure TRE
+            Imperial TRE
           </Text>
           <Stack tokens={{childrenGap: 5}}>
             {
