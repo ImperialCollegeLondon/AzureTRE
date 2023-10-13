@@ -32,7 +32,7 @@ export const Footer: React.FunctionComponent = () => {
   return (
     <div className={contentClass}>
       <Stack horizontal style={{alignItems:'center'}}>
-        <StackItem grow={1}>Imperial Trusted Research Environment</StackItem>
+        <StackItem grow={1}>Azure Trusted Research Environment</StackItem>
         <StackItem>
           <IconButton
             styles={iconButtonStyles}
@@ -54,7 +54,7 @@ export const Footer: React.FunctionComponent = () => {
           setInitialFocus
         >
           <Text block variant="xLarge" className={styles.title} id="info-label">
-            Imperial TRE
+            Azure TRE
           </Text>
           <Stack tokens={{childrenGap: 5}}>
             {
@@ -104,8 +104,8 @@ const iconButtonStyles: Partial<IButtonStyles> = {
     color: theme.palette.white,
   },
   rootHovered: {
-    // color: theme.palette.neutralDark,
-    color: '#0F8291',
+    color: theme.palette.neutralDark,
+    // color: '#0F8291',
   },
 };
 
