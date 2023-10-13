@@ -29,8 +29,8 @@ export const TopNav: React.FunctionComponent = () => {
 const theme = getTheme();
 const contentClass = mergeStyles([
   {
-    backgroundColor: theme.palette.themeDark,
-    // backgroundColor: '#003E74',
+    // backgroundColor: theme.palette.themeDark,
+    backgroundColor: '#003E74',
     color: theme.palette.white,
     lineHeight: '50px',
     padding: '0 10px 0 10px'
