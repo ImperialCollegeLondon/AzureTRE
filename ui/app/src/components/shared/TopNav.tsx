@@ -2,7 +2,6 @@ import React from 'react';
 import { getTheme, Icon, mergeStyles, Stack } from '@fluentui/react';
 import { Link } from 'react-router-dom';
 import { UserMenu } from './UserMenu';
-import logo from "../../assets/IMP_ML_W_N.png";
 import { NotificationPanel } from './notifications/NotificationPanel';
 
 export const TopNav: React.FunctionComponent = () => {
@@ -30,8 +29,8 @@ export const TopNav: React.FunctionComponent = () => {
 const theme = getTheme();
 const contentClass = mergeStyles([
   {
-    // backgroundColor: theme.palette.themeDark,
-    backgroundColor: '#003E74',
+    backgroundColor: theme.palette.themeDark,
+    // backgroundColor: '#003E74',
     color: theme.palette.white,
     lineHeight: '50px',
     padding: '0 10px 0 10px'
