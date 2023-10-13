@@ -90,7 +90,8 @@ const theme = getTheme();
 const contentClass = mergeStyles([
   {
     alignItems: 'center',
-    backgroundColor: theme.palette.themeDark,
+    // backgroundColor: theme.palette.themeDark,
+    backgroundColor: '#003E74',
     color: theme.palette.white,
     lineHeight: '25px',
     padding: '0 20px',
