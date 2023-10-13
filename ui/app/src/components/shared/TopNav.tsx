@@ -1,8 +1,9 @@
 import React from 'react';
-import { getTheme, Icon, mergeStyles, Stack } from '@fluentui/react';
+import { getTheme, mergeStyles, Stack } from '@fluentui/react';
 import { Link } from 'react-router-dom';
 import { UserMenu } from './UserMenu';
 import { NotificationPanel } from './notifications/NotificationPanel';
+import { logo } from '../../assets/IMP_ML_W_N.svg'
 
 export const TopNav: React.FunctionComponent = () => {
   return (
@@ -11,6 +12,7 @@ export const TopNav: React.FunctionComponent = () => {
         <Stack horizontal>
           <Stack.Item grow={100}>
             <Link to='/' className='tre-home-link'>
+              <img src={logo} alt="IC Logo" height="10" />
               <h5 style={{display: 'inline'}}>Imperial TRE</h5>
             </Link>
           </Stack.Item>
