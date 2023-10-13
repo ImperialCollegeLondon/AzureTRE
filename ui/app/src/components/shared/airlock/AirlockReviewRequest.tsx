@@ -359,13 +359,15 @@ const contentStyles = mergeStyleSets({
 
 const iconButtonStyles: Partial<IButtonStyles> = {
   root: {
-    color: theme.palette.neutralPrimary,
+    // color: theme.palette.neutralPrimary,
+    color: '#00A0C8',
     marginLeft: 'auto',
     marginTop: '4px',
     marginRight: '2px',
   },
   rootHovered: {
-    color: theme.palette.neutralDark,
+    // color: theme.palette.neutralDark,
+    color: '#0F8291',
   },
 };
 

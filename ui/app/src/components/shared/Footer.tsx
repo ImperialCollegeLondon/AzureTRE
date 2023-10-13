@@ -104,7 +104,8 @@ const iconButtonStyles: Partial<IButtonStyles> = {
     color: theme.palette.white,
   },
   rootHovered: {
-    color: theme.palette.neutralDark,
+    // color: theme.palette.neutralDark,
+    color: '#0F8291',
   },
 };
 
