@@ -22,7 +22,8 @@ export const WorkspaceHeader: React.FunctionComponent = () => {
 const theme = getTheme();
 const contentClass = mergeStyles([
   {
-    backgroundColor: theme.palette.themeDarker,
+    // backgroundColor: theme.palette.themeDarker,
+    backgroundColor: '#002147',
     color: theme.palette.white,
     lineHeight: '15px',
     padding: '0 20px',
