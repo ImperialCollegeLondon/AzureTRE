@@ -51,6 +51,10 @@ resource "azurerm_firewall" "fw" {
   }
 
   lifecycle { ignore_changes = [tags] }
+
+  depends_on = [
+    azurerm_firewall_policy.root
+  ]
 }
 
 data "azurerm_monitor_diagnostic_categories" "firewall" {
@@ -82,10 +86,6 @@ resource "azurerm_firewall_policy" "root" {
   location            = data.azurerm_resource_group.rg.location
   sku                 = var.sku_tier
   tags                = local.tre_shared_service_tags
-
-  depends_on = [
-    azurerm_firewall.fw
-  ]
 
   lifecycle { ignore_changes = [tags] }
 }
