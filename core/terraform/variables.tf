@@ -180,3 +180,8 @@ variable "is_cosmos_defined_throughput" {
   type    = bool
   default = false
 }
+
+variable "kv_purge_protection_enabled" {
+  type    = bool
+  default = true
+}

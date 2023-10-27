@@ -127,8 +127,6 @@ resource "azurerm_firewall_policy_rule_collection_group" "core" {
       ]
       source_ip_groups = [data.azurerm_ip_group.resource_processor.id]
     }
-
-
   }
 
   application_rule_collection {
@@ -193,7 +191,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "core" {
   }
 
   depends_on = [
-    azurerm_firewall.fw
+    azurerm_firewall_policy.root
   ]
 }
 

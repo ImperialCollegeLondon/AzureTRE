@@ -83,5 +83,9 @@ resource "azurerm_firewall_policy" "root" {
   sku                 = var.sku_tier
   tags                = local.tre_shared_service_tags
 
+  depends_on = [
+    azurerm_firewall.fw
+  ]
+
   lifecycle { ignore_changes = [tags] }
 }
