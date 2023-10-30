@@ -155,6 +155,8 @@ case "${bundle_type}" in
   ("shared_service") tre shared-service-templates new --definition "${payload}";;
 esac
 
+echo "bundle error here 001"
+
 if [[ "${verify}" = "true" ]]; then
   # Check that the template got registered
 
