@@ -224,6 +224,7 @@ runs:
           -e TF_VAR_enable_airlock_malware_scanning=${{ inputs.ENABLE_AIRLOCK_MALWARE_SCANNING }} \
           -e CI_CACHE_ACR_NAME="${{ inputs.CI_CACHE_ACR_NAME }}" \
           -e KV_PURGE_PROTECTION_ENABLED="${{ inputs.KV_PURGE_PROTECTION_ENABLED }}" \
+          -e TF_VAR_kv_purge_protection_enabled="${{ inputs.KV_PURGE_PROTECTION_ENABLED }}" \
           -e TF_VAR_core_app_service_plan_sku="${{ (inputs.CORE_APP_SERVICE_PLAN_SKU != ''
             && inputs.CORE_APP_SERVICE_PLAN_SKU) || 'P1v2' }}" \
           -e WORKSPACE_APP_SERVICE_PLAN_SKU="${{ (inputs.WORKSPACE_APP_SERVICE_PLAN_SKU != ''
