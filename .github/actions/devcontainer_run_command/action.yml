@@ -121,7 +121,9 @@ inputs:
     description: "JSON string containing key/value pairs to injet into the Resource Processor as ENV vars"
     required: false
     default: ""
-
+  KV_PURGE_PROTECTION_ENABLED:
+    description: "JSON string containing key/value pairs to injet into the Resource Processor as ENV vars"
+    required: true
 runs:
   using: composite
   steps:
