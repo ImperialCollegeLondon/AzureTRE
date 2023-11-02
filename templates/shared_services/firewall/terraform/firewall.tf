@@ -54,7 +54,9 @@ resource "azurerm_firewall" "fw" {
 
   depends_on = [
     azurerm_firewall_policy.root,
-    azurerm_firewall_policy_rule_collection_group.core
+    azurerm_firewall_policy_rule_collection_group.core,
+    azurerm_firewall_policy_rule_collection_group.dynamic_network,
+    azurerm_firewall_policy_rule_collection_group.dynamic_application
   ]
 }
 
