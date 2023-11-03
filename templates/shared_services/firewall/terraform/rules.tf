@@ -190,9 +190,9 @@ resource "azurerm_firewall_policy_rule_collection_group" "core" {
     }
   }
 
-  depends_on = [
-    azurerm_firewall_policy.root
-  ]
+  #depends_on = [
+  #  azurerm_firewall_policy.root
+  #]
 }
 
 
@@ -230,9 +230,9 @@ resource "azurerm_firewall_policy_rule_collection_group" "dynamic_network" {
     }
   }
 
-  depends_on = [
-    azurerm_firewall_policy_rule_collection_group.core
-  ]
+  #depends_on = [
+  #  azurerm_firewall_policy_rule_collection_group.core
+  #]
 }
 
 resource "azurerm_firewall_policy_rule_collection_group" "dynamic_application" {
@@ -276,7 +276,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "dynamic_application" {
     }
   }
 
-  depends_on = [
-    azurerm_firewall_policy_rule_collection_group.dynamic_network
-  ]
+  #depends_on = [
+  #  azurerm_firewall_policy_rule_collection_group.dynamic_network
+  #]
 }
