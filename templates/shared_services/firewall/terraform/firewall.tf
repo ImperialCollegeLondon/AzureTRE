@@ -52,12 +52,12 @@ resource "azurerm_firewall" "fw" {
 
   lifecycle { ignore_changes = [tags] }
 
-  depends_on = [
-    azurerm_firewall_policy.root,
-    azurerm_firewall_policy_rule_collection_group.core,
-    azurerm_firewall_policy_rule_collection_group.dynamic_network,
-    azurerm_firewall_policy_rule_collection_group.dynamic_application
-  ]
+  #depends_on = [
+  #  azurerm_firewall_policy.root,
+  #  azurerm_firewall_policy_rule_collection_group.core,
+  #  azurerm_firewall_policy_rule_collection_group.dynamic_network,
+  #  azurerm_firewall_policy_rule_collection_group.dynamic_application
+  #]
 }
 
 data "azurerm_monitor_diagnostic_categories" "firewall" {
