@@ -6,7 +6,7 @@
 set -o errexit
 set -o pipefail
 # Uncomment this line to see each command for debugging (careful: this will show secrets!)
-set -o xtrace
+# set -o xtrace
 
 function usage() {
     cat <<USAGE
@@ -101,8 +101,6 @@ explain_json=$(porter explain --reference "${acr_name}${acr_domain_suffix}"/"$(y
 
 payload=$(echo "${explain_json}" | jq --argfile json_schema template_schema.json --arg current "${current}" --arg bundle_type "${bundle_type}" '. + {"json_schema": $json_schema, "resourceType": $bundle_type, "current": $current}')
 
-echo "bundle error here 001"
-
 if [ "${dry_run}" == "true" ]; then
     echo "--dry-run specified - automatic bundle registration disabled. Use the script output to self-register. "
     echo "See documentation for more details: https://microsoft.github.io/AzureTRE/tre-admins/registering-templates/"
@@ -130,8 +128,6 @@ function get_template() {
   echo "$get_result"
 }
 
-echo "bundle error here 002"
-
 get_result=$(get_template)
 if [[ -n "$(echo "$get_result" | jq -r .id)" ]]; then
   # 'id' was returned - so we successfully got the template from the API. Now check the version
@@ -157,8 +153,6 @@ case "${bundle_type}" in
   ("user_resource") tre workspace-service-template "${workspace_service_name}" user-resource-templates new --definition "${payload}" ;;
   ("shared_service") tre shared-service-templates new --definition "${payload}";;
 esac
-
-echo "bundle error here 003"
 
 if [[ "${verify}" = "true" ]]; then
   # Check that the template got registered
