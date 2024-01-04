@@ -46,9 +46,12 @@ user_resources_workspace_router = APIRouter(dependencies=[Depends(get_current_wo
 def validate_user_has_valid_role_for_user_resource(user, user_resource):
     if "WorkspaceOwner" in user.roles:
         return
-
-    if ("WorkspaceResearcher" in user.roles or "AirlockManager" in user.roles) and user_resource.ownerId == user.id:
+        
+    if ("WorkspaceResearcher" in user.roles or "AirlockManager" in user.roles):
         return
+    
+    # if ("WorkspaceResearcher" in user.roles or "AirlockManager" in user.roles) and user_resource.ownerId == user.id:
+    #     return
 
     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=strings.ACCESS_USER_IS_NOT_OWNER_OR_RESEARCHER)
 
@@ -363,9 +366,9 @@ async def retrieve_user_resources_for_workspace_service(
         user_resource_repo=Depends(get_repository(UserResourceRepository))) -> UserResourcesInList:
     user_resources = await user_resource_repo.get_user_resources_for_workspace_service(workspace_id, service_id)
 
-    # filter only to the user - for researchers
-    if ("WorkspaceResearcher" in user.roles or "AirlockManager" in user.roles) and "WorkspaceOwner" not in user.roles:
-        user_resources = [resource for resource in user_resources if resource.ownerId == user.id]
+    # # filter only to the user - for researchers
+    # if ("WorkspaceResearcher" in user.roles or "AirlockManager" in user.roles) and "WorkspaceOwner" not in user.roles:
+    #     user_resources = [resource for resource in user_resources if resource.ownerId == user.id]
 
     for user_resource in user_resources:
         if 'azure_resource_id' in user_resource.properties:
