@@ -14,7 +14,7 @@ import { AirlockNewRequest } from './AirlockNewRequest';
 import { WorkspaceRoleName } from '../../../models/roleNames';
 import { useAccount, useMsal } from '@azure/msal-react';
 import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
-import { SecuredByRole } from '../shared/SecuredByRole';
+import { SecuredByRole } from '../SecuredByRole';
 
 export const Airlock: React.FunctionComponent = () => {
   const [airlockRequests, setAirlockRequests] = useState([] as AirlockRequest[]);
