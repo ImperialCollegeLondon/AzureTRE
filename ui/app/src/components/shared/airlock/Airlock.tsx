@@ -120,10 +120,10 @@ export const Airlock: React.FunctionComponent = () => {
 
     const items: IContextualMenuItem[] = [
       {
-          key: 'sort',
-          name: 'Sort',
-          iconProps: { iconName: 'Sort' },
-          onClick: () => orderRequests(column)
+        key: 'sort',
+        name: 'Sort',
+        iconProps: { iconName: 'Sort' },
+        onClick: () => orderRequests(column)
       },
       {
         key: 'filter',
@@ -136,11 +136,11 @@ export const Airlock: React.FunctionComponent = () => {
     ];
 
     setContextMenuProps({
-        items: items,
-        target: ev.currentTarget as HTMLElement,
-        directionalHint: DirectionalHint.bottomCenter,
-        gapSpace: 0,
-        onDismiss: () => setContextMenuProps(undefined),
+      items: items,
+      target: ev.currentTarget as HTMLElement,
+      directionalHint: DirectionalHint.bottomCenter,
+      gapSpace: 0,
+      onDismiss: () => setContextMenuProps(undefined),
     });
   }, [filters]);
 
@@ -159,12 +159,12 @@ export const Airlock: React.FunctionComponent = () => {
         isIconOnly: true,
         onRender: (request: AirlockRequest) => {
           if (request.status === AirlockRequestStatus.Draft) {
-            return <Icon iconName="FolderOpen" style={{verticalAlign:'bottom', fontSize: 14}} />
+            return <Icon iconName="FolderOpen" style={{ verticalAlign: 'bottom', fontSize: 14 }} />
           } else if (request.files?.length > 0 && request.files[0].name) {
             const fileType = request.files[0].name.split('.').pop();
-            return <Icon {...getFileTypeIconProps({ extension: fileType })} style={{verticalAlign:'bottom'}} />
+            return <Icon {...getFileTypeIconProps({ extension: fileType })} style={{ verticalAlign: 'bottom' }} />
           } else {
-            return <Icon iconName="Page" style={{verticalAlign:'bottom', fontSize: 14}} />
+            return <Icon iconName="Page" style={{ verticalAlign: 'bottom', fontSize: 14 }} />
           }
         }
       },
@@ -184,7 +184,7 @@ export const Airlock: React.FunctionComponent = () => {
         minWidth: 150,
         maxWidth: 200,
         isResizable: true,
-        onRender: (request: AirlockRequest) => <Persona size={ PersonaSize.size24 } text={request.createdBy?.name} />,
+        onRender: (request: AirlockRequest) => <Persona size={PersonaSize.size24} text={request.createdBy?.name} />,
         isFiltered: filters.has('creator_user_id')
       },
       {
@@ -230,7 +230,7 @@ export const Airlock: React.FunctionComponent = () => {
         isSorted: orderBy === 'createdTime',
         isSortedDescending: !orderAscending,
         onRender: (request: AirlockRequest) => {
-          return <span>{ moment.unix(request.createdWhen).format('DD/MM/YYYY') }</span>;
+          return <span>{moment.unix(request.createdWhen).format('DD/MM/YYYY')}</span>;
         },
         onColumnClick: orderByColumn
       },
@@ -245,7 +245,7 @@ export const Airlock: React.FunctionComponent = () => {
         isSorted: orderBy === 'updatedWhen',
         isSortedDescending: !orderAscending,
         onRender: (request: AirlockRequest) => {
-          return <span>{ moment.unix(request.updatedWhen).fromNow() }</span>;
+          return <span>{moment.unix(request.updatedWhen).fromNow()}</span>;
         },
         onColumnClick: orderByColumn
       }
@@ -296,7 +296,7 @@ export const Airlock: React.FunctionComponent = () => {
       <Stack className="tre-panel">
         <Stack.Item>
           <Stack horizontal horizontalAlign="space-between">
-            <h1 style={{marginBottom: 0, marginRight: 30}}>Airlock</h1>
+            <h1 style={{ marginBottom: 0, marginRight: 30 }}>Airlock</h1>
             <Stack.Item grow>
               <CommandBar items={quickFilters} ariaLabel="Quick filters" />
             </Stack.Item>
@@ -305,20 +305,22 @@ export const Airlock: React.FunctionComponent = () => {
               text="Refresh"
               style={{ background: 'none', color: '#006EAF' }}
               onClick={() => getAirlockRequests()}
-            />
-            <CommandBarButton
-              iconProps={{ iconName: 'add' }}
-              text="New request"
-              style={{ background: 'none', color: '#006EAF' }}
-              onClick={() => navigate('new')}
-            />
+              />
+              <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.AirlockManager]} element={
+              <CommandBarButton
+                iconProps={{ iconName: 'add' }}
+                text="New request"
+                style={{ background: 'none', color: '#006EAF' }}
+                onClick={() => navigate('new')}
+              />
+            } />
           </Stack>
         </Stack.Item>
       </Stack>
       {
         apiError && <ExceptionLayout e={apiError} />
       }
-      <div className="tre-resource-panel" style={{padding: '0px'}}>
+      <div className="tre-resource-panel" style={{ padding: '0px' }}>
         <ShimmeredDetailsList
           items={airlockRequests}
           columns={requestColumns}
@@ -329,10 +331,10 @@ export const Airlock: React.FunctionComponent = () => {
           enableShimmer={loadingState === LoadingState.Loading}
         />
         {
-          contextMenuProps && <ContextualMenu {...contextMenuProps}/>
+          contextMenuProps && <ContextualMenu {...contextMenuProps} />
         }
         {
-          airlockRequests.length === 0 && loadingState !== LoadingState.Loading && <div style={{textAlign: 'center', padding: '50px 10px 100px 10px'}}>
+          airlockRequests.length === 0 && loadingState !== LoadingState.Loading && <div style={{ textAlign: 'center', padding: '50px 10px 100px 10px' }}>
             <h4>No requests found</h4>
             {
               filters.size > 0
@@ -345,10 +347,10 @@ export const Airlock: React.FunctionComponent = () => {
 
       <Routes>
         <Route path="new" element={
-          <AirlockNewRequest onCreateRequest={handleNewRequest}/>
+          <AirlockNewRequest onCreateRequest={handleNewRequest} />
         } />
         <Route path=":requestId" element={
-          <AirlockViewRequest requests={airlockRequests} onUpdateRequest={getAirlockRequests}/>
+          <AirlockViewRequest requests={airlockRequests} onUpdateRequest={getAirlockRequests} />
         } />
       </Routes>
     </>
