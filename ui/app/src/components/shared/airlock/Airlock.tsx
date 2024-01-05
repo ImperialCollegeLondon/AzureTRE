@@ -297,7 +297,6 @@ export const Airlock: React.FunctionComponent = () => {
         <Stack.Item>
           <Stack horizontal horizontalAlign="space-between">
             <h1 style={{ marginBottom: 0, marginRight: 30 }}>Airlock</h1>
-            <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.AirlockManager]} element={
             <Stack.Item grow>
               <CommandBar items={quickFilters} ariaLabel="Quick filters" />
             </Stack.Item>
@@ -306,13 +305,14 @@ export const Airlock: React.FunctionComponent = () => {
               text="Refresh"
               style={{ background: 'none', color: '#006EAF' }}
               onClick={() => getAirlockRequests()}
-            />
-            <CommandBarButton
-              iconProps={{ iconName: 'add' }}
-              text="New request"
-              style={{ background: 'none', color: '#006EAF' }}
-              onClick={() => navigate('new')}
-            />
+              />
+              <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.AirlockManager]} element={
+              <CommandBarButton
+                iconProps={{ iconName: 'add' }}
+                text="New request"
+                style={{ background: 'none', color: '#006EAF' }}
+                onClick={() => navigate('new')}
+              />
             } />
           </Stack>
         </Stack.Item>
