@@ -115,8 +115,7 @@ export const WorkspaceServiceItem: React.FunctionComponent<WorkspaceServiceItemP
                       <Stack horizontal horizontalAlign="space-between">
                         <h1>Resources</h1>
                         <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.AirlockManager]} element={
-                          <PrimaryButton iconProps={{ iconName: 'Add' }} text="Create new"
-                            disabled={!workspaceService.isEnabled || latestUpdate.componentAction === ComponentAction.Lock || successStates.indexOf(workspaceService.deploymentStatus) === -1}
+                          <PrimaryButton iconProps={{ iconName: 'Add' }} text="Create new" disabled={!workspaceService.isEnabled || latestUpdate.componentAction === ComponentAction.Lock || successStates.indexOf(workspaceService.deploymentStatus) === -1}
                             title={(!workspaceService.isEnabled || latestUpdate.componentAction === ComponentAction.Lock || successStates.indexOf(workspaceService.deploymentStatus) === -1) ? 'Service must be enabled, successfully deployed, and not locked' : 'Create a User Resource'}
                             onClick={() => {
                               createFormCtx.openCreateForm({
