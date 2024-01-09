@@ -347,10 +347,10 @@ export const Airlock: React.FunctionComponent = () => {
       </div>
 
       <Routes>
-        <Route path="new" element={ <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.AirlockManager]} element={
+        <Route path="new" element={ <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.AirlockManager]} element={
           <AirlockNewRequest onCreateRequest={handleNewRequest} />
         } /> } />
-        <Route path=":requestId" element={ <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.AirlockManager]} element={
+        <Route path=":requestId" element={ <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.AirlockManager]} element={
           <AirlockViewRequest requests={airlockRequests} onUpdateRequest={getAirlockRequests} />
         } /> } />
       </Routes>
