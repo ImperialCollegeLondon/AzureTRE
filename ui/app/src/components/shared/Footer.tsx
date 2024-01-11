@@ -93,8 +93,8 @@ export const Footer: React.FunctionComponent = () => {
       {
         showSupport && <Callout
           className={styles.callout}
-          ariaLabelledBy="info-label"
-          ariaDescribedBy="info-description"
+          ariaLabelledBy="support-label"
+          ariaDescribedBy="support-description"
           role="dialog"
           gapSpace={0}
           target="#support"
@@ -102,14 +102,14 @@ export const Footer: React.FunctionComponent = () => {
           directionalHint={DirectionalHint.topAutoEdge}
           setInitialFocus
         >
-          <Text block variant="xLarge" className={styles.title} id="info-label">
+          <Text block variant="xLarge" className={styles.title} id="support-label">
             Support
           </Text>
-          <Text>
-            If you would like to raise a question, require further assistance, or would like to leave feedback, please contact <Link href="#" target="_blank" className={styles.link}>TRE Support</Link>
+          <Text block variant="medium" id="support-text">
+            If you would like to raise a question, require further assistance, or would like to leave feedback, please contact TRE Support
           </Text>
           <Link href="#" target="_blank" className={styles.link}>
-            Contact
+            Contact Here
           </Link>
         </Callout>
       }
@@ -147,5 +147,9 @@ const styles = mergeStyleSets({
   title: {
     marginBottom: 12,
     fontWeight: FontWeights.semilight
+  },
+  link: {
+    display: 'block',
+    marginTop: 20,
   }
 });
