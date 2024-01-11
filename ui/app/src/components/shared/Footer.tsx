@@ -37,15 +37,15 @@ export const Footer: React.FunctionComponent = () => {
         <StackItem>
           <IconButton
             styles={iconButtonStyles}
-            iconProps={{iconName:'Info'}}
-            id="info"
-            onClick={() => setShowInfo(!showInfo)}
-          />
-          <IconButton
-            styles={iconButtonStyles}
             iconProps={{iconName:'FeedbackRequestSolid'}}
             id="FeedbackRequestSolid"
             onClick={() => setShowSupport(!showSupport)}
+          />
+          <IconButton
+            styles={iconButtonStyles}
+            iconProps={{iconName:'Info'}}
+            id="info"
+            onClick={() => setShowInfo(!showInfo)}
           />
         </StackItem>
       </Stack>
