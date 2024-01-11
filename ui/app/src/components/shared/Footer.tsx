@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AnimationClassNames, Callout, IconButton, FontWeights, Stack, Text, getTheme, mergeStyles, mergeStyleSets, StackItem, IButtonStyles } from '@fluentui/react';
+import { AnimationClassNames, Callout, IconButton, FontWeights, Stack, Text, Link, getTheme, mergeStyles, mergeStyleSets, StackItem, IButtonStyles } from '@fluentui/react';
 import { HttpMethod, useAuthApiCall } from '../../hooks/useAuthApiCall';
 import { ApiEndpoint } from '../../models/apiEndpoints';
 import config from "../../config.json";
@@ -10,6 +10,7 @@ import config from "../../config.json";
 
 export const Footer: React.FunctionComponent = () => {
   const [showInfo, setShowInfo] = useState(false);
+  const [showSupport, setShowSupport] = useState(false);
   const [apiMetadata, setApiMetadata] = useState<any>();
   const [health, setHealth] = useState<{services: [{service: string, status: string}]}>();
   const apiCall = useAuthApiCall();
@@ -33,13 +34,18 @@ export const Footer: React.FunctionComponent = () => {
     <div className={contentClass}>
       <Stack horizontal style={{alignItems:'center'}}>
         <StackItem grow={1}>Azure Trusted Research Environment</StackItem>
-        <StackItem>If you would like to raise a question, require further assistance, or would like to leave feedback, please contact <Link href="#">TRE Support</Link></StackItem>
         <StackItem>
           <IconButton
             styles={iconButtonStyles}
             iconProps={{iconName:'Info'}}
             id="info"
             onClick={() => setShowInfo(!showInfo)}
+          />
+          <IconButton
+            styles={iconButtonStyles}
+            iconProps={{iconName:'FeedbackRequestSolid'}}
+            id="FeedbackRequestSolid"
+            onClick={() => setShowSupport(!showSupport)}
           />
         </StackItem>
       </Stack>
@@ -81,6 +87,25 @@ export const Footer: React.FunctionComponent = () => {
               })
             }
           </Stack>
+        </Callout>
+      }
+            {
+        showSupport && <Callout
+          className={styles.callout}
+          ariaLabelledBy="info-label"
+          ariaDescribedBy="info-description"
+          role="dialog"
+          gapSpace={0}
+          target="#info"
+          onDismiss={() => setShowSupport(false)}
+          setInitialFocus
+        >
+          <Text block variant="xLarge" className={styles.title} id="info-label">
+            Support
+          </Text>
+          <Text>
+          If you would like to raise a question, require further assistance, or would like to leave feedback, please contact <Link href="#">TRE Support</Link>
+          </Text>
         </Callout>
       }
     </div>
