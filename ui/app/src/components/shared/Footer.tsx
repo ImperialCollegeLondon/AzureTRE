@@ -33,6 +33,7 @@ export const Footer: React.FunctionComponent = () => {
     <div className={contentClass}>
       <Stack horizontal style={{alignItems:'center'}}>
         <StackItem grow={1}>Azure Trusted Research Environment</StackItem>
+        <StackItem>If you would like to raise a question, require further assistance, or would like to leave feedback, please contact <Link href="#">TRE Support</Link></StackItem>
         <StackItem>
           <IconButton
             styles={iconButtonStyles}
