@@ -43,7 +43,7 @@ export const RootDashboard: React.FunctionComponent<RootDashboardProps> = (props
             resources={props.workspaces}
             updateResource={(r: Resource) => props.updateWorkspace(r as Workspace)}
             removeResource={(r: Resource) => props.removeWorkspace(r as Workspace)}
-            emptyText="No workspaces to display. Create one to get started." />
+            emptyText="No workspaces to display." />
         </Stack.Item>
       </Stack>
     </>
