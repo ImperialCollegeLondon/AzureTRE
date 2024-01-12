@@ -93,6 +93,7 @@ export const Footer: React.FunctionComponent = () => {
       {
         showSupport && <Callout
           className={styles.callout}
+          ariaLabel="support"
           ariaLabelledBy="support-label"
           ariaDescribedBy="support-description"
           role="dialog"
@@ -105,10 +106,10 @@ export const Footer: React.FunctionComponent = () => {
           <Text block variant="xLarge" className={styles.title} id="support-label">
             Support
           </Text>
-          <Text block variant="medium" id="support-text">
+          <Text block variant="smallPlus" id="support-text">
             If you would like to raise a question, require further assistance, or would like to leave feedback, please contact TRE Support
           </Text>
-          <Link href="#" target="_blank" className={styles.link}>
+          <Link href="#" target="_blank" className={styles.link} id="support-link">
             Contact Here
           </Link>
         </Callout>
