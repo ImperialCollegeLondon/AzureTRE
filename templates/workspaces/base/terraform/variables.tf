@@ -122,3 +122,31 @@ variable "workspace_owner_object_id" {
 variable "arm_environment" {
   type = string
 }
+
+# Imperial variables
+
+variable "app_role_id_imperial_workspace_owner" {
+  type        = string
+  default     = ""
+  description = "The id of the application role ImperialWorkspaceOwner in the identity provider, this is passed in so that we may return it as an output."
+}
+variable "app_role_id_imperial_workspace_manager" {
+  type        = string
+  default     = ""
+  description = "The id of the application role ImperialWorkspaceManager in the identity provider, this is passed in so that we may return it as an output."
+}
+variable "app_role_id_imperial_workspace_researcher" {
+  type        = string
+  default     = ""
+  description = "The id of the application role ImperialWorkspaceResearcher in the identity provider, this is passed in so that we may return it as an output."
+}
+variable "app_role_id_imperial_workspace_data_engineer" {
+  type        = string
+  default     = ""
+  description = "The id of the application role ImperialWorkspaceDataEngineer in the identity provider, this is passed in so that we may return it as an output."
+}
+variable "app_role_id_imperial_workspace_airlock_manager" {
+  type        = string
+  default     = ""
+  description = "The id of the application role ImperialAirlockManager in the identity provider, this is passed in so that we may return it as an output."
+}
