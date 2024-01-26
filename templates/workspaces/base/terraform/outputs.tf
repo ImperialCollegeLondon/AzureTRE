@@ -29,24 +29,3 @@ output "scope_id" {
   value = var.register_aad_application ? module.aad[0].scope_id : var.scope_id
 }
 
-# Imperial Outputs
-
-output "app_role_id_imperial_workspace_owner" {
-  value = var.register_aad_application ? module.aad[0].app_role_imperial_workspace_owner_id : var.app_role_id_imperial_workspace_owner
-}
-
-output "app_role_id_imperial_workspace_manager" {
-  value = var.register_aad_application ? module.aad[0].app_role_imperial_workspace_owner_id : var.app_role_id_imperial_workspace_manager
-}
-
-output "app_role_id_imperial_workspace_researcher" {
-  value = var.register_aad_application ? module.aad[0].app_role_imperial_workspace_researcher_id : var.app_role_id_imperial_workspace_researcher
-}
-
-output "app_role_id_imperial_workspace_data_engineer" {
-  value = var.register_aad_application ? module.aad[0].app_role_imperial_workspace_researcher_id : var.app_role_id_imperial_workspace_data_engineer
-}
-
-output "app_role_id_imperial_workspace_airlock_manager" {
-  value = var.register_aad_application ? module.aad[0].app_role_imperial_workspace_airlock_manager_id : var.app_role_id_imperial_workspace_airlock_manager
-}

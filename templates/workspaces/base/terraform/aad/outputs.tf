@@ -21,25 +21,3 @@ output "scope_id" {
 output "sp_id" {
   value = azuread_service_principal.workspace.object_id
 }
-
-# imperial variables
-
-output "app_role_imperial_workspace_owner_id" {
-  value = random_uuid.app_role_imperial_workspace_owner_id.result
-}
-
-output "app_role_imperial_workspace_manager_id" {
-  value = random_uuid.app_role_imperial_workspace_manager_id.result
-}
-
-output "app_role_imperial_workspace_researcher_id" {
-  value = random_uuid.app_role_imperial_workspace_researcher_id.result
-}
-
-output "app_role_imperial_workspace_data_engineer_id" {
-  value = random_uuid.app_role_imperial_workspace_data_engineer_id.result
-}
-
-output "app_role_imperial_workspace_airlock_manager_id" {
-  value = random_uuid.app_role_imperial_workspace_airlock_manager_id.result
-}

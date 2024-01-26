@@ -5,12 +5,6 @@ resource "random_uuid" "app_role_workspace_owner_id" {}
 resource "random_uuid" "app_role_workspace_researcher_id" {}
 resource "random_uuid" "app_role_workspace_airlock_manager_id" {}
 
-resource "random_uuid" "app_role_imperial_workspace_owner_id" {}
-resource "random_uuid" "app_role_imperial_workspace_manager_id" {}
-resource "random_uuid" "app_role_imperial_workspace_data_engineer_id" {}
-resource "random_uuid" "app_role_imperial_workspace_researcher_id" {}
-resource "random_uuid" "app_role_imperial_workspace_airlock_manager_id" {}
-
 resource "azuread_application" "workspace" {
   display_name    = var.workspace_resource_name_suffix
   identifier_uris = ["api://${var.workspace_resource_name_suffix}"]
@@ -57,52 +51,6 @@ resource "azuread_application" "workspace" {
     enabled              = true
     id                   = random_uuid.app_role_workspace_airlock_manager_id.result
     value                = "AirlockManager"
-  }
-
-  # Imperial workspace roles
-  app_role {
-    allowed_member_types = ["User", "Application"]
-    description          = "Provides Imperial Workspace owners access to the Workspace."
-    display_name         = "Imperial Workspace Owner"
-    enabled              = true
-    id                   = random_uuid.app_role_imperial_workspace_owner_id.result
-    value                = "ImperialWorkspaceOwner"
-  }
-
-  app_role {
-    allowed_member_types = ["User", "Application"]
-    description          = "Provides Imperial Workspace managers access to the Workspace."
-    display_name         = "Imperial Workspace Manager"
-    enabled              = true
-    id                   = random_uuid.app_role_imperial_workspace_manager_id.result
-    value                = "ImperialWorkspaceManager"
-  }
-
-  app_role {
-    allowed_member_types = ["User", "Application"]
-    description          = "Provides Imperial researchers access to the Workspace."
-    display_name         = "Imperial Workspace Researcher"
-    enabled              = true
-    id                   = random_uuid.app_role_imperial_workspace_researcher_id.result
-    value                = "ImperialWorkspaceResearcher"
-  }
-
-  app_role {
-    allowed_member_types = ["User", "Application"]
-    description          = "Provides Imperial data engineers access to the Workspace."
-    display_name         = "Imperial Data Engineer"
-    enabled              = true
-    id                   = random_uuid.app_role_imperial_workspace_data_engineer_id.result
-    value                = "ImperialDataEngineer"
-  }
-
-  app_role {
-    allowed_member_types = ["User", "Application"]
-    description          = "Provides imperial airlock managers access to the Workspace and ability to review airlock requests."
-    display_name         = "Imperial Airlock Manager"
-    enabled              = true
-    id                   = random_uuid.app_role_imperial_workspace_airlock_manager_id.result
-    value                = "ImperialAirlockManager"
   }
 
   feature_tags {
@@ -226,90 +174,5 @@ resource "azuread_app_role_assignment" "workspace_airlock_managers_group" {
   count               = var.create_aad_groups ? 1 : 0
   app_role_id         = azuread_service_principal.workspace.app_role_ids["AirlockManager"]
   principal_object_id = azuread_group.workspace_airlock_managers[count.index].id
-  resource_object_id  = azuread_service_principal.workspace.object_id
-}
-
-
-# Imperial assignments and groups
-
-#resource "azuread_app_role_assignment" "workspace_owner" {
-#  app_role_id         = azuread_service_principal.workspace.app_role_ids["WorkspaceOwner"]
-#  principal_object_id = var.workspace_owner_object_id
-#  resource_object_id  = azuread_service_principal.workspace.object_id
-#}
-
-resource "azuread_group" "imperial_workspace_owners" {
-  count            = var.create_aad_groups ? 1 : 0
-  display_name     = "${var.workspace_resource_name_suffix} Imperial Workspace Owners"
-  owners           = [var.workspace_owner_object_id]
-  security_enabled = true
-}
-
-resource "azuread_group" "imperial_workspace_managers" {
-  count            = var.create_aad_groups ? 1 : 0
-  display_name     = "${var.workspace_resource_name_suffix} Imperial Workspace managers"
-  owners           = [var.workspace_owner_object_id]
-  security_enabled = true
-}
-
-resource "azuread_group" "imperial_workspace_researchers" {
-  count            = var.create_aad_groups ? 1 : 0
-  display_name     = "${var.workspace_resource_name_suffix} Imperial Workspace Researchers"
-  owners           = [var.workspace_owner_object_id]
-  security_enabled = true
-}
-
-resource "azuread_group" "imperial_workspace_data_engineer" {
-  count            = var.create_aad_groups ? 1 : 0
-  display_name     = "${var.workspace_resource_name_suffix} Imperial Data Engineers"
-  owners           = [var.workspace_owner_object_id]
-  security_enabled = true
-}
-
-resource "azuread_group" "imperial_workspace_airlock_managers" {
-  count            = var.create_aad_groups ? 1 : 0
-  display_name     = "${var.workspace_resource_name_suffix} Imperial Airlock Managers"
-  owners           = [var.workspace_owner_object_id]
-  security_enabled = true
-}
-
-resource "azuread_group_member" "imperial_workspace_owner" {
-  count            = var.create_aad_groups ? 1 : 0
-  group_object_id  = azuread_group.imperial_workspace_owners[count.index].id
-  member_object_id = var.workspace_owner_object_id
-}
-
-resource "azuread_app_role_assignment" "imperial_workspace_owners_group" {
-  count               = var.create_aad_groups ? 1 : 0
-  app_role_id         = azuread_service_principal.workspace.app_role_ids["ImperialWorkspaceOwner"]
-  principal_object_id = azuread_group.imperial_workspace_owners[count.index].id
-  resource_object_id  = azuread_service_principal.workspace.object_id
-}
-
-resource "azuread_app_role_assignment" "imperial_workspace_managers_group" {
-  count               = var.create_aad_groups ? 1 : 0
-  app_role_id         = azuread_service_principal.workspace.app_role_ids["ImperialWorkspaceManager"]
-  principal_object_id = azuread_group.imperial_workspace_manager[count.index].id
-  resource_object_id  = azuread_service_principal.workspace.object_id
-}
-
-resource "azuread_app_role_assignment" "imperial_workspace_researchers_group" {
-  count               = var.create_aad_groups ? 1 : 0
-  app_role_id         = azuread_service_principal.workspace.app_role_ids["ImperialWorkspaceResearcher"]
-  principal_object_id = azuread_group.imperial_workspace_researchers[count.index].id
-  resource_object_id  = azuread_service_principal.workspace.object_id
-}
-
-resource "azuread_app_role_assignment" "imperial_workspace_data_engineer_group" {
-  count               = var.create_aad_groups ? 1 : 0
-  app_role_id         = azuread_service_principal.workspace.app_role_ids["ImperialDataEngineer"]
-  principal_object_id = azuread_group.imperial_workspace_data_engineer[count.index].id
-  resource_object_id  = azuread_service_principal.workspace.object_id
-}
-
-resource "azuread_app_role_assignment" "imperial_workspace_airlock_managers_group" {
-  count               = var.create_aad_groups ? 1 : 0
-  app_role_id         = azuread_service_principal.workspace.app_role_ids["ImperialAirlockManager"]
-  principal_object_id = azuread_group.imperial_workspace_airlock_managers[count.index].id
   resource_object_id  = azuread_service_principal.workspace.object_id
 }
