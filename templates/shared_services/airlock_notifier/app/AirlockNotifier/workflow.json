@@ -123,6 +123,12 @@
                               "type": "string"
                           }
                       },
+                      "imperial_workspace_researcher": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
                       "workspace_owner": {
                           "type": "array",
                           "items": {
@@ -199,7 +205,7 @@
               "Set_recipients_as_researchers_emails": {
                 "inputs": {
                   "name": "recipients",
-                  "value": "@body('Parse_JSON')?['data']?['recipient_emails_by_role']?['workspace_researcher']"
+                  "value": "@body('Parse_JSON')?['data']?['recipient_emails_by_role']?['workspace_researcher'] || @body('Parse_JSON')?['data']?['recipient_emails_by_role']?['imperial_workspace_researcher']"
                 },
                 "runAfter": {},
                 "type": "SetVariable"
