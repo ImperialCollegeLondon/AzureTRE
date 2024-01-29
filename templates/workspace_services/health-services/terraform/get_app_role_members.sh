@@ -13,7 +13,9 @@ sp=$(az rest --method GET --uri "${msGraphUri}/serviceprincipals?\$filter=appid 
 spId=$(echo "$sp" | jq -r '.value[0].id')
 
 # filter to the Workspace Researcher Role
-workspaceResearcherRoleId=$(echo "$sp" | jq -r '.value[0].appRoles[] | select(.value == "WorkspaceResearcher") | .id')
+#workspaceResearcherRoleId=$(echo "$sp" | jq -r '.value[0].appRoles[] | select(.value == "WorkspaceResearcher") | .id')
+workspaceResearcherRoleId=$(echo "$sp" | jq -r '.value[0].appRoles[] | select(.value == "WorkspaceResearcher" or .value == "ImperialWorkspaceResearcher") | .id')
+
 principals=$(az rest --method GET --uri "${msGraphUri}/serviceprincipals/${spId}/appRoleAssignedTo" -o json | jq -r --arg workspaceResearcherRoleId "${workspaceResearcherRoleId}" '.value[] | select(.appRoleId == $workspaceResearcherRoleId) | .principalId')
 
 jq -n --arg principals "$principals" '{"principals":$principals}'
