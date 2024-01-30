@@ -426,7 +426,7 @@ class AzureADAuthorization(AccessService):
         if RoleAssignment(resource_id=workspace_sp_id, role_id=workspace.properties['app_role_id_workspace_researcher']) in user_role_assignments:
             return WorkspaceRole.Researcher
         if RoleAssignment(resource_id=workspace_sp_id, role_id=workspace.properties['app_role_id_imperial_workspace_researcher']) in user_role_assignments:
-            return WorkspaceRole.ImperialWorkspaceResearcher
+            return WorkspaceRole.Imperial_Researcher
         if RoleAssignment(resource_id=workspace_sp_id, role_id=workspace.properties['app_role_id_workspace_airlock_manager']) in user_role_assignments:
             return WorkspaceRole.AirlockManager
         return WorkspaceRole.NoRole
