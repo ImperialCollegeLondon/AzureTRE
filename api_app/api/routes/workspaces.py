@@ -365,7 +365,7 @@ async def retrieve_user_resources_for_workspace_service(
     user_resources = await user_resource_repo.get_user_resources_for_workspace_service(workspace_id, service_id)
 
     # filter only to the user - for researchers
-    if ("ImperialWorkspaceResearcher" in user.roles or "WorkspaceResearcher" in user.roles or "AirlockManager" in user.roles) and "WorkspaceOwner" not in user.roles:
+    if ("WorkspaceResearcher" in user.roles or "AirlockManager" in user.roles) and "WorkspaceOwner" not in user.roles:
         user_resources = [resource for resource in user_resources if resource.ownerId == user.id]
 
     for user_resource in user_resources:
