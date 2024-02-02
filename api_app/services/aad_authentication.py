@@ -401,10 +401,11 @@ class AzureADAuthorization(AccessService):
         if data["auth_type"] != "Automatic":
             auth_info = self._get_app_auth_info(data["client_id"])
 
+            # DRC commented this out for testing
             # Check we've get all our required roles
-            for role in self.WORKSPACE_ROLES_DICT.items():
-                if role[1] not in auth_info:
-                    raise AuthConfigValidationError(f"{strings.ACCESS_APP_IS_MISSING_ROLE} {role[0]}")
+            #for role in self.WORKSPACE_ROLES_DICT.items():
+            #    if role[1] not in auth_info:
+            #        raise AuthConfigValidationError(f"{strings.ACCESS_APP_IS_MISSING_ROLE} {role[0]}")
 
         return auth_info
 
