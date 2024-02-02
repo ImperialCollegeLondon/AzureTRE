@@ -10,16 +10,17 @@ import config from "../../config.json";
 
 export const Footer: React.FunctionComponent = () => {
   const [showInfo, setShowInfo] = useState(false);
+  const [showSupport, setShowSupport] = useState(false);
   const [apiMetadata, setApiMetadata] = useState<any>();
-  const [health, setHealth] = useState<{services: [{service: string, status: string}]}>();
+  const [health, setHealth] = useState<{ services: [{ service: string, status: string }] }>();
   const apiCall = useAuthApiCall();
 
   useEffect(() => {
-    const getMeta = async() => {
+    const getMeta = async () => {
       const result = await apiCall(ApiEndpoint.Metadata, HttpMethod.Get);
       setApiMetadata(result);
     };
-    const getHealth = async() => {
+    const getHealth = async () => {
       const result = await apiCall(ApiEndpoint.Health, HttpMethod.Get);
       setHealth(result);
     };
@@ -151,5 +152,9 @@ const styles = mergeStyleSets({
   title: {
     marginBottom: 12,
     fontWeight: FontWeights.semilight
+  },
+  link: {
+    display: 'block',
+    marginTop: 20,
   }
 });
