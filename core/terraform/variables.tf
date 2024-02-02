@@ -185,6 +185,11 @@ variable "is_cosmos_defined_throughput" {
   default = false
 }
 
+variable "kv_purge_protection_enabled" {
+  type    = bool
+  default = true
+}
+
 variable "logging_level" {
   type        = string
   default     = "INFO"

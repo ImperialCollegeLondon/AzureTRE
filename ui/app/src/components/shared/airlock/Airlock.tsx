@@ -303,13 +303,13 @@ export const Airlock: React.FunctionComponent = () => {
             <CommandBarButton
               iconProps={{ iconName: 'refresh' }}
               text="Refresh"
-              style={{ background: 'none', color: theme.palette.themePrimary }}
+              style={{ background: 'none', color: '#006EAF' }}
               onClick={() => getAirlockRequests()}
             />
             <CommandBarButton
               iconProps={{ iconName: 'add' }}
               text="New request"
-              style={{ background: 'none', color: theme.palette.themePrimary }}
+              style={{ background: 'none', color: '#006EAF' }}
               onClick={() => navigate('new')}
             />
           </Stack>

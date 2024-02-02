@@ -3,6 +3,7 @@ import { getTheme, Icon, mergeStyles, Stack } from '@fluentui/react';
 import { Link } from 'react-router-dom';
 import { UserMenu } from './UserMenu';
 import { NotificationPanel } from './notifications/NotificationPanel';
+import imperialLogo from '../../assets/imperial_college_logo.svg'
 
 export const TopNav: React.FunctionComponent = () => {
   return (
