@@ -336,7 +336,8 @@ const contentStyles = mergeStyleSets({
     theme.fonts.xLarge,
     {
       flex: '1 1 auto',
-      borderTop: `4px solid ${theme.palette.themePrimary}`,
+      // borderTop: `4px solid ${theme.palette.themePrimary}`,
+      borderTop: `4px solid #006EAF`,
       color: theme.palette.neutralPrimary,
       display: 'flex',
       alignItems: 'center',
