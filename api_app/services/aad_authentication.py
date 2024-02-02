@@ -445,7 +445,8 @@ class AzureADAuthorization(AccessService):
         if RoleAssignment(resource_id=workspace_sp_id, role_id=workspace.properties['app_role_id_imperial_workspace_researcher']) in user_role_assignments:
             return WorkspaceRole.ImperialResearcher
 
-        return WorkspaceRole.NoRole
+        #return WorkspaceRole.NoRole
+        return WorkspaceRole.Researcher
 
 
 def merge_dict(d1, d2):
