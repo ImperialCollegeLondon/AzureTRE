@@ -431,10 +431,9 @@ class AzureADAuthorization(AccessService):
 
         workspace_sp_id = workspace.properties['sp_id']
 
-        # DRC commented out
-        #for requiredRole in self.WORKSPACE_ROLES_DICT.values():
-        #    if requiredRole not in workspace.properties:
-        #        raise AuthConfigValidationError(strings.AUTH_CONFIGURATION_NOT_AVAILABLE_FOR_WORKSPACE)
+        for requiredRole in self.WORKSPACE_ROLES_DICT.values():
+            if requiredRole not in workspace.properties:
+                raise AuthConfigValidationError(strings.AUTH_CONFIGURATION_NOT_AVAILABLE_FOR_WORKSPACE)
 
         if RoleAssignment(resource_id=workspace_sp_id, role_id=workspace.properties['app_role_id_workspace_owner']) in user_role_assignments:
             return WorkspaceRole.Owner
@@ -445,8 +444,7 @@ class AzureADAuthorization(AccessService):
         if RoleAssignment(resource_id=workspace_sp_id, role_id=workspace.properties['app_role_id_imperial_workspace_researcher']) in user_role_assignments:
             return WorkspaceRole.ImperialResearcher
 
-        #return WorkspaceRole.NoRole
-        return WorkspaceRole.Researcher
+        return WorkspaceRole.NoRole
 
 
 def merge_dict(d1, d2):
