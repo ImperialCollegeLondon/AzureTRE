@@ -48,11 +48,11 @@ def validate_user_has_valid_role_for_user_resource(user, user_resource):
     if "WorkspaceOwner" in user.roles:
         return
 
-    if ("WorkspaceResearcher" in user.roles or "AirlockManager" in user.roles) and user_resource.ownerId == user.id:
+    if ("WorkspaceResearcher" in user.roles or "AirlockManager" in user.roles or "ImperialWorkspaceResearcher" in user.roles) and user_resource.ownerId == user.id:
         return
     
-    if "ImperialWorkspaceResearcher" in user.roles:
-        return
+    # if "ImperialWorkspaceResearcher" in user.roles:
+    #     return
 
     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=strings.ACCESS_USER_IS_NOT_OWNER_OR_RESEARCHER)
 
