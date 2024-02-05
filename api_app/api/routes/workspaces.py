@@ -376,8 +376,8 @@ async def retrieve_user_resources_for_workspace_service(
     if ("WorkspaceResearcher" in user.roles or "AirlockManager" in user.roles) and "WorkspaceOwner" not in user.roles:
         user_resources = [resource for resource in user_resources if resource.ownerId == user.id]
 
-    if ("WorkspaceResearcher" in user.roles or "AirlockManager" in user.roles or "ImperialWorkspaceResearcher" in user.roles) and "WorkspaceOwner" not in user.roles:
-        user_resources = [resource for resource in user_resources if resource.ownerId == user.id]
+    #if ("WorkspaceResearcher" in user.roles or "AirlockManager" in user.roles or "ImperialWorkspaceResearcher" in user.roles) and "WorkspaceOwner" not in user.roles:
+    #    user_resources = [resource for resource in user_resources if resource.ownerId == user.id]
 
     if "ImperialWorkspaceResearcher" in user.roles:
         user_resources = [resource for resource in user_resources ]        
