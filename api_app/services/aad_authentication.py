@@ -443,7 +443,8 @@ class AzureADAuthorization(AccessService):
             return WorkspaceRole.AirlockManager
         if RoleAssignment(resource_id=workspace_sp_id, role_id=workspace.properties['app_role_id_imperial_workspace_researcher']) in user_role_assignments:
             return WorkspaceRole.ImperialResearcher
-
+        if RoleAssignment(resource_id=workspace_sp_id, role_id=workspace.properties['app_role_id_imperial_workspace_owner']) in user_role_assignments:
+            return WorkspaceRole.ImperialOwner
         return WorkspaceRole.NoRole
 
 
