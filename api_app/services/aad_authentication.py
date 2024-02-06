@@ -38,7 +38,7 @@ class AzureADAuthorization(AccessService):
     aad_instance = config.AAD_AUTHORITY_URL
 
     TRE_CORE_ROLES = ['TREAdmin', 'TREUser']
-    WORKSPACE_ROLES_DICT = {'WorkspaceOwner': 'app_role_id_workspace_owner', 'WorkspaceResearcher': 'app_role_id_workspace_researcher', 'AirlockManager': 'app_role_id_workspace_airlock_manager', 'ImperialWorkspaceResearcher': 'app_role_id_imperial_workspace_researcher'}
+    WORKSPACE_ROLES_DICT = {'WorkspaceOwner': 'app_role_id_workspace_owner', 'WorkspaceResearcher': 'app_role_id_workspace_researcher', 'AirlockManager': 'app_role_id_workspace_airlock_manager', 'ImperialWorkspaceResearcher': 'app_role_id_imperial_workspace_researcher' , 'ImperialWorkspaceOwner': 'app_role_id_imperial_workspace_owner'}
 
     def __init__(self, auto_error: bool = True, require_one_of_roles: Optional[list] = None):
         super(AzureADAuthorization, self).__init__(

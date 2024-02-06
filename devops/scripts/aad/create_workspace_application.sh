@@ -134,6 +134,7 @@ if [ -n "${existingApp}" ]; then
 
     researcherRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "WorkspaceResearcher").id')
     imperialResearcherRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "ImperialWorkspaceResearcher").id')
+    imperialOwnerRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "ImperialWorkspaceOwner").id')
     ownerRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "WorkspaceOwner").id')
     airlockManagerRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "AirlockManager").id')
     userImpersonationScopeId=$(echo "$existingApp" | jq -r '.api.oauth2PermissionScopes[] | select(.value == "user_impersonation").id')
@@ -196,6 +197,15 @@ appDefinition=$(jq -c . << JSON
         "isEnabled": true,
         "origin": "Application",
         "value": "ImperialWorkspaceResearcher"
+    },
+    {
+        "id": "${imperialOwnerRoleId}",
+        "allowedMemberTypes": [ "User", "Application" ],
+        "description": "Provides Imperial Owner access to the Workspace.",
+        "displayName": "Imperial Workspace Owner",
+        "isEnabled": true,
+        "origin": "Application",
+        "value": "ImperialWorkspaceOwner"
     },
     {
         "id": "${airlockManagerRoleId}",
