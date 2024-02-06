@@ -54,7 +54,7 @@ export const WorkspaceProvider: React.FunctionComponent = () => {
           await apiCall(`${ApiEndpoint.Workspaces}/${workspaceId}`, HttpMethod.Get, scopeId,
             undefined, ResultType.JSON, (roles: Array<string>) => {
               wsRoles = roles;
-              console.info(wsRoles)
+              console.info(wsRoles.length)
             }, true);
         }
 
