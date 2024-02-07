@@ -356,6 +356,10 @@ if [[ -n ${automationClientId} ]]; then
                 "type": "Role"
             },
             {
+                "id": "${imperialOwnerRoleId}",
+                "type": "Role"
+            },
+            {
                 "id": "${airlockManagerRoleId}",
                 "type": "Role"
             }
