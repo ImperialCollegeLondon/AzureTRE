@@ -356,6 +356,10 @@ if [[ -n ${automationClientId} ]]; then
                 "type": "Role"
             },
             {
+                "id": "${imperialOwnerRoleId}",
+                "type": "Role"
+            },
+            {
                 "id": "${airlockManagerRoleId}",
                 "type": "Role"
             }
@@ -380,6 +384,7 @@ JSON
       grant_admin_consent "${automationSpId}" "${workspaceSpId}" "${airlockManagerRoleId}"
       grant_admin_consent "${automationSpId}" "${workspaceSpId}" "${researcherRoleId}"
       grant_admin_consent "${automationSpId}" "${workspaceSpId}" "${imperialResearcherRoleId}"
+      grant_admin_consent "${automationSpId}" "${workspaceSpId}" "${imperialOwnerRoleId}"
       az ad app permission grant --id "$automationSpId" --api "$workspaceAppId" --scope "user_impersonation" --only-show-errors
   fi
 fi
