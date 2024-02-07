@@ -122,6 +122,7 @@ source "${DIR}/update_resource_access.sh"
 # Default of new UUIDs
 researcherRoleId=$(cat /proc/sys/kernel/random/uuid)
 imperialResearcherRoleId=$(cat /proc/sys/kernel/random/uuid)
+imperialOwnerRoleId=$(cat /proc/sys/kernel/random/uuid)
 ownerRoleId=$(cat /proc/sys/kernel/random/uuid)
 airlockManagerRoleId=$(cat /proc/sys/kernel/random/uuid)
 userImpersonationScopeId=$(cat /proc/sys/kernel/random/uuid)
@@ -140,6 +141,7 @@ if [ -n "${existingApp}" ]; then
     userImpersonationScopeId=$(echo "$existingApp" | jq -r '.api.oauth2PermissionScopes[] | select(.value == "user_impersonation").id')
     if [[ -z "${researcherRoleId}" ]]; then researcherRoleId=$(cat /proc/sys/kernel/random/uuid); fi
     if [[ -z "${imperialResearcherRoleId}" ]]; then imperialResearcherRoleId=$(cat /proc/sys/kernel/random/uuid); fi
+    if [[ -z "${imperialOwnerRoleId}" ]]; then imperialOwnerRoleId=$(cat /proc/sys/kernel/random/uuid); fi
     if [[ -z "${ownerRoleId}" ]]; then ownerRoleId=$(cat /proc/sys/kernel/random/uuid); fi
     if [[ -z "${airlockManagerRoleId}" ]]; then airlockManagerRoleId=$(cat /proc/sys/kernel/random/uuid); fi
     if [[ -z "${userImpersonationScopeId}" ]]; then userImpersonationScopeId=$(cat /proc/sys/kernel/random/uuid); fi
