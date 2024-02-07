@@ -54,7 +54,6 @@ export const WorkspaceProvider: React.FunctionComponent = () => {
           await apiCall(`${ApiEndpoint.Workspaces}/${workspaceId}`, HttpMethod.Get, scopeId,
             undefined, ResultType.JSON, (roles: Array<string>) => {
               wsRoles = roles;
-              console.info(wsRoles.toString())
             }, true);
         }
 
@@ -63,6 +62,7 @@ export const WorkspaceProvider: React.FunctionComponent = () => {
           workspaceCtx.current.setWorkspace(ws);
           workspaceCtx.current.setRoles(wsRoles);
           setWSRoles(wsRoles);
+          console.info(wsRoles.toString())
           // get workspace services to pass to nav + ws services page
           const workspaceServices = await apiCall(`${ApiEndpoint.Workspaces}/${ws.id}/${ApiEndpoint.WorkspaceServices}`,
             HttpMethod.Get, ws.properties.scope_id);
@@ -79,7 +79,7 @@ export const WorkspaceProvider: React.FunctionComponent = () => {
         } else {
           let e = new APIError();
           e.status = 403;
-          e.userMessage = "User does not have a role assigned in the workspace or the TRE Admin role assigned: " + wsRoles.toString();
+          e.userMessage = "User does not have a role assigned in the workspace or the TRE Admin role assigned";
           e.endpoint = `${ApiEndpoint.Workspaces}/${workspaceId}`;
           throw e;
         }
