@@ -73,11 +73,11 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
           r = [RoleName.TREAdmin, WorkspaceRoleName.WorkspaceOwner];
           break;
         case ResourceType.WorkspaceService:
-          r = [WorkspaceRoleName.WorkspaceOwner]
+          r = [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.ImperialWorkspaceManager]
           wsAuth = true;
           break;
         case ResourceType.UserResource:
-          r = [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearcher, WorkspaceRoleName.ImperialWorkspaceResearcher, WorkspaceRoleName.AirlockManager, WorkspaceRoleName.ImperialWorkspaceOwner];
+          r = [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearcher, WorkspaceRoleName.ImperialWorkspaceResearcher, WorkspaceRoleName.AirlockManager, WorkspaceRoleName.ImperialWorkspaceOwner, WorkspaceRoleName.ImperialWorkspaceManager];
           wsAuth = true;
           break;
         case ResourceType.Workspace:

@@ -22,17 +22,17 @@ export const ResourceBody: React.FunctionComponent<ResourceBodyProps> = (props: 
   const workspaceCtx = useContext(WorkspaceContext);
 
   const operationsRolesByResourceType = {
-    [ResourceType.Workspace]: [RoleName.TREAdmin, WorkspaceRoleName.WorkspaceOwner],
+    [ResourceType.Workspace]: [RoleName.TREAdmin, WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.ImperialWorkspaceManager],
     [ResourceType.SharedService]: [RoleName.TREAdmin],
-    [ResourceType.WorkspaceService]: [WorkspaceRoleName.WorkspaceOwner],
-    [ResourceType.UserResource]: [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearcher, WorkspaceRoleName.ImperialWorkspaceResearcher, WorkspaceRoleName.ImperialWorkspaceOwner]
+    [ResourceType.WorkspaceService]: [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.ImperialWorkspaceManager],
+    [ResourceType.UserResource]: [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearcher, WorkspaceRoleName.ImperialWorkspaceResearcher, WorkspaceRoleName.ImperialWorkspaceOwner, WorkspaceRoleName.ImperialWorkspaceManager]
   };
 
   const historyRolesByResourceType = {
-    [ResourceType.Workspace]: [RoleName.TREAdmin, WorkspaceRoleName.WorkspaceOwner],
+    [ResourceType.Workspace]: [RoleName.TREAdmin, WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.ImperialWorkspaceManager],
     [ResourceType.SharedService]: [RoleName.TREAdmin],
-    [ResourceType.WorkspaceService]: [WorkspaceRoleName.WorkspaceOwner],
-    [ResourceType.UserResource]: [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearcher, WorkspaceRoleName.ImperialWorkspaceResearcher, WorkspaceRoleName.ImperialWorkspaceOwner]
+    [ResourceType.WorkspaceService]: [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.ImperialWorkspaceManager],
+    [ResourceType.UserResource]: [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearcher, WorkspaceRoleName.ImperialWorkspaceResearcher, WorkspaceRoleName.ImperialWorkspaceOwner, WorkspaceRoleName.ImperialWorkspaceManager]
   };
 
   const operationsRoles = operationsRolesByResourceType[props.resource.resourceType];
