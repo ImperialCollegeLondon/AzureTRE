@@ -70,6 +70,7 @@ public class AuthenticationProviderService {
                 || x.equalsIgnoreCase("WorkspaceResearcher")
                 || x.equalsIgnoreCase("ImperialWorkspaceResearcher")
                 || x.equalsIgnoreCase("ImperialWorkspaceOwner")
+                || x.equalsIgnoreCase("ImperialWorkspaceManager")
                 || x.equalsIgnoreCase("AirlockManager"))) {
                 throw new GuacamoleInvalidCredentialsException(
                     "User must have a workspace owner or workspace researcher or Airlock Manager role",
