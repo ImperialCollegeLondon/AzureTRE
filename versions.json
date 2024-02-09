@@ -44,6 +44,11 @@
   {
     "version": "v0.16-ws-researcher",
     "title": "v0.16-ws-researcher",
+    "aliases": []
+  },
+  {
+    "version": "v0.16-ws-owner",
+    "title": "v0.16-ws-owner",
     "aliases": [
       "latest"
     ]
