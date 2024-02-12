@@ -73,7 +73,7 @@ def validate_user_allowed_to_access_storage_account(user: User, airlock_request:
     if (airlock_request.status == AirlockRequestStatus.InReview):
         allowed_roles = ["AirlockManager", "WorkspaceOwner"]
     else:
-        allowed_roles = ["WorkspaceResearcher", "WorkspaceOwner"]
+        allowed_roles = ["WorkspaceResearcher", "WorkspaceOwner", "ImperialWorkspaceDataEngineer"]
 
     if not _user_has_one_of_roles(user=user, roles=allowed_roles):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=strings.AIRLOCK_UNAUTHORIZED_TO_SA)
@@ -351,7 +351,9 @@ def check_email_exists(role_assignment_details: defaultdict(list)):
     if "AirlockManager" not in role_assignment_details or not role_assignment_details["AirlockManager"]:
         logger.error('Creating an airlock request but the airlock manager does not have an email address.')
         raise HTTPException(status_code=status.HTTP_417_EXPECTATION_FAILED, detail=strings.AIRLOCK_NO_AIRLOCK_MANAGER_EMAIL)
-
+    if "ImperialWorkspaceDataEngineer" not in role_assignment_details or not role_assignment_details["ImperialWorkspaceDataEngineer"]:
+        logger.error('Creating an airlock request but the DataEngineer does not have an email address.')
+        raise HTTPException(status_code=status.HTTP_417_EXPECTATION_FAILED, detail=strings.AIRLOCK_NO_RESEARCHER_EMAIL)
 
 async def get_airlock_requests_by_user_and_workspace(user: User, workspace: Workspace, airlock_request_repo: AirlockRequestRepository,
                                                      creator_user_id: Optional[str] = None, type: Optional[AirlockRequestType] = None, status: Optional[AirlockRequestStatus] = None,
@@ -370,10 +372,10 @@ def get_allowed_actions(request: AirlockRequest, user: User, airlock_request_rep
     if can_review_request and "AirlockManager" in user.roles:
         allowed_actions.append(AirlockActions.Review)
 
-    if can_cancel_request and ("WorkspaceOwner" in user.roles or "WorkspaceResearcher" in user.roles):
+    if can_cancel_request and ("WorkspaceOwner" in user.roles or "WorkspaceResearcher" in user.roles or "ImperialWorkspaceDataEngineer" in user.roles):
         allowed_actions.append(AirlockActions.Cancel)
 
-    if can_submit_request and ("WorkspaceOwner" in user.roles or "WorkspaceResearcher" in user.roles):
+    if can_submit_request and ("WorkspaceOwner" in user.roles or "WorkspaceResearcher" in user.roles or "ImperialWorkspaceDataEngineer" in user.roles):
         allowed_actions.append(AirlockActions.Submit)
 
     return allowed_actions

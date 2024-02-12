@@ -123,6 +123,7 @@ source "${DIR}/update_resource_access.sh"
 researcherRoleId=$(cat /proc/sys/kernel/random/uuid)
 imperialResearcherRoleId=$(cat /proc/sys/kernel/random/uuid)
 imperialOwnerRoleId=$(cat /proc/sys/kernel/random/uuid)
+imperialDataEngineerRoleId=$(cat /proc/sys/kernel/random/uuid)
 ownerRoleId=$(cat /proc/sys/kernel/random/uuid)
 airlockManagerRoleId=$(cat /proc/sys/kernel/random/uuid)
 userImpersonationScopeId=$(cat /proc/sys/kernel/random/uuid)
@@ -136,12 +137,14 @@ if [ -n "${existingApp}" ]; then
     researcherRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "WorkspaceResearcher").id')
     imperialResearcherRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "ImperialWorkspaceResearcher").id')
     imperialOwnerRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "ImperialWorkspaceOwner").id')
+    imperialDataEngineerRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "ImperialWorkspaceDataEngineer").id')
     ownerRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "WorkspaceOwner").id')
     airlockManagerRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "AirlockManager").id')
     userImpersonationScopeId=$(echo "$existingApp" | jq -r '.api.oauth2PermissionScopes[] | select(.value == "user_impersonation").id')
     if [[ -z "${researcherRoleId}" ]]; then researcherRoleId=$(cat /proc/sys/kernel/random/uuid); fi
     if [[ -z "${imperialResearcherRoleId}" ]]; then imperialResearcherRoleId=$(cat /proc/sys/kernel/random/uuid); fi
     if [[ -z "${imperialOwnerRoleId}" ]]; then imperialOwnerRoleId=$(cat /proc/sys/kernel/random/uuid); fi
+    if [[ -z "${imperialDataEngineerRoleId}" ]]; then imperialDataEngineerRoleId=$(cat /proc/sys/kernel/random/uuid); fi
     if [[ -z "${ownerRoleId}" ]]; then ownerRoleId=$(cat /proc/sys/kernel/random/uuid); fi
     if [[ -z "${airlockManagerRoleId}" ]]; then airlockManagerRoleId=$(cat /proc/sys/kernel/random/uuid); fi
     if [[ -z "${userImpersonationScopeId}" ]]; then userImpersonationScopeId=$(cat /proc/sys/kernel/random/uuid); fi
@@ -208,6 +211,15 @@ appDefinition=$(jq -c . << JSON
         "isEnabled": true,
         "origin": "Application",
         "value": "ImperialWorkspaceOwner"
+    },
+    {
+        "id": "${imperialDataEngineerRoleId}",
+        "allowedMemberTypes": [ "User", "Application" ],
+        "description": "Provides Imperial Data Engineer access to the Workspace.",
+        "displayName": "Imperial Workspace Data Engineer",
+        "isEnabled": true,
+        "origin": "Application",
+        "value": "ImperialWorkspaceDataEngineer"
     },
     {
         "id": "${airlockManagerRoleId}",
@@ -360,6 +372,10 @@ if [[ -n ${automationClientId} ]]; then
                 "type": "Role"
             },
             {
+                "id": "${imperialDataEngineerRoleId}",
+                "type": "Role"
+            },
+            {
                 "id": "${airlockManagerRoleId}",
                 "type": "Role"
             }
@@ -385,6 +401,7 @@ JSON
       grant_admin_consent "${automationSpId}" "${workspaceSpId}" "${researcherRoleId}"
       grant_admin_consent "${automationSpId}" "${workspaceSpId}" "${imperialResearcherRoleId}"
       grant_admin_consent "${automationSpId}" "${workspaceSpId}" "${imperialOwnerRoleId}"
+      grant_admin_consent "${automationSpId}" "${workspaceSpId}" "${imperialDataEngineerRoleId}"
       az ad app permission grant --id "$automationSpId" --api "$workspaceAppId" --scope "user_impersonation" --only-show-errors
   fi
 fi

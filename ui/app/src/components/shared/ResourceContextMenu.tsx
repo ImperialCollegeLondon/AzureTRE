@@ -77,7 +77,7 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
           wsAuth = true;
           break;
         case ResourceType.UserResource:
-          r = [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearcher, WorkspaceRoleName.ImperialWorkspaceResearcher, WorkspaceRoleName.AirlockManager, WorkspaceRoleName.ImperialWorkspaceOwner];
+          r = [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearcher, WorkspaceRoleName.ImperialWorkspaceResearcher, WorkspaceRoleName.AirlockManager, WorkspaceRoleName.ImperialWorkspaceOwner, WorkspaceRoleName.ImperialWorkspaceDataEngineer];
           wsAuth = true;
           break;
         case ResourceType.Workspace:
