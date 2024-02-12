@@ -71,7 +71,7 @@ def validate_user_allowed_to_access_storage_account(user: User, airlock_request:
     allowed_roles = []
 
     if (airlock_request.status == AirlockRequestStatus.InReview):
-        allowed_roles = ["AirlockManager", "WorkspaceOwner"]
+        allowed_roles = ["AirlockManager", "WorkspaceOwner", "ImperialWorkspaceDataEngineer"]
     else:
         allowed_roles = ["WorkspaceResearcher", "WorkspaceOwner", "ImperialWorkspaceDataEngineer"]
 
