@@ -9,4 +9,5 @@ export enum WorkspaceRoleName {
     AirlockManager = "AirlockManager",
     ImperialWorkspaceResearcher = "ImperialWorkspaceResearcher",
     ImperialWorkspaceOwner = "ImperialWorkspaceOwner"
+    ImperialWorkspaceDataEngineer = "ImperialWorkspaceDataEngineer"
 }

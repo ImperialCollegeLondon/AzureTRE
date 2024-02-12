@@ -11,7 +11,7 @@ class WorkspaceRole(Enum):
     AirlockManager = 3
     ImperialResearcher = 4
     ImperialOwner = 5
-
+    ImperialDataEngineer = 6
 
 
 class Workspace(Resource):
