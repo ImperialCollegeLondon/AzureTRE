@@ -39,6 +39,7 @@ export const App: React.FunctionComponent = () => {
     const setAppRolesOnLoad = async () => {
       await apiCall(ApiEndpoint.Workspaces, HttpMethod.Get, undefined, undefined, ResultType.JSON, (roles: Array<string>) => {
         setAppRoles(roles);
+        console.log(roles)
       }, true);
     };
     setAppRolesOnLoad();
