@@ -348,9 +348,9 @@ def check_email_exists(role_assignment_details: defaultdict(list)):
     if "ImperialWorkspaceResearcher" not in role_assignment_details or not role_assignment_details["ImperialWorkspaceResearcher"]:
         logger.error('Creating an airlock request but the researcher does not have an email address.')
         raise HTTPException(status_code=status.HTTP_417_EXPECTATION_FAILED, detail=strings.AIRLOCK_NO_RESEARCHER_EMAIL)
-    if "ImperialAirlockManager" not in role_assignment_details or not role_assignment_details["ImperialAirlockManager"]:
-        logger.error('Creating an airlock request but the airlock manager does not have an email address.')
-        raise HTTPException(status_code=status.HTTP_417_EXPECTATION_FAILED, detail=strings.AIRLOCK_NO_AIRLOCK_MANAGER_EMAIL)
+    # if "ImperialAirlockManager" not in role_assignment_details or not role_assignment_details["ImperialAirlockManager"]:
+    #     logger.error('Creating an airlock request but the airlock manager does not have an email address.')
+    #     raise HTTPException(status_code=status.HTTP_417_EXPECTATION_FAILED, detail=strings.AIRLOCK_NO_AIRLOCK_MANAGER_EMAIL)
     #if "ImperialWorkspaceDataEngineer" not in role_assignment_details or not role_assignment_details["ImperialWorkspaceDataEngineer"]:
     #    logger.error('Creating an airlock request but the DataEngineer does not have an email address.')
     #    raise HTTPException(status_code=status.HTTP_417_EXPECTATION_FAILED, detail=strings.AIRLOCK_NO_RESEARCHER_EMAIL)
