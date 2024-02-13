@@ -28,7 +28,7 @@ export const WorkspaceServices: React.FunctionComponent<WorkspaceServicesProps> 
         <Stack.Item>
           <Stack horizontal horizontalAlign="space-between">
             <h1>Workspace Services</h1>
-            <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.WorkspaceOwner]} element={
+            <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.ImperialWorkspaceManager]} element={
               <PrimaryButton iconProps={{ iconName: 'Add' }} text="Create new" disabled={successStates.indexOf(workspaceCtx.workspace.deploymentStatus) === -1 || !workspaceCtx.workspace.isEnabled} onClick={() => {
                 createFormCtx.openCreateForm({
                   resourceType: ResourceType.WorkspaceService,

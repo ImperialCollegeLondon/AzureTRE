@@ -7,7 +7,7 @@
   "required": [
   ],
   "authorizedRoles": [
-    "WorkspaceOwner", "WorkspaceResearcher"
+    "WorkspaceOwner", "WorkspaceResearcher", "ImperialWorkspaceManager"
   ],
   "properties": {
     "os_image": {

@@ -12,6 +12,7 @@ class WorkspaceRole(Enum):
     ImperialResearcher = 4
     ImperialOwner = 5
     ImperialDataEngineer = 6
+    ImperialManager = 7
 
 
 class Workspace(Resource):

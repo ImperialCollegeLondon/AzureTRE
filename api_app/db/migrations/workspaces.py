@@ -37,6 +37,7 @@ class WorkspaceMigration(WorkspaceRepository):
                     item["properties"]["app_role_id_workspace_researcher"] = item["authInformation"]["roles"]["WorkspaceResearcher"]
                     item["properties"]["app_role_id_imperial_workspace_researcher"] = item["authInformation"]["roles"]["ImperialWorkspaceResearcher"]
                     item["properties"]["app_role_id_imperial_workspace_owner"] = item["authInformation"]["roles"]["ImperialWorkspaceOwner"]
+                    item["properties"]["app_role_id_imperial_workspace_manager"] = item["authInformation"]["roles"]["ImperialWorkspaceManager"]
                     item["properties"]["app_role_id_imperial_workspace_dataengineer"] = item["authInformation"]["roles"]["ImperialWorkspaceDataEngineer"]
                     item["properties"]["app_role_id_workspace_owner"] = item["authInformation"]["roles"]["WorkspaceOwner"]
                     # cleanup
