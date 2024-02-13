@@ -27,7 +27,7 @@ export const RootDashboard: React.FunctionComponent<RootDashboardProps> = (props
           <Stack horizontal horizontalAlign="space-between">
             <Stack.Item><h1>Workspaces</h1></Stack.Item>
             <Stack.Item style={{ width: 200, textAlign: 'right' }}>
-              <SecuredByRole allowedAppRoles={[RoleName.TREAdmin]} element={
+              <SecuredByRole allowedAppRoles={[RoleName.TREAdmin, RoleName.ImperialTREAdmin]} element={
                 <PrimaryButton iconProps={{ iconName: 'Add' }} text="Create new" onClick={() => {
                   createFormCtx.openCreateForm({
                     resourceType: ResourceType.Workspace,
