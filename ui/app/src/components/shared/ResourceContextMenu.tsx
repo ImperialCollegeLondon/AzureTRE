@@ -73,15 +73,15 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
           r = [RoleName.TREAdmin, WorkspaceRoleName.WorkspaceOwner];
           break;
         case ResourceType.WorkspaceService:
-          r = [WorkspaceRoleName.WorkspaceOwner]
+          r = [RoleName.ImperialTREAdmin, WorkspaceRoleName.WorkspaceOwner]
           wsAuth = true;
           break;
         case ResourceType.UserResource:
-          r = [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearcher, WorkspaceRoleName.ImperialWorkspaceResearcher, WorkspaceRoleName.AirlockManager, WorkspaceRoleName.ImperialWorkspaceOwner, WorkspaceRoleName.ImperialWorkspaceDataEngineer];
+          r = [RoleName.ImperialTREAdmin, WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearcher, WorkspaceRoleName.ImperialWorkspaceResearcher, WorkspaceRoleName.AirlockManager, WorkspaceRoleName.ImperialWorkspaceOwner, WorkspaceRoleName.ImperialWorkspaceDataEngineer];
           wsAuth = true;
           break;
         case ResourceType.Workspace:
-          r = [RoleName.TREAdmin];
+          r = [RoleName.ImperialTREAdmin, RoleName.TREAdmin];
           break;
       }
       setRoles(r);
