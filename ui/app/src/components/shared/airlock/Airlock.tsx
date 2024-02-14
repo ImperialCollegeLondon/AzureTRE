@@ -292,6 +292,16 @@ export const Airlock: React.FunctionComponent = () => {
     });
   }
 
+  if (workspaceCtx.roles?.includes(WorkspaceRoleName.ImperialAirlockManager)) {
+    quickFilters.unshift({
+      key: 'awaitingMyReview',
+      text: 'Awaiting my review',
+      iconProps: { iconName: 'TemporaryUser' },
+      // Currently we don't have assigned reviewers so this will be all requests in review status
+      onClick: () => setFilters(new Map([['status', 'in_review']]))
+    });
+  }
+
   return (
     <>
       <Stack className="tre-panel">
@@ -307,7 +317,7 @@ export const Airlock: React.FunctionComponent = () => {
               style={{ background: 'none', color: '#006EAF' }}
               onClick={() => getAirlockRequests()}
             />
-            <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.AirlockManager, WorkspaceRoleName.ImperialWorkspaceDataEngineer]} element={
+            <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.AirlockManager, WorkspaceRoleName.ImperialWorkspaceDataEngineer, WorkspaceRoleName.ImperialAirlockManager]} element={
               <CommandBarButton
                 iconProps={{ iconName: 'add' }}
                 text="New request"
@@ -347,10 +357,10 @@ export const Airlock: React.FunctionComponent = () => {
       </div>
 
       <Routes>
-        <Route path="new" element={ <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.AirlockManager, WorkspaceRoleName.ImperialWorkspaceDataEngineer]} element={
+        <Route path="new" element={ <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.AirlockManager, WorkspaceRoleName.ImperialWorkspaceDataEngineer, WorkspaceRoleName.ImperialAirlockManager]} element={
           <AirlockNewRequest onCreateRequest={handleNewRequest} />
         } /> } />
-        <Route path=":requestId" element={ <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.AirlockManager, WorkspaceRoleName.ImperialWorkspaceDataEngineer]} element={
+        <Route path=":requestId" element={ <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.AirlockManager, WorkspaceRoleName.ImperialWorkspaceDataEngineer, WorkspaceRoleName.ImperialAirlockManager]} element={
           <AirlockViewRequest requests={airlockRequests} onUpdateRequest={getAirlockRequests} />
         } /> } />
       </Routes>

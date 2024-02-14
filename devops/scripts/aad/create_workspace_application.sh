@@ -126,6 +126,7 @@ imperialOwnerRoleId=$(cat /proc/sys/kernel/random/uuid)
 imperialDataEngineerRoleId=$(cat /proc/sys/kernel/random/uuid)
 ownerRoleId=$(cat /proc/sys/kernel/random/uuid)
 airlockManagerRoleId=$(cat /proc/sys/kernel/random/uuid)
+imperialAirlockManagerRoleId=$(cat /proc/sys/kernel/random/uuid)
 userImpersonationScopeId=$(cat /proc/sys/kernel/random/uuid)
 appObjectId=""
 
@@ -140,6 +141,7 @@ if [ -n "${existingApp}" ]; then
     imperialDataEngineerRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "ImperialWorkspaceDataEngineer").id')
     ownerRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "WorkspaceOwner").id')
     airlockManagerRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "AirlockManager").id')
+    imperialAirlockManagerRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "ImperialAirlockManager").id')
     userImpersonationScopeId=$(echo "$existingApp" | jq -r '.api.oauth2PermissionScopes[] | select(.value == "user_impersonation").id')
     if [[ -z "${researcherRoleId}" ]]; then researcherRoleId=$(cat /proc/sys/kernel/random/uuid); fi
     if [[ -z "${imperialResearcherRoleId}" ]]; then imperialResearcherRoleId=$(cat /proc/sys/kernel/random/uuid); fi
@@ -147,6 +149,7 @@ if [ -n "${existingApp}" ]; then
     if [[ -z "${imperialDataEngineerRoleId}" ]]; then imperialDataEngineerRoleId=$(cat /proc/sys/kernel/random/uuid); fi
     if [[ -z "${ownerRoleId}" ]]; then ownerRoleId=$(cat /proc/sys/kernel/random/uuid); fi
     if [[ -z "${airlockManagerRoleId}" ]]; then airlockManagerRoleId=$(cat /proc/sys/kernel/random/uuid); fi
+    if [[ -z "${imperialAirlockManagerRoleId}" ]]; then imperialAirlockManagerRoleId=$(cat /proc/sys/kernel/random/uuid); fi
     if [[ -z "${userImpersonationScopeId}" ]]; then userImpersonationScopeId=$(cat /proc/sys/kernel/random/uuid); fi
 fi
 
@@ -220,6 +223,15 @@ appDefinition=$(jq -c . << JSON
         "isEnabled": true,
         "origin": "Application",
         "value": "ImperialWorkspaceDataEngineer"
+    },
+    {
+        "id": "${imperialAirlockManagerRoleId}",
+        "allowedMemberTypes": [ "User", "Application" ],
+        "description": "Provides imperial airlock managers access to the Workspace and ability to review airlock requests",
+        "displayName": "Imperial Airlock Manager",
+        "isEnabled": true,
+        "origin": "Application",
+        "value": "ImperialAirlockManager"
     },
     {
         "id": "${airlockManagerRoleId}",
@@ -378,6 +390,10 @@ if [[ -n ${automationClientId} ]]; then
             {
                 "id": "${airlockManagerRoleId}",
                 "type": "Role"
+            },
+            {
+                "id": "${imperialAirlockManagerRoleId}",
+                "type": "Role"
             }
         ],
         "resourceAppId": "${workspaceAppId}"
@@ -402,6 +418,7 @@ JSON
       grant_admin_consent "${automationSpId}" "${workspaceSpId}" "${imperialResearcherRoleId}"
       grant_admin_consent "${automationSpId}" "${workspaceSpId}" "${imperialOwnerRoleId}"
       grant_admin_consent "${automationSpId}" "${workspaceSpId}" "${imperialDataEngineerRoleId}"
+      grant_admin_consent "${automationSpId}" "${workspaceSpId}" "${imperialAirlockManagerRoleId}"
       az ad app permission grant --id "$automationSpId" --api "$workspaceAppId" --scope "user_impersonation" --only-show-errors
   fi
 fi

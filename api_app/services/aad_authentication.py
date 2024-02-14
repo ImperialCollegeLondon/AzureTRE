@@ -38,7 +38,7 @@ class AzureADAuthorization(AccessService):
     aad_instance = config.AAD_AUTHORITY_URL
 
     TRE_CORE_ROLES = ['TREAdmin', 'TREUser', 'ImperialTREAdmin']
-    WORKSPACE_ROLES_DICT = {'WorkspaceOwner': 'app_role_id_workspace_owner', 'WorkspaceResearcher': 'app_role_id_workspace_researcher', 'AirlockManager': 'app_role_id_workspace_airlock_manager', 'ImperialWorkspaceResearcher': 'app_role_id_imperial_workspace_researcher' , 'ImperialWorkspaceOwner': 'app_role_id_imperial_workspace_owner', 'ImperialWorkspaceDataEngineer': 'app_role_id_imperial_workspace_dataengineer'}
+    WORKSPACE_ROLES_DICT = {'WorkspaceOwner': 'app_role_id_workspace_owner', 'WorkspaceResearcher': 'app_role_id_workspace_researcher', 'AirlockManager': 'app_role_id_workspace_airlock_manager', 'ImperialWorkspaceResearcher': 'app_role_id_imperial_workspace_researcher' , 'ImperialWorkspaceOwner': 'app_role_id_imperial_workspace_owner', 'ImperialWorkspaceDataEngineer': 'app_role_id_imperial_workspace_dataengineer', 'ImperialAirlockManager': 'app_role_id_imperial_workspace_airlock_manager'}
 
     def __init__(self, auto_error: bool = True, require_one_of_roles: Optional[list] = None):
         super(AzureADAuthorization, self).__init__(
@@ -447,6 +447,8 @@ class AzureADAuthorization(AccessService):
             return WorkspaceRole.ImperialOwner
         if RoleAssignment(resource_id=workspace_sp_id, role_id=workspace.properties['app_role_id_imperial_workspace_dataengineer']) in user_role_assignments:
             return WorkspaceRole.ImperialDataEngineer
+        if RoleAssignment(resource_id=workspace_sp_id, role_id=workspace.properties['app_role_id_imperial_workspace_airlock_manager']) in user_role_assignments:
+            return WorkspaceRole.ImperialAirlockManager
         return WorkspaceRole.NoRole
 
 
