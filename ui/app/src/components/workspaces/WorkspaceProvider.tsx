@@ -72,7 +72,7 @@ export const WorkspaceProvider: React.FunctionComponent = () => {
           const sharedServices = await apiCall(ApiEndpoint.SharedServices, HttpMethod.Get);
           setSharedServices(sharedServices.sharedServices);
           setLoadingState(LoadingState.Ok);
-        } else if (appRoles.roles.includes(RoleName.TREAdmin)) {
+        } else if (appRoles.roles.includes(RoleName.TREAdmin) || appRoles.roles.includes(RoleName.ImperialTREAdmin)) {
           ws = (await apiCall(`${ApiEndpoint.Workspaces}/${workspaceId}`, HttpMethod.Get)).workspace;
           workspaceCtx.current.setWorkspace(ws);
           setLoadingState(LoadingState.Ok);
