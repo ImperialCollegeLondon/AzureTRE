@@ -22,17 +22,17 @@ export const ResourceBody: React.FunctionComponent<ResourceBodyProps> = (props: 
   const workspaceCtx = useContext(WorkspaceContext);
 
   const operationsRolesByResourceType = {
-    [ResourceType.Workspace]: [RoleName.TREAdmin, WorkspaceRoleName.WorkspaceOwner],
+    [ResourceType.Workspace]: [RoleName.TREAdmin, RoleName.ImperialTREAdmin, WorkspaceRoleName.WorkspaceOwner],
     [ResourceType.SharedService]: [RoleName.TREAdmin],
-    [ResourceType.WorkspaceService]: [WorkspaceRoleName.WorkspaceOwner],
-    [ResourceType.UserResource]: [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearcher, WorkspaceRoleName.ImperialWorkspaceResearcher, WorkspaceRoleName.ImperialWorkspaceOwner, WorkspaceRoleName.ImperialWorkspaceDataEngineer]
+    [ResourceType.WorkspaceService]: [RoleName.ImperialTREAdmin, WorkspaceRoleName.WorkspaceOwner],
+    [ResourceType.UserResource]: [RoleName.ImperialTREAdmin, WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearcher, WorkspaceRoleName.ImperialWorkspaceResearcher, WorkspaceRoleName.ImperialWorkspaceOwner, WorkspaceRoleName.ImperialWorkspaceDataEngineer]
   };
 
   const historyRolesByResourceType = {
-    [ResourceType.Workspace]: [RoleName.TREAdmin, WorkspaceRoleName.WorkspaceOwner],
+    [ResourceType.Workspace]: [RoleName.TREAdmin, RoleName.ImperialTREAdmin, WorkspaceRoleName.WorkspaceOwner],
     [ResourceType.SharedService]: [RoleName.TREAdmin],
-    [ResourceType.WorkspaceService]: [WorkspaceRoleName.WorkspaceOwner],
-    [ResourceType.UserResource]: [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearcher, WorkspaceRoleName.ImperialWorkspaceResearcher, WorkspaceRoleName.ImperialWorkspaceOwner, WorkspaceRoleName.ImperialWorkspaceDataEngineer]
+    [ResourceType.WorkspaceService]: [RoleName.ImperialTREAdmin, WorkspaceRoleName.WorkspaceOwner],
+    [ResourceType.UserResource]: [RoleName.ImperialTREAdmin, WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearcher, WorkspaceRoleName.ImperialWorkspaceResearcher, WorkspaceRoleName.ImperialWorkspaceOwner, WorkspaceRoleName.ImperialWorkspaceDataEngineer]
   };
 
   const operationsRoles = operationsRolesByResourceType[props.resource.resourceType];

@@ -48,7 +48,7 @@ export const RootLayout: React.FunctionComponent = () => {
   useEffect(() => {
     const getCosts = async () => {
       try {
-        if (appRolesCtx.roles.includes(RoleName.TREAdmin)) {
+        if (appRolesCtx.roles.includes(RoleName.TREAdmin) || appRolesCtx.roles.includes(RoleName.ImperialTREAdmin)) {
           costsWriteCtx.current.setLoadingState(LoadingState.Loading)
           const r = await apiCall(ApiEndpoint.Costs, HttpMethod.Get, undefined, undefined, ResultType.JSON);
 
