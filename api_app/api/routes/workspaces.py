@@ -23,8 +23,7 @@ from models.schemas.resource import ResourceHistoryInList, ResourcePatch
 from models.schemas.resource_template import ResourceTemplateInformationInList
 from resources import strings
 from services.access_service import AuthConfigValidationError
-from services.authentication import get_current_admin_user, \
-    get_current_imperial_admin_user, \
+from services.authentication import get_current_imperial_admin_user, \
     get_access_service, get_current_workspace_owner_user, get_current_workspace_owner_or_researcher_user, get_current_tre_user_or_tre_admin, \
     get_current_workspace_owner_or_tre_admin, \
     get_current_workspace_owner_or_researcher_user_or_airlock_manager, \
@@ -383,9 +382,9 @@ async def retrieve_user_resources_for_workspace_service(
     if ("WorkspaceResearcher" in user.roles or "AirlockManager" in user.roles or "ImperialAirlockManager" in user.roles) and ("WorkspaceOwner" not in user.roles or "ImperialWorkspaceResearcher" not in user.roles or "ImperialWorkspaceOwner" not in user.roles or "ImperialWorkspaceDataEngineer" not in user.roles):
         user_resources = [resource for resource in user_resources if resource.ownerId == user.id]
 
-    #for user_resource in user_resources:
-    #    if 'azure_resource_id' in user_resource.properties:
-    #        user_resource.azureStatus = get_azure_resource_status(user_resource.properties['azure_resource_id'])
+    for user_resource in user_resources:
+       if 'azure_resource_id' in user_resource.properties:
+           user_resource.azureStatus = get_azure_resource_status(user_resource.properties['azure_resource_id'])
 
     await asyncio.gather(*[enrich_resource_with_available_upgrades(user_resource, resource_template_repo) for user_resource in user_resources])
 
