@@ -7,7 +7,8 @@
     "required": [
     ],
     "authorizedRoles": [
-      "AirlockManager"
+      "AirlockManager",
+      "ImperialAirlockManager"
     ],
     "properties": {
       "os_image": {

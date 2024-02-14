@@ -53,6 +53,15 @@ resource "azuread_application" "workspace" {
     value                = "AirlockManager"
   }
 
+  app_role {
+    allowed_member_types = ["User", "Application"]
+    description          = "Provides imperial airlock managers access to the Workspace and ability to review airlock requests."
+    display_name         = "Imperial Airlock Manager"
+    enabled              = true
+    id                   = random_uuid.app_role_imperial_workspace_airlock_manager_id.result
+    value                = "ImperialAirlockManager"
+  }
+
   feature_tags {
     enterprise = true
   }

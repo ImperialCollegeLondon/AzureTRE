@@ -71,7 +71,7 @@ def validate_user_allowed_to_access_storage_account(user: User, airlock_request:
     allowed_roles = []
 
     if (airlock_request.status == AirlockRequestStatus.InReview):
-        allowed_roles = ["AirlockManager", "WorkspaceOwner", "ImperialWorkspaceDataEngineer"]
+        allowed_roles = ["AirlockManager", "ImperialAirlockManager", "WorkspaceOwner", "ImperialWorkspaceDataEngineer"]
     else:
         allowed_roles = ["WorkspaceResearcher", "WorkspaceOwner", "ImperialWorkspaceDataEngineer"]
 
@@ -348,9 +348,12 @@ def check_email_exists(role_assignment_details: defaultdict(list)):
     if "ImperialWorkspaceResearcher" not in role_assignment_details or not role_assignment_details["ImperialWorkspaceResearcher"]:
         logger.error('Creating an airlock request but the researcher does not have an email address.')
         raise HTTPException(status_code=status.HTTP_417_EXPECTATION_FAILED, detail=strings.AIRLOCK_NO_RESEARCHER_EMAIL)
-    if "AirlockManager" not in role_assignment_details or not role_assignment_details["AirlockManager"]:
+    if "ImperialAirlockManager" not in role_assignment_details or not role_assignment_details["ImperialAirlockManager"]:
         logger.error('Creating an airlock request but the airlock manager does not have an email address.')
         raise HTTPException(status_code=status.HTTP_417_EXPECTATION_FAILED, detail=strings.AIRLOCK_NO_AIRLOCK_MANAGER_EMAIL)
+    #if "AirlockManager" not in role_assignment_details or not role_assignment_details["AirlockManager"]:
+    #    logger.error('Creating an airlock request but the airlock manager does not have an email address.')
+    #    raise HTTPException(status_code=status.HTTP_417_EXPECTATION_FAILED, detail=strings.AIRLOCK_NO_AIRLOCK_MANAGER_EMAIL)
     #if "ImperialWorkspaceDataEngineer" not in role_assignment_details or not role_assignment_details["ImperialWorkspaceDataEngineer"]:
     #    logger.error('Creating an airlock request but the DataEngineer does not have an email address.')
     #    raise HTTPException(status_code=status.HTTP_417_EXPECTATION_FAILED, detail=strings.AIRLOCK_NO_RESEARCHER_EMAIL)
@@ -368,6 +371,9 @@ def get_allowed_actions(request: AirlockRequest, user: User, airlock_request_rep
     can_review_request = airlock_request_repo.validate_status_update(request.status, AirlockRequestStatus.ApprovalInProgress)
     can_cancel_request = airlock_request_repo.validate_status_update(request.status, AirlockRequestStatus.Cancelled)
     can_submit_request = airlock_request_repo.validate_status_update(request.status, AirlockRequestStatus.Submitted)
+
+    if can_review_request and "ImperialAirlockManager" in user.roles:
+        allowed_actions.append(AirlockActions.Review)
 
     if can_review_request and "AirlockManager" in user.roles:
         allowed_actions.append(AirlockActions.Review)
