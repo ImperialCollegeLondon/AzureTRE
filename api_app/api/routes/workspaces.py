@@ -382,10 +382,9 @@ async def retrieve_user_resources_for_workspace_service(
     if ("WorkspaceResearcher" in user.roles or "AirlockManager" in user.roles or "ImperialAirlockManager" in user.roles) and ("WorkspaceOwner" not in user.roles or "ImperialWorkspaceResearcher" not in user.roles or "ImperialWorkspaceOwner" not in user.roles or "ImperialWorkspaceDataEngineer" not in user.roles):
         user_resources = [resource for resource in user_resources if resource.ownerId == user.id]
 
-    # DRC commented outto test
-    #for user_resource in user_resources:
-    #   if 'azure_resource_id' in user_resource.properties:
-    #       user_resource.azureStatus = get_azure_resource_status(user_resource.properties['azure_resource_id'])
+    for user_resource in user_resources:
+       if 'azure_resource_id' in user_resource.properties:
+           user_resource.azureStatus = get_azure_resource_status(user_resource.properties['azure_resource_id'])
 
     await asyncio.gather(*[enrich_resource_with_available_upgrades(user_resource, resource_template_repo) for user_resource in user_resources])
 
