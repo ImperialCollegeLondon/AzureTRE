@@ -307,7 +307,7 @@ export const Airlock: React.FunctionComponent = () => {
               style={{ background: 'none', color: '#006EAF' }}
               onClick={() => getAirlockRequests()}
             />
-            <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.AirlockManager, WorkspaceRoleName.ImperialWorkspaceDataEngineer]} element={
+            <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.AirlockManager, WorkspaceRoleName.WorkspaceDataEngineer]} element={
               <CommandBarButton
                 iconProps={{ iconName: 'add' }}
                 text="New request"
@@ -347,10 +347,10 @@ export const Airlock: React.FunctionComponent = () => {
       </div>
 
       <Routes>
-        <Route path="new" element={ <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.AirlockManager, WorkspaceRoleName.ImperialWorkspaceDataEngineer]} element={
+        <Route path="new" element={ <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.AirlockManager, WorkspaceRoleName.WorkspaceDataEngineer]} element={
           <AirlockNewRequest onCreateRequest={handleNewRequest} />
         } /> } />
-        <Route path=":requestId" element={ <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.AirlockManager, WorkspaceRoleName.ImperialWorkspaceDataEngineer]} element={
+        <Route path=":requestId" element={ <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.AirlockManager, WorkspaceRoleName.WorkspaceDataEngineer]} element={
           <AirlockViewRequest requests={airlockRequests} onUpdateRequest={getAirlockRequests} />
         } /> } />
       </Routes>

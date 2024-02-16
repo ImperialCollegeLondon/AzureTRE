@@ -9,9 +9,8 @@ class WorkspaceRole(Enum):
     Researcher = 1
     Owner = 2
     AirlockManager = 3
-    ImperialResearcher = 4
-    ImperialOwner = 5
-    ImperialDataEngineer = 6
+    ResearchLead = 4
+    DataEngineer = 5
 
 
 class Workspace(Resource):

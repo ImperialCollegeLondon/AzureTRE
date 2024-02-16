@@ -111,7 +111,7 @@ export const WorkspaceProvider: React.FunctionComponent = () => {
     const getWorkspaceCosts = async () => {
       try {
         // TODO: amend when costs enabled in API for WorkspaceRoleName.Researcher
-        if(wsRoles.includes(WorkspaceRoleName.WorkspaceOwner) || wsRoles.includes(WorkspaceRoleName.ImperialWorkspaceOwner)){
+        if(wsRoles.includes(WorkspaceRoleName.WorkspaceOwner)){
           let scopeId = (await apiCall(`${ApiEndpoint.Workspaces}/${workspaceId}/scopeid`, HttpMethod.Get)).workspaceAuth.scopeId;
           const r = await apiCall(`${ApiEndpoint.Workspaces}/${workspaceId}/${ApiEndpoint.Costs}`, HttpMethod.Get, scopeId, undefined, ResultType.JSON);
           const costs = [
