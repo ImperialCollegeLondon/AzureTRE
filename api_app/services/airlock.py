@@ -71,9 +71,14 @@ def validate_user_allowed_to_access_storage_account(user: User, airlock_request:
     allowed_roles = []
 
     if (airlock_request.status == AirlockRequestStatus.InReview):
-        allowed_roles = ["AirlockManager", "WorkspaceOwner", "WorkspaceDataEngineer"]
+        allowed_roles = ["AirlockManager", "WorkspaceDataEngineer"]
     else:
-        allowed_roles = ["WorkspaceResearcher", "WorkspaceOwner", "WorkspaceDataEngineer"]
+        allowed_roles = ["WorkspaceDataEngineer"]
+
+    #if (airlock_request.status == AirlockRequestStatus.InReview):
+    #    allowed_roles = ["AirlockManager", "WorkspaceOwner", "WorkspaceDataEngineer"]
+    #else:
+    #    allowed_roles = ["WorkspaceResearcher", "WorkspaceOwner", "WorkspaceDataEngineer"]
 
     if not _user_has_one_of_roles(user=user, roles=allowed_roles):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=strings.AIRLOCK_UNAUTHORIZED_TO_SA)
