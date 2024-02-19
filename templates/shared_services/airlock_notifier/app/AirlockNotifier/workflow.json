@@ -117,13 +117,7 @@
                   "recipient_emails_by_role": {
                     "type": "object",
                     "properties": {
-                      "workspace_researcher": {
-                          "type": "array",
-                          "items": {
-                              "type": "string"
-                          }
-                      },
-                      "workspace_owner": {
+                      "workspace_dataengineer": {
                           "type": "array",
                           "items": {
                               "type": "string"
