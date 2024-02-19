@@ -40,7 +40,7 @@ export const ResourceCard: React.FunctionComponent<ResourceCardProps> = (props: 
   const navigate = useNavigate();
 
   const costTagRolesByResourceType = {
-    [ResourceType.Workspace]: [RoleName.TREAdmin, WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearchLead],
+    [ResourceType.Workspace]: [RoleName.TREAdmin, RoleName.ImperialTREAdmin, WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearchLead],
     [ResourceType.SharedService]: [RoleName.TREAdmin],
     [ResourceType.WorkspaceService]: [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearchLead],
     [ResourceType.UserResource]: [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearchLead] // when implemented WorkspaceRoleName.WorkspaceResearcher]
@@ -86,7 +86,7 @@ export const ResourceCard: React.FunctionComponent<ResourceCardProps> = (props: 
 
   const appRoles = useContext(AppRolesContext);
   const authNotProvisioned = props.resource.resourceType === ResourceType.Workspace && !props.resource.properties.scope_id;
-  const enableClickOnCard = !authNotProvisioned || appRoles.roles.includes(RoleName.TREAdmin);
+  const enableClickOnCard = !authNotProvisioned || appRoles.roles.includes(RoleName.TREAdmin) || appRoles.roles.includes(RoleName.ImperialTREAdmin);
   const workspaceId = props.resource.resourceType === ResourceType.Workspace ? props.resource.id : "";
   const cardStyles = enableClickOnCard ? noNavCardStyles : clickableCardStyles;
 

@@ -72,7 +72,7 @@ export const WorkspaceProvider: React.FunctionComponent = () => {
           const sharedServices = await apiCall(ApiEndpoint.SharedServices, HttpMethod.Get);
           setSharedServices(sharedServices.sharedServices);
           setLoadingState(LoadingState.Ok);
-        } else if (appRoles.roles.includes(RoleName.TREAdmin)) {
+        } else if (appRoles.roles.includes(RoleName.TREAdmin) || appRoles.roles.includes(RoleName.ImperialTREAdmin)) {
           ws = (await apiCall(`${ApiEndpoint.Workspaces}/${workspaceId}`, HttpMethod.Get)).workspace;
           workspaceCtx.current.setWorkspace(ws);
           setLoadingState(LoadingState.Ok);
@@ -80,7 +80,7 @@ export const WorkspaceProvider: React.FunctionComponent = () => {
         } else {
           let e = new APIError();
           e.status = 403;
-          e.userMessage = "User does not have a role assigned in the workspace or the TRE Admin role assigned";
+          e.userMessage = "User does not have a role assigned in the workspace or an Admin role assigned";
           e.endpoint = `${ApiEndpoint.Workspaces}/${workspaceId}`;
           throw e;
         }

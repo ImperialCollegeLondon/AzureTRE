@@ -1,6 +1,7 @@
 export enum RoleName {
     TREAdmin = "TREAdmin",
-    TREUser = "TREUser"
+    TREUser = "TREUser",
+    ImperialTREAdmin = "ImperialTREAdmin"
 }
 
 export enum WorkspaceRoleName {

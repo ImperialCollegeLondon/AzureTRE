@@ -81,7 +81,7 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
           wsAuth = true;
           break;
         case ResourceType.Workspace:
-          r = [RoleName.TREAdmin];
+          r = [RoleName.TREAdmin, RoleName.ImperialTREAdmin];
           break;
       }
       setRoles(r);

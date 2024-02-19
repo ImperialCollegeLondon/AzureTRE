@@ -21,13 +21,16 @@ def get_access_service(provider: str = AuthProvider.AAD) -> AccessService:
     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=strings.INVALID_AUTH_PROVIDER)
 
 
-get_current_tre_user = AzureADAuthorization(require_one_of_roles=['TREUser'])
+get_current_tre_user = AzureADAuthorization(require_one_of_roles=['TREUser', 'ImperialTREAdmin'])
 
 
 get_current_admin_user = AzureADAuthorization(require_one_of_roles=['TREAdmin'])
 
 
-get_current_tre_user_or_tre_admin = AzureADAuthorization(require_one_of_roles=['TREUser', 'TREAdmin'])
+get_current_imperial_admin_user = AzureADAuthorization(require_one_of_roles=['TREAdmin', 'ImperialTREAdmin'])
+
+
+get_current_tre_user_or_tre_admin = AzureADAuthorization(require_one_of_roles=['TREUser', 'TREAdmin', 'ImperialTREAdmin'])
 
 
 get_current_workspace_owner_user = AzureADAuthorization(require_one_of_roles=['WorkspaceOwner'])
@@ -48,10 +51,10 @@ get_current_workspace_owner_or_airlock_manager = AzureADAuthorization(require_on
 get_current_workspace_owner_or_researcher_user_or_airlock_manager = AzureADAuthorization(require_one_of_roles=['WorkspaceOwner', 'WorkspaceResearcher', 'AirlockManager', 'WorkspaceResearchLead', 'WorkspaceDataEngineer'])
 
 
-get_current_workspace_owner_or_researcher_user_or_tre_admin = AzureADAuthorization(require_one_of_roles=["TREAdmin", "WorkspaceOwner", "WorkspaceResearcher", "WorkspaceResearchLead", "WorkspaceDataEngineer"])
+get_current_workspace_owner_or_researcher_user_or_tre_admin = AzureADAuthorization(require_one_of_roles=["TREAdmin", "ImperialTREAdmin", "WorkspaceOwner", "WorkspaceResearcher", "WorkspaceResearchLead", "WorkspaceDataEngineer"])
 
 
-get_current_workspace_owner_or_researcher_user_or_airlock_manager_or_tre_admin = AzureADAuthorization(require_one_of_roles=["TREAdmin", "WorkspaceOwner", "WorkspaceResearcher", "AirlockManager", "WorkspaceResearchLead", "WorkspaceDataEngineer"])
+get_current_workspace_owner_or_researcher_user_or_airlock_manager_or_tre_admin = AzureADAuthorization(require_one_of_roles=["TREAdmin", "ImperialTREAdmin", "WorkspaceOwner", "WorkspaceResearcher", "AirlockManager", "WorkspaceResearchLead", "WorkspaceDataEngineer"])
 
 
-get_current_workspace_owner_or_tre_admin = AzureADAuthorization(require_one_of_roles=["TREAdmin", "WorkspaceOwner", "WorkspaceDataEngineer"])
+get_current_workspace_owner_or_tre_admin = AzureADAuthorization(require_one_of_roles=["TREAdmin", "ImperialTREAdmin", "WorkspaceOwner", "WorkspaceDataEngineer"])
