@@ -42,8 +42,8 @@ export const ResourceCard: React.FunctionComponent<ResourceCardProps> = (props: 
   const costTagRolesByResourceType = {
     [ResourceType.Workspace]: [RoleName.TREAdmin, RoleName.ImperialTREAdmin, WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearchLead],
     [ResourceType.SharedService]: [RoleName.TREAdmin],
-    [ResourceType.WorkspaceService]: [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearchLead],
-    [ResourceType.UserResource]: [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearchLead] // when implemented WorkspaceRoleName.WorkspaceResearcher]
+    [ResourceType.WorkspaceService]: [RoleName.ImperialTREAdmin, WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearchLead],
+    [ResourceType.UserResource]: [RoleName.ImperialTREAdmin, WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearchLead] // when implemented WorkspaceRoleName.WorkspaceResearcher]
   };
 
   const costsTagsRoles = costTagRolesByResourceType[props.resource.resourceType];
