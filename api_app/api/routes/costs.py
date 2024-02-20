@@ -15,12 +15,12 @@ from db.repositories.workspace_services import WorkspaceServiceRepository
 from db.repositories.workspaces import WorkspaceRepository
 from models.domain.costs import CostReport, GranularityEnum, WorkspaceCostReport
 from resources import strings
-from services.authentication import get_current_admin_user, get_current_workspace_owner_or_tre_admin
+from services.authentication import get_current_imperial_admin_user, get_current_workspace_owner_or_tre_admin
 from services.cost_service import CostService, ServiceUnavailable, SubscriptionNotSupported, TooManyRequests, WorkspaceDoesNotExist, cost_service_factory
 from services.logging import logger
 
 
-costs_core_router = APIRouter(dependencies=[Depends(get_current_admin_user)])
+costs_core_router = APIRouter(dependencies=[Depends(get_current_imperial_admin_user)])
 costs_workspace_router = APIRouter(dependencies=[Depends(get_current_workspace_owner_or_tre_admin)])
 
 
