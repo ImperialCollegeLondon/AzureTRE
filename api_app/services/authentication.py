@@ -24,7 +24,7 @@ def get_access_service(provider: str = AuthProvider.AAD) -> AccessService:
 get_current_tre_user = AzureADAuthorization(require_one_of_roles=['TREUser', 'ImperialTREAdmin'])
 
 
-get_current_admin_user = AzureADAuthorization(require_one_of_roles=['TREAdmin'])
+get_current_admin_user = AzureADAuthorization(require_one_of_roles=['TREAdmin', 'ImperialTREAdmin'])
 
 
 get_current_imperial_admin_user = AzureADAuthorization(require_one_of_roles=['TREAdmin', 'ImperialTREAdmin'])
