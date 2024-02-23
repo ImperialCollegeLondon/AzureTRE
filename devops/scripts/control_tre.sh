@@ -14,6 +14,8 @@ fw_name="fw-${TRE_ID}"
 agw_name="agw-$TRE_ID"
 api_name="api-$TRE_ID"
 
+API_STATE="Unavailable"
+
 # if the resource group doesn't exist, no need to continue this script.
 # most likely this is an automated execution before calling make tre-deploy.
 if [[ $(az group list --output json --query "[?name=='${core_rg_name}'] | length(@)") == 0 ]]; then
@@ -115,7 +117,7 @@ elif [[ "$1" == *"stop"* ]]; then
   done
 
 elif [[ "$1" == *"restart"* ]]; then
-  az webapp show --name "${api_name}" --resource-group "${core_rg_name}" --query "state" 
+  az webapp show --name "${api_name}" --resource-group "${core_rg_name}" --query "state" -o tsv
   az webapp restart --name "${api_name}" --resource-group "${core_rg_name}"
   echo "Restarting App Service ${api_name}"
   sleep 5
@@ -139,6 +141,10 @@ fi
 # Report final AGW status
 AGW_STATE=$(az network application-gateway list --query "[?resourceGroup=='${core_rg_name}'&&name=='${agw_name}'].operationalState | [0]" -o tsv)
 
+# Report final App Service Status
+API_STATE=$(az webapp show --name "${api_name}" --resource-group "${core_rg_name}" --query "state" -o tsv)
+
 echo -e "\n\e[34m»»» 🔨 \e[96mTRE Status for $TRE_ID\e[0m"
 echo -e "\e[34m»»»   • \e[96mFirewall:              \e[33m$FW_STATE\e[0m"
-echo -e "\e[34m»»»   • \e[96mApplication Gateway:   \e[33m$AGW_STATE\e[0m\n"
+echo -e "\e[34m»»»   • \e[96mApplication Gateway:   \e[33m$AGW_STATE\e[0m"
+echo -e "\e[34m»»»   • \e[96mApp Service:           \e[33m$API_STATE\e[0m\n"
