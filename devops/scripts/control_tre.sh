@@ -12,6 +12,7 @@ fi
 core_rg_name="rg-${TRE_ID}"
 fw_name="fw-${TRE_ID}"
 agw_name="agw-$TRE_ID"
+api_name="api-$TRE_ID"
 
 # if the resource group doesn't exist, no need to continue this script.
 # most likely this is an automated execution before calling make tre-deploy.
@@ -112,6 +113,12 @@ elif [[ "$1" == *"stop"* ]]; then
     echo "Deallocating VM ${vm_name} in ${rg_name}"
     az vm deallocate --resource-group "${rg_name}" --name "${vm_name}" &
   done
+
+elif [[ "$1" == *"restart"* ]]; then
+  az webapp show --name "${api_name}" --resource-group "${core_rg_name}" --query "state" 
+  az webapp restart --name "${api_name}" --resource-group "${core_rg_name}"
+  echo "Restarting App Service ${api_name}"
+  sleep 5
 fi
 
 # for some reason the vm/vmss commands aren't considered as 'jobs', but this will still work in most cases

@@ -132,6 +132,11 @@ tre-stop: ## ⛔ Stop the TRE Service
 	&& . ${MAKEFILE_DIR}/devops/scripts/check_dependencies.sh env \
 	&& ${MAKEFILE_DIR}/devops/scripts/control_tre.sh stop
 
+tre-restart: ## ⏩ Restart the TRE Service
+	$(call target_title, "Restarting TRE") \
+	&& . ${MAKEFILE_DIR}/devops/scripts/check_dependencies.sh env \
+	&& ${MAKEFILE_DIR}/devops/scripts/control_tre.sh restart
+
 tre-destroy: ## 🧨 Destroy the TRE Service
 	$(call target_title, "Destroying TRE") \
 	&& . ${MAKEFILE_DIR}/devops/scripts/check_dependencies.sh nodocker,env \
