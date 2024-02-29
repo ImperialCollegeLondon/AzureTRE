@@ -60,6 +60,6 @@ resource "azurerm_cosmosdb_sql_role_assignment" "tre_db_contributor" {
 }
 
 resource "azuread_group" "imperial_tre_managers" {
-  display_name     = "Imperial TRE Managers ${var.tre_id}"
+  display_name     = "${var.tre_id} Imperial TRE Managers"
   security_enabled = true
 }
