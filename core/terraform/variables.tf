@@ -189,10 +189,6 @@ variable "kv_purge_protection_enabled" {
   type    = bool
   default = true
 }
-variable "create_imperial_tre_managers" {
-  type    = bool
-  default = true
-}
 variable "logging_level" {
   type        = string
   default     = "INFO"
