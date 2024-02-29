@@ -58,3 +58,8 @@ resource "azurerm_cosmosdb_sql_role_assignment" "tre_db_contributor" {
   principal_id        = azurerm_user_assigned_identity.id.principal_id
   scope               = azurerm_cosmosdb_account.tre_db_account.id
 }
+
+resource "azuread_group" "imperial_tre_managers" {
+  display_name     = "${var.tre_id} Imperial TRE Managers"
+  security_enabled = true
+}
