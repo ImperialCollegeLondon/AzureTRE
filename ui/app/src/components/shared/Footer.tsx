@@ -113,7 +113,7 @@ export const Footer: React.FunctionComponent = () => {
           <Text block variant="smallPlus" id="support-text">
             If you would like to raise a question, require further assistance, or would like to leave feedback, please contact TRE Support
           </Text>
-          <Link href="#" target="_blank" className={styles.link} id="support-link">
+          <Link href="#" target="https://servicemgt.service-now.com/ask?id=sc_cat_item&sys_id=fe972e1c1b184a10557837b5464bcbcf" className={styles.link} id="support-link">
             Contact Here
           </Link>
         </Callout>
