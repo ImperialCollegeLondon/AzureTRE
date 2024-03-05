@@ -42,6 +42,13 @@
     "aliases": []
   },
   {
+    "version": "v0.16.0.1",
+    "title": "v0.16.0.1",
+    "aliases": [
+      "latest"
+    ]
+  },
+  {
     "version": "v0.16-ws-researcher",
     "title": "v0.16-ws-researcher",
     "aliases": []
@@ -49,9 +56,7 @@
   {
     "version": "v0.16-ws-owner",
     "title": "v0.16-ws-owner",
-    "aliases": [
-      "latest"
-    ]
+    "aliases": []
   },
   {
     "version": "v0.15.2.3",
