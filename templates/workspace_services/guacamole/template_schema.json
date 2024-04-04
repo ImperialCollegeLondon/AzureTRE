@@ -41,7 +41,7 @@
       "title": "Disable 'Paste'",
       "description": "Disable Paste functionality",
       "updateable": true,
-      "default": true
+      "default": false
     },
     "guac_enable_drive": {
       "$id": "#/properties/guac_enable_drive",
