@@ -115,7 +115,7 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
         resourceParent: parentResource,
         workspaceApplicationIdURI: workspaceCtx.workspaceApplicationIdURI,
       }),
-      disabled: (props.componentAction === ComponentAction.Lock)
+      disabled: (props.componentAction === ComponentAction.Lock || !roles.includes(WorkspaceRoleName.WorkspaceOwner))
     },
     {
       key: 'disable',
