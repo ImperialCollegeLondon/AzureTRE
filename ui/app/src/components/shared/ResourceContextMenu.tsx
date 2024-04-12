@@ -122,7 +122,7 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
       text: props.resource.isEnabled ? 'Disable' : 'Enable',
       iconProps: { iconName: props.resource.isEnabled ? 'CirclePause' : 'PlayResume' },
       onClick: () => setShowDisable(true),
-      disabled: (props.componentAction === ComponentAction.Lock)
+      disabled: (props.componentAction === ComponentAction.Lock || !roles.includes(WorkspaceRoleName.WorkspaceOwner))
     },
     {
       key: 'delete',
