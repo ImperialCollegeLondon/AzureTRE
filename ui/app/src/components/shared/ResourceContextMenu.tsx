@@ -130,7 +130,7 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
       title: props.resource.isEnabled ? 'Resource must be disabled before deleting' : 'Delete this resource',
       iconProps: { iconName: 'Delete' },
       onClick: () => setShowDelete(true),
-      disabled: (props.resource.isEnabled || props.componentAction === ComponentAction.Lock)
+      disabled: (props.resource.isEnabled || props.componentAction === ComponentAction.Lock || !roles.includes(WorkspaceRoleName.WorkspaceOwner))
     },
   ];
 
