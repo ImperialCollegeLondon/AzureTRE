@@ -104,7 +104,7 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
   // context menu
   let menuItems: Array<any> = [];
 
-  const hasRequiredRoles = (roles) => {
+  const hasRequiredRoles = (roles: string | string[]) => {
     const requiredRoles = [WorkspaceRoleName.WorkspaceResearcher, WorkspaceRoleName.WorkspaceResearchLead];
     return requiredRoles.some(role => roles.includes(role));
   }
