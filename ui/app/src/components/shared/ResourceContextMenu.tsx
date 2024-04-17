@@ -211,7 +211,7 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
       title: 'Upgrade this resource template version',
       iconProps: { iconName: 'Refresh' },
       onClick: () => setShowUpgrade(true),
-      disabled: (props.componentAction === ComponentAction.Lock)
+      disabled: (props.componentAction === ComponentAction.Lock || !hasRequiredRoles(roles))
     })
   }
 
