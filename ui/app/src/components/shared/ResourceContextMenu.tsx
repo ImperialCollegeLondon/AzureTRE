@@ -22,6 +22,7 @@ import { addUpdateOperation } from '../shared/notifications/operationsSlice';
 import { ConfirmUpgradeResource } from './ConfirmUpgradeResource';
 
 
+
 interface ResourceContextMenuProps {
   resource: Resource,
   componentAction: ComponentAction,
@@ -46,10 +47,7 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
   const [roles, setRoles] = useState([] as Array<string>);
   const appRoles = useContext(AppRolesContext); // the user is in these roles which apply across the app
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    const disable = !hasRequiredRoles(roles);
-    setShowDisable(disable);
-  }, [roles]);
+
 
   // get the resource template
   useEffect(() => {
