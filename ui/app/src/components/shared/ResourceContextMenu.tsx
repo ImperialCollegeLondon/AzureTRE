@@ -104,6 +104,11 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
   // context menu
   let menuItems: Array<any> = [];
 
+  const hasRequiredRoles = (roles: string | string[]) => {
+    const requiredRoles = [WorkspaceRoleName.WorkspaceResearcher, WorkspaceRoleName.WorkspaceResearchLead];
+    return requiredRoles.some(role => roles.includes(role));
+  }
+
   menuItems = [
     {
       key: 'update',
@@ -115,14 +120,14 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
         resourceParent: parentResource,
         workspaceApplicationIdURI: workspaceCtx.workspaceApplicationIdURI,
       }),
-      disabled: (props.componentAction === ComponentAction.Lock)
+      disabled: (props.componentAction === ComponentAction.Lock || !hasRequiredRoles(roles))
     },
     {
       key: 'disable',
       text: props.resource.isEnabled ? 'Disable' : 'Enable',
       iconProps: { iconName: props.resource.isEnabled ? 'CirclePause' : 'PlayResume' },
       onClick: () => setShowDisable(true),
-      disabled: (props.componentAction === ComponentAction.Lock)
+      disabled: (props.componentAction === ComponentAction.Lock || !hasRequiredRoles(roles))
     },
     {
       key: 'delete',
@@ -130,7 +135,7 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
       title: props.resource.isEnabled ? 'Resource must be disabled before deleting' : 'Delete this resource',
       iconProps: { iconName: 'Delete' },
       onClick: () => setShowDelete(true),
-      disabled: (props.resource.isEnabled || props.componentAction === ComponentAction.Lock)
+      disabled: (props.resource.isEnabled || props.componentAction === ComponentAction.Lock || !hasRequiredRoles(roles))
     },
   ];
 
@@ -206,7 +211,7 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
       title: 'Upgrade this resource template version',
       iconProps: { iconName: 'Refresh' },
       onClick: () => setShowUpgrade(true),
-      disabled: (props.componentAction === ComponentAction.Lock)
+      disabled: (props.componentAction === ComponentAction.Lock || !hasRequiredRoles(roles))
     })
   }
 
