@@ -121,16 +121,14 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
         resourceParent: parentResource,
         workspaceApplicationIdURI: workspaceCtx.workspaceApplicationIdURI,
       }),
-      disabled: (props.componentAction === ComponentAction.Lock || disallowedRoles(roles)),
-      hidden: disallowedRoles(roles)
+      disabled: (props.componentAction === ComponentAction.Lock || disallowedRoles(roles))
     },
     {
       key: 'disable',
       text: props.resource.isEnabled ? 'Disable' : 'Enable',
       iconProps: { iconName: props.resource.isEnabled ? 'CirclePause' : 'PlayResume' },
       onClick: () => setShowDisable(true),
-      disabled: (props.componentAction === ComponentAction.Lock || !disallowedRoles(roles)),
-      hidden: disallowedRoles(roles)
+      disabled: (props.componentAction === ComponentAction.Lock || !disallowedRoles(roles))
     },  
     {
       key: 'delete',
@@ -138,8 +136,7 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
       title: props.resource.isEnabled ? 'Resource must be disabled before deleting' : 'Delete this resource',
       iconProps: { iconName: 'Delete' },
       onClick: () => setShowDelete(true),
-      disabled: (props.resource.isEnabled || props.componentAction === ComponentAction.Lock || !disallowedRoles(roles)),
-      hidden: !disallowedRoles(roles)
+      disabled: (props.resource.isEnabled || props.componentAction === ComponentAction.Lock || !disallowedRoles(roles))
     },
   ];
 
