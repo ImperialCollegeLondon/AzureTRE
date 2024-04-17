@@ -54,7 +54,7 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
         r = [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.AirlockManager, WorkspaceRoleName.WorkspaceDataEngineer];
         break;
       case ResourceType.Workspace:
-        r = [RoleName.TREAdmin, RoleName.ImperialTREAdmin];
+        r = [RoleName.TREAdmin, RoleName.ImperialTREAdmin, WorkspaceRoleName.WorkspaceOwner];
         break;
       default:
         throw Error('Unsupported resource type.');
