@@ -21,10 +21,16 @@ import { useAppDispatch } from '../../hooks/customReduxHooks';
 import { addUpdateOperation } from '../shared/notifications/operationsSlice';
 import { ConfirmUpgradeResource } from './ConfirmUpgradeResource';
 
+
 interface ResourceContextMenuProps {
   resource: Resource,
   componentAction: ComponentAction,
   commandBar?: boolean
+}
+
+const hasRequiredRoles = (roles: string | string[]) => {
+  const requiredRoles = [WorkspaceRoleName.WorkspaceResearcher, WorkspaceRoleName.WorkspaceResearchLead];
+  return requiredRoles.some(role => roles.includes(role));
 }
 
 export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuProps> = (props: ResourceContextMenuProps) => {
@@ -40,6 +46,10 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
   const [roles, setRoles] = useState([] as Array<string>);
   const appRoles = useContext(AppRolesContext); // the user is in these roles which apply across the app
   const dispatch = useAppDispatch();
+  useEffect(() => {
+    const disable = !hasRequiredRoles(roles);
+    setShowDisable(disable);
+  }, [roles]);
 
   // get the resource template
   useEffect(() => {
@@ -77,7 +87,7 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
           wsAuth = true;
           break;
         case ResourceType.UserResource:
-          r = [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.AirlockManager, WorkspaceRoleName.WorkspaceDataEngineer];
+          r = [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearcher, WorkspaceRoleName.WorkspaceResearchLead, WorkspaceRoleName.AirlockManager, WorkspaceRoleName.WorkspaceDataEngineer];
           wsAuth = true;
           break;
         case ResourceType.Workspace:
@@ -103,11 +113,6 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
 
   // context menu
   let menuItems: Array<any> = [];
-
-  const hasRequiredRoles = (roles: string | string[]) => {
-    const requiredRoles = [WorkspaceRoleName.WorkspaceResearcher, WorkspaceRoleName.WorkspaceResearchLead];
-    return requiredRoles.some(role => roles.includes(role));
-  }
 
   menuItems = [
     {
