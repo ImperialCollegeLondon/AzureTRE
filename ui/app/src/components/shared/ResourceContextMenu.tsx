@@ -22,6 +22,7 @@ import { addUpdateOperation } from '../shared/notifications/operationsSlice';
 import { ConfirmUpgradeResource } from './ConfirmUpgradeResource';
 
 
+
 interface ResourceContextMenuProps {
   resource: Resource,
   componentAction: ComponentAction,
