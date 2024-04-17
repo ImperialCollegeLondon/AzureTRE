@@ -21,17 +21,10 @@ import { useAppDispatch } from '../../hooks/customReduxHooks';
 import { addUpdateOperation } from '../shared/notifications/operationsSlice';
 import { ConfirmUpgradeResource } from './ConfirmUpgradeResource';
 
-
-
 interface ResourceContextMenuProps {
   resource: Resource,
   componentAction: ComponentAction,
   commandBar?: boolean
-}
-
-const hasRequiredRoles = (roles: string | string[]) => {
-  const requiredRoles = [WorkspaceRoleName.WorkspaceResearcher, WorkspaceRoleName.WorkspaceResearchLead];
-  return requiredRoles.some(role => roles.includes(role));
 }
 
 export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuProps> = (props: ResourceContextMenuProps) => {
@@ -47,8 +40,13 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
   const [roles, setRoles] = useState([] as Array<string>);
   const appRoles = useContext(AppRolesContext); // the user is in these roles which apply across the app
   const dispatch = useAppDispatch();
-
-
+  
+  const disallowedRoles = (roles: string | string[]) => {
+    const requiredRoles = [WorkspaceRoleName.WorkspaceResearcher, WorkspaceRoleName.WorkspaceResearchLead];
+    console.log(requiredRoles.some(role => roles.includes(role)))
+    return requiredRoles.some(role => roles.includes(role));
+  }
+  
   // get the resource template
   useEffect(() => {
     const getTemplate = async () => {
@@ -123,22 +121,25 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
         resourceParent: parentResource,
         workspaceApplicationIdURI: workspaceCtx.workspaceApplicationIdURI,
       }),
-      disabled: (props.componentAction === ComponentAction.Lock || !hasRequiredRoles(roles))
+      disabled: (props.componentAction === ComponentAction.Lock || disallowedRoles(roles)),
+      hidden: disallowedRoles(roles)
     },
     {
       key: 'disable',
       text: props.resource.isEnabled ? 'Disable' : 'Enable',
       iconProps: { iconName: props.resource.isEnabled ? 'CirclePause' : 'PlayResume' },
       onClick: () => setShowDisable(true),
-      disabled: (props.componentAction === ComponentAction.Lock || !hasRequiredRoles(roles))
-    },
+      disabled: (props.componentAction === ComponentAction.Lock || !disallowedRoles(roles)),
+      hidden: disallowedRoles(roles)
+    },  
     {
       key: 'delete',
       text: 'Delete',
       title: props.resource.isEnabled ? 'Resource must be disabled before deleting' : 'Delete this resource',
       iconProps: { iconName: 'Delete' },
       onClick: () => setShowDelete(true),
-      disabled: (props.resource.isEnabled || props.componentAction === ComponentAction.Lock || !hasRequiredRoles(roles))
+      disabled: (props.resource.isEnabled || props.componentAction === ComponentAction.Lock || !disallowedRoles(roles)),
+      hidden: !disallowedRoles(roles)
     },
   ];
 
@@ -172,7 +173,6 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
       })
     }
   }
-
 
   const shouldDisableActions = () => {
     return props.componentAction === ComponentAction.Lock
@@ -214,7 +214,7 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
       title: 'Upgrade this resource template version',
       iconProps: { iconName: 'Refresh' },
       onClick: () => setShowUpgrade(true),
-      disabled: (props.componentAction === ComponentAction.Lock || !hasRequiredRoles(roles))
+      disabled: (props.componentAction === ComponentAction.Lock)
     })
   }
 
