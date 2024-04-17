@@ -40,7 +40,7 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
   const [roles, setRoles] = useState([] as Array<string>);
   const appRoles = useContext(AppRolesContext); // the user is in these roles which apply across the app
   const dispatch = useAppDispatch();
-  
+
   const requiredRoles = (roles: string | string[], type: ResourceType) => {
     let r = [] as Array<string>;
     switch (type) {
