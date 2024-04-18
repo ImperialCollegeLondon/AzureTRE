@@ -59,7 +59,7 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
       default:
         throw Error('Unsupported resource type.');
     }
-    console.log(menu + " role " + type + " : " + r)
+    console.log(menu + " role " + type + " : " + r + roles)
     return r.some(role => roles.includes(role));
   }
   
