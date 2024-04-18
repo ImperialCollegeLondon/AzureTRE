@@ -72,9 +72,9 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
       default:
         throw Error('Unsupported resource type.');
     }
-    const userRoles = appRoles.roles
+    let userRoles = appRoles.roles
     if (workspaceCtx.roles.length > 0){
-      userRoles.concat(workspaceCtx.roles);
+      userRoles = userRoles.concat(workspaceCtx.roles);
     }
     console.log(action + " role " + type + " : " + r + " : " + userRoles)
     return !r.some(role => userRoles.includes(role));
