@@ -237,7 +237,7 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
 
   // add 'upgrade' button if we have available template upgrades
   const nonMajorUpgrades = props.resource.availableUpgrades?.filter(upgrade => !upgrade.forceUpdateRequired)
-  if (nonMajorUpgrades?.length > 0 || !requiredRoles(props.resource.resourceType, ActionType.Upgrade)) {
+  if (nonMajorUpgrades?.length > 0) {
     menuItems.push({
       key: 'upgrade',
       text: 'Upgrade',
