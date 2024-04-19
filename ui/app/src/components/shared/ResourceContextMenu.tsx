@@ -50,7 +50,7 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
   const appRoles = useContext(AppRolesContext); // the user is in these roles which apply across the app
   const dispatch = useAppDispatch();
 
-  const requiredRoles = (type: ResourceType, action: ActionType) => {
+  const requiredRoles = async (type: ResourceType, action: ActionType) => {
     let wsAuth = false;
     let r = [] as Array<string>;
 
