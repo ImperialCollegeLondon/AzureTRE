@@ -50,36 +50,6 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
   const appRoles = useContext(AppRolesContext); // the user is in these roles which apply across the app
   const dispatch = useAppDispatch();
 
-  const requiredRoles = async (type: ResourceType, action: ActionType) => {
-    let wsAuth = false;
-    let r = [] as Array<string>;
-
-    switch (type) {
-      case ResourceType.SharedService:
-        r = [RoleName.TREAdmin, WorkspaceRoleName.WorkspaceOwner];
-        break;
-      case ResourceType.WorkspaceService:
-        r = [WorkspaceRoleName.WorkspaceOwner]
-        wsAuth = true;
-        break;
-      case ResourceType.UserResource:
-        r = [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.AirlockManager, WorkspaceRoleName.WorkspaceDataEngineer];
-        wsAuth = true;
-        break;
-      case ResourceType.Workspace:
-        r = [RoleName.TREAdmin, RoleName.ImperialTREAdmin, WorkspaceRoleName.WorkspaceOwner];
-        break;
-      default:
-        throw Error('Unsupported resource type.');
-    }
-    let currentUserRoles = appRoles.roles
-    if (workspaceCtx.roles.length > 0){
-      currentUserRoles = currentUserRoles.concat(workspaceCtx.roles);
-    }
-    console.log(action + " role " + type + " : " + r + " : " + currentUserRoles)
-    return !r.some(role => currentUserRoles.includes(role));
-  }
-
   // get the resource template
   useEffect(() => {
     const getTemplate = async () => {
@@ -140,11 +110,42 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
     action && action.operation && dispatch(addUpdateOperation(action.operation));
   }
 
+  const requiredRoles = (type: ResourceType, action: ActionType) => {
+    let wsAuth = false;
+    let r = [] as Array<string>;
+
+    switch (type) {
+      case ResourceType.SharedService:
+        r = [RoleName.TREAdmin, WorkspaceRoleName.WorkspaceOwner];
+        break;
+      case ResourceType.WorkspaceService:
+        r = [WorkspaceRoleName.WorkspaceOwner]
+        wsAuth = true;
+        break;
+      case ResourceType.UserResource:
+        r = [WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.AirlockManager, WorkspaceRoleName.WorkspaceDataEngineer];
+        wsAuth = true;
+        break;
+      case ResourceType.Workspace:
+        r = [RoleName.TREAdmin, RoleName.ImperialTREAdmin, WorkspaceRoleName.WorkspaceOwner];
+        break;
+      default:
+        throw Error('Unsupported resource type.');
+    }
+    let currentUserRoles = appRoles.roles
+    if (workspaceCtx.roles.length > 0){
+      currentUserRoles = currentUserRoles.concat(workspaceCtx.roles);
+    }
+    console.log(action + " role " + type + " : " + r + " : " + currentUserRoles)
+    return r.some(role => currentUserRoles.includes(role));
+  }
+
+
   // context menu
   let menuItems: Array<any> = [];
 
-  menuItems = [
-    {
+  if (requiredRoles(props.resource.resourceType, ActionType.Update)) {
+    menuItems.push({
       key: 'update',
       text: 'Update',
       iconProps: { iconName: 'WindowEdit' },
@@ -154,25 +155,61 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
         resourceParent: parentResource,
         workspaceApplicationIdURI: workspaceCtx.workspaceApplicationIdURI,
       }),
-      disabled: (props.componentAction === ComponentAction.Lock || requiredRoles(props.resource.resourceType, ActionType.Update))
-    },
-    {
+      disabled: (props.componentAction === ComponentAction.Lock)
+    })
+  }
+
+  if (requiredRoles(props.resource.resourceType, ActionType.Disable)) {
+    menuItems.push({
       key: 'disable',
       text: props.resource.isEnabled ? 'Disable' : 'Enable',
       iconProps: { iconName: props.resource.isEnabled ? 'CirclePause' : 'PlayResume' },
       onClick: () => setShowDisable(true),
-      disabled: (props.componentAction === ComponentAction.Lock || requiredRoles(props.resource.resourceType, ActionType.Disable))
-      // disabled: (props.componentAction === ComponentAction.Lock)
-    },
-    {
+      disabled: (props.componentAction === ComponentAction.Lock)
+    })
+  }
+
+  if (requiredRoles(props.resource.resourceType, ActionType.Delete)) {
+    menuItems.push({
       key: 'delete',
       text: 'Delete',
       title: props.resource.isEnabled ? 'Resource must be disabled before deleting' : 'Delete this resource',
       iconProps: { iconName: 'Delete' },
       onClick: () => setShowDelete(true),
-      disabled: (props.resource.isEnabled || props.componentAction === ComponentAction.Lock || requiredRoles(props.resource.resourceType, ActionType.Delete))
-    },
-  ];
+      disabled: (props.resource.isEnabled || props.componentAction === ComponentAction.Lock)
+    })
+  }
+
+  // menuItems = [
+  //   {
+  //     key: 'update',
+  //     text: 'Update',
+  //     iconProps: { iconName: 'WindowEdit' },
+  //     onClick: () => createFormCtx.openCreateForm({
+  //       resourceType: props.resource.resourceType,
+  //       updateResource: props.resource,
+  //       resourceParent: parentResource,
+  //       workspaceApplicationIdURI: workspaceCtx.workspaceApplicationIdURI,
+  //     }),
+  //     disabled: (props.componentAction === ComponentAction.Lock || requiredRoles(props.resource.resourceType, ActionType.Update))
+  //   },
+  //   {
+  //     key: 'disable',
+  //     text: props.resource.isEnabled ? 'Disable' : 'Enable',
+  //     iconProps: { iconName: props.resource.isEnabled ? 'CirclePause' : 'PlayResume' },
+  //     onClick: () => setShowDisable(true),
+  //     disabled: (props.componentAction === ComponentAction.Lock || requiredRoles(props.resource.resourceType, ActionType.Disable))
+  //     // disabled: (props.componentAction === ComponentAction.Lock)
+  //   },
+  //   {
+  //     key: 'delete',
+  //     text: 'Delete',
+  //     title: props.resource.isEnabled ? 'Resource must be disabled before deleting' : 'Delete this resource',
+  //     iconProps: { iconName: 'Delete' },
+  //     onClick: () => setShowDelete(true),
+  //     disabled: (props.resource.isEnabled || props.componentAction === ComponentAction.Lock || requiredRoles(props.resource.resourceType, ActionType.Delete))
+  //   },
+  // ];
 
   const shouldDisableConnect = () => {
     return props.componentAction === ComponentAction.Lock
@@ -238,14 +275,14 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
 
   // add 'upgrade' button if we have available template upgrades
   const nonMajorUpgrades = props.resource.availableUpgrades?.filter(upgrade => !upgrade.forceUpdateRequired)
-  if (nonMajorUpgrades?.length > 0) {
+  if (nonMajorUpgrades?.length > 0 || requiredRoles(props.resource.resourceType, ActionType.Update)) {
     menuItems.push({
       key: 'upgrade',
       text: 'Upgrade',
       title: 'Upgrade this resource template version',
       iconProps: { iconName: 'Refresh' },
       onClick: () => setShowUpgrade(true),
-      disabled: (props.componentAction === ComponentAction.Lock || requiredRoles(props.resource.resourceType, ActionType.Upgrade))
+      disabled: (props.componentAction === ComponentAction.Lock)
     })
   }
 
