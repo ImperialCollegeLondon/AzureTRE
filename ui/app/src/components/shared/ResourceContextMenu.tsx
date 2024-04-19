@@ -116,7 +116,7 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
 
     switch (type) {
       case ResourceType.SharedService:
-        r = [RoleName.TREAdmin, WorkspaceRoleName.WorkspaceOwner];
+        r = [RoleName.TREAdmin];
         break;
       case ResourceType.WorkspaceService:
         r = [WorkspaceRoleName.WorkspaceOwner]
@@ -127,15 +127,16 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
         wsAuth = true;
         break;
       case ResourceType.Workspace:
-        r = [RoleName.TREAdmin, RoleName.ImperialTREAdmin, WorkspaceRoleName.WorkspaceOwner];
+        r = [RoleName.TREAdmin, RoleName.ImperialTREAdmin];
         break;
       default:
         throw Error('Unsupported resource type.');
     }
-    let currentUserRoles = appRoles.roles
-    if (workspaceCtx.roles.length > 0){
-      currentUserRoles = currentUserRoles.concat(workspaceCtx.roles);
-    }
+    // let currentUserRoles = appRoles.roles
+    // if (workspaceCtx.roles.length > 0){
+    //   currentUserRoles = currentUserRoles.concat(workspaceCtx.roles);
+    // }
+    const currentUserRoles = wsAuth ? workspaceCtx.roles : appRoles.roles;
     console.log(action + " role " + type + " : " + r + " : " + currentUserRoles)
     return r.some(role => currentUserRoles.includes(role));
   }
