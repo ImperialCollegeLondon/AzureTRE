@@ -72,12 +72,12 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
       default:
         throw Error('Unsupported resource type.');
     }
-    let userRoles = appRoles.roles
+    let currentUserRoles = appRoles.roles
     if (workspaceCtx.roles.length > 0){
-      userRoles = userRoles.concat(workspaceCtx.roles);
+      currentUserRoles = currentUserRoles.concat(workspaceCtx.roles);
     }
-    console.log(action + " role " + type + " : " + r + " : " + userRoles)
-    return !r.some(role => userRoles.includes(role));
+    console.log(action + " role " + type + " : " + r + " : " + currentUserRoles)
+    return !r.some(role => currentUserRoles.includes(role));
   }
 
   // get the resource template
@@ -161,8 +161,8 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
       text: props.resource.isEnabled ? 'Disable' : 'Enable',
       iconProps: { iconName: props.resource.isEnabled ? 'CirclePause' : 'PlayResume' },
       onClick: () => setShowDisable(true),
-      // disabled: (props.componentAction === ComponentAction.Lock || requiredRoles(props.resource.resourceType, ActionType.Disable))
-      disabled: (props.componentAction === ComponentAction.Lock)
+      disabled: (props.componentAction === ComponentAction.Lock || requiredRoles(props.resource.resourceType, ActionType.Disable))
+      // disabled: (props.componentAction === ComponentAction.Lock)
     },
     {
       key: 'delete',
