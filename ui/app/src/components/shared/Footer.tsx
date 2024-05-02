@@ -127,7 +127,7 @@ const contentClass = mergeStyles([
   {
     alignItems: 'center',
     // backgroundColor: theme.palette.themeDark,
-    backgroundColor: '#003E74',
+    backgroundColor: '#0000CD',
     color: theme.palette.white,
     lineHeight: '25px',
     padding: '0 20px',
