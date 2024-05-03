@@ -127,7 +127,7 @@ const contentClass = mergeStyles([
   {
     alignItems: 'center',
     // backgroundColor: theme.palette.themeDark,
-    backgroundColor: '#003E74',
+    backgroundColor: '#0000CD',
     color: theme.palette.white,
     lineHeight: '25px',
     padding: '0 20px',
@@ -140,7 +140,7 @@ const iconButtonStyles: Partial<IButtonStyles> = {
     color: theme.palette.white,
   },
   rootHovered: {
-    color: theme.palette.neutralDark,
+    color: '#161A1D',
   },
 };
 
