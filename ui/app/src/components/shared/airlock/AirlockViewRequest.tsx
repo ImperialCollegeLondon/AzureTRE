@@ -48,7 +48,7 @@ export const AirlockViewRequest: React.FunctionComponent<AirlockViewRequestProps
     } else {
       setRequest(req);
     }
-    console.log(req);
+    // console.log(req);
   }, [apiCall, requestId, props.requests, workspaceCtx.workspace.id, workspaceCtx.workspaceApplicationIdURI]);
 
   const dismissPanel = useCallback(() => navigate('../'), [navigate]);

@@ -137,7 +137,7 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
     //   currentUserRoles = currentUserRoles.concat(workspaceCtx.roles);
     // }
     const currentUserRoles = wsAuth ? workspaceCtx.roles : appRoles.roles;
-    console.log(action + " role " + type + " : " + r + " : " + currentUserRoles)
+    // console.log(action + " role " + type + " : " + r + " : " + currentUserRoles)
     return r.some(role => currentUserRoles.includes(role));
   }
 

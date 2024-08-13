@@ -87,7 +87,7 @@ export const ResourceForm: React.FunctionComponent<ResourceFormProps> = (props: 
 
   const createUpdateResource = async (formData: any) => {
     const data = removeReadOnlyProps(formData, template);
-    console.log("parsed payload to send", data);
+    // console.log("parsed payload to send", data);
 
     setSendingData(true);
     let response;
