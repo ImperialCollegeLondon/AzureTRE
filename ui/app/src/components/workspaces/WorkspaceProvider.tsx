@@ -62,7 +62,7 @@ export const WorkspaceProvider: React.FunctionComponent = () => {
           workspaceCtx.current.setWorkspace(ws);
           workspaceCtx.current.setRoles(wsRoles);
           setWSRoles(wsRoles);
-          console.info(wsRoles)
+          // console.info(wsRoles)
 
           // get workspace services to pass to nav + ws services page
           const workspaceServices = await apiCall(`${ApiEndpoint.Workspaces}/${ws.id}/${ApiEndpoint.WorkspaceServices}`,
