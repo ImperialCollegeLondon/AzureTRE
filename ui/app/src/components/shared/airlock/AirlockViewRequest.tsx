@@ -49,9 +49,9 @@ export const AirlockViewRequest: React.FunctionComponent<AirlockViewRequestProps
     } else {
       setRequest(req);
     }
-    
+
     if (config.debug === true) {
-      console.log(req);  // Added this line, removed the commented line.
+      config.debug && console.log(req);  // Added this line, removed the commented line.
     }
   
 

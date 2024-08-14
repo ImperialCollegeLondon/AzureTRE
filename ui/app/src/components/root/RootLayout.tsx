@@ -73,7 +73,7 @@ export const RootLayout: React.FunctionComponent = () => {
           else if (e.status === 429 /*too many requests*/ || e.status === 503 /*service unavaiable*/) {
             let msg = JSON.parse(e.message);
             let retryAfter = Number(msg.error["retry-after"]);
-            // config.debug && console.info("retrying after " + retryAfter + " seconds");
+            config.debug && console.info("retrying after " + retryAfter + " seconds");
             setTimeout(getCosts, retryAfter * 1000);
           }
           else {
