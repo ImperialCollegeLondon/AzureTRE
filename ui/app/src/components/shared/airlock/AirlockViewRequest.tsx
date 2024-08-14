@@ -50,10 +50,7 @@ export const AirlockViewRequest: React.FunctionComponent<AirlockViewRequestProps
       setRequest(req);
     }
 
-    if (config.debug === true) {
       config.debug && console.log(req);  // Added this line, removed the commented line.
-    }
-  
 
   }, [apiCall, requestId, props.requests, workspaceCtx.workspace.id, workspaceCtx.workspaceApplicationIdURI]);
 
