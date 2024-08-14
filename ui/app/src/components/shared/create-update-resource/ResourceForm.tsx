@@ -9,6 +9,7 @@ import { ResourceType } from "../../../models/resourceType";
 import { APIError } from "../../../models/exceptions";
 import { ExceptionLayout } from "../ExceptionLayout";
 import { ResourceTemplate, sanitiseTemplateForRJSF } from "../../../models/resourceTemplate";
+import config from '../../../config.json';
 
 interface ResourceFormProps {
   templateName: string,
@@ -87,6 +88,10 @@ export const ResourceForm: React.FunctionComponent<ResourceFormProps> = (props: 
 
   const createUpdateResource = async (formData: any) => {
     const data = removeReadOnlyProps(formData, template);
+
+    if (config.debug === true) {
+      console.log("parsed payload to send", data);
+    }
     // console.log("parsed payload to send", data);
 
     setSendingData(true);
