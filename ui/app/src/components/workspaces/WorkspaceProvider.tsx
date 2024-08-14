@@ -20,6 +20,7 @@ import { LoadingState } from '../../models/loadingState';
 import { ExceptionLayout } from '../shared/ExceptionLayout';
 import { AppRolesContext } from '../../contexts/AppRolesContext';
 import { RoleName, WorkspaceRoleName } from '../../models/roleNames';
+import config from '../../config.json';
 
 export const WorkspaceProvider: React.FunctionComponent = () => {
   const apiCall = useAuthApiCall();
@@ -62,7 +63,10 @@ export const WorkspaceProvider: React.FunctionComponent = () => {
           workspaceCtx.current.setWorkspace(ws);
           workspaceCtx.current.setRoles(wsRoles);
           setWSRoles(wsRoles);
-          console.info(wsRoles)
+
+          
+          config.debug && console.info(wsRoles);  // Added this line, removed the commented line.
+          
 
           // get workspace services to pass to nav + ws services page
           const workspaceServices = await apiCall(`${ApiEndpoint.Workspaces}/${ws.id}/${ApiEndpoint.WorkspaceServices}`,
