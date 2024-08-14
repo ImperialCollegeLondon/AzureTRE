@@ -90,9 +90,9 @@ export const ResourceForm: React.FunctionComponent<ResourceFormProps> = (props: 
     const data = removeReadOnlyProps(formData, template);
 
     if (config.debug === true) {
-      console.log("parsed payload to send", data);
+      console.log("parsed payload to send", data);  // Added this line, removed the commented line.
     }
-    // console.log("parsed payload to send", data);
+  
 
     setSendingData(true);
     let response;
