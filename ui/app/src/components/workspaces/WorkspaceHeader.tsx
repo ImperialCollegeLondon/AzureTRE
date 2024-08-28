@@ -9,7 +9,7 @@ export const WorkspaceHeader: React.FunctionComponent = () => {
     <>
       <Stack className={contentClass}>
         <Stack.Item className='tre-workspace-header'>
-          <h4 style={{fontWeight: '400'}}>
+          <h4 style={{ fontWeight: '400' }}>
             <Icon iconName="CubeShape" style={{ marginRight: '8px', fontSize: '22px', verticalAlign: 'bottom' }} />
             {workspaceCtx.workspace?.properties?.display_name}
           </h4>
@@ -22,7 +22,8 @@ export const WorkspaceHeader: React.FunctionComponent = () => {
 const theme = getTheme();
 const contentClass = mergeStyles([
   {
-    backgroundColor: theme.palette.themeDarker,
+    // backgroundColor: theme.palette.themeDarker,
+    backgroundColor: '#161A1D',
     color: theme.palette.white,
     lineHeight: '15px',
     padding: '0 20px',

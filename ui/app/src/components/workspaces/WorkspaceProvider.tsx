@@ -20,6 +20,7 @@ import { LoadingState } from '../../models/loadingState';
 import { ExceptionLayout } from '../shared/ExceptionLayout';
 import { AppRolesContext } from '../../contexts/AppRolesContext';
 import { RoleName, WorkspaceRoleName } from '../../models/roleNames';
+import config from '../../config.json';
 
 export const WorkspaceProvider: React.FunctionComponent = () => {
   const apiCall = useAuthApiCall();
@@ -63,6 +64,10 @@ export const WorkspaceProvider: React.FunctionComponent = () => {
           workspaceCtx.current.setRoles(wsRoles);
           setWSRoles(wsRoles);
 
+          
+          config.debug && console.info(wsRoles);  // Added this line, removed the commented line.
+          
+
           // get workspace services to pass to nav + ws services page
           const workspaceServices = await apiCall(`${ApiEndpoint.Workspaces}/${ws.id}/${ApiEndpoint.WorkspaceServices}`,
             HttpMethod.Get, ws.properties.scope_id);
@@ -71,7 +76,7 @@ export const WorkspaceProvider: React.FunctionComponent = () => {
           const sharedServices = await apiCall(ApiEndpoint.SharedServices, HttpMethod.Get);
           setSharedServices(sharedServices.sharedServices);
           setLoadingState(LoadingState.Ok);
-        } else if (appRoles.roles.includes(RoleName.TREAdmin)) {
+        } else if (appRoles.roles.includes(RoleName.TREAdmin) || appRoles.roles.includes(RoleName.ImperialTREAdmin)) {
           ws = (await apiCall(`${ApiEndpoint.Workspaces}/${workspaceId}`, HttpMethod.Get)).workspace;
           workspaceCtx.current.setWorkspace(ws);
           setLoadingState(LoadingState.Ok);
@@ -79,7 +84,7 @@ export const WorkspaceProvider: React.FunctionComponent = () => {
         } else {
           let e = new APIError();
           e.status = 403;
-          e.userMessage = "User does not have a role assigned in the workspace or the TRE Admin role assigned";
+          e.userMessage = "User does not have a role assigned in the workspace or an Admin role assigned";
           e.endpoint = `${ApiEndpoint.Workspaces}/${workspaceId}`;
           throw e;
         }
@@ -110,7 +115,7 @@ export const WorkspaceProvider: React.FunctionComponent = () => {
     const getWorkspaceCosts = async () => {
       try {
         // TODO: amend when costs enabled in API for WorkspaceRoleName.Researcher
-        if(wsRoles.includes(WorkspaceRoleName.WorkspaceOwner)){
+        if(wsRoles.includes(WorkspaceRoleName.WorkspaceOwner) || wsRoles.includes(WorkspaceRoleName.WorkspaceResearchLead)){
           let scopeId = (await apiCall(`${ApiEndpoint.Workspaces}/${workspaceId}/scopeid`, HttpMethod.Get)).workspaceAuth.scopeId;
           const r = await apiCall(`${ApiEndpoint.Workspaces}/${workspaceId}/${ApiEndpoint.Costs}`, HttpMethod.Get, scopeId, undefined, ResultType.JSON);
           const costs = [

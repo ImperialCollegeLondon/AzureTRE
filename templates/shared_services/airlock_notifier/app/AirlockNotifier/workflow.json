@@ -168,8 +168,24 @@
                       "id": {
                         "type": "string"
                       }
-                    },
-                    "type": "object"
+                    }
+                  },
+                  "recipient_emails_by_role": {
+                    "type": "object",
+                    "properties": {
+                      "workspace_dataengineer": {
+                          "type": "array",
+                          "items": {
+                              "type": "string"
+                          }
+                      },
+                      "airlock_manager": {
+                          "type": "array",
+                          "items": {
+                              "type": "string"
+                          }
+                      }
+                    }
                   }
                 },
                 "type": "object"

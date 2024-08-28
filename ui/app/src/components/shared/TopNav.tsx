@@ -3,6 +3,7 @@ import { getTheme, Icon, mergeStyles, Stack } from '@fluentui/react';
 import { Link } from 'react-router-dom';
 import { UserMenu } from './UserMenu';
 import { NotificationPanel } from './notifications/NotificationPanel';
+import imperialLogo from '../../assets/imperial_college_logo.svg'
 
 export const TopNav: React.FunctionComponent = () => {
   return (
@@ -11,7 +12,7 @@ export const TopNav: React.FunctionComponent = () => {
         <Stack horizontal>
           <Stack.Item grow={100}>
             <Link to='/' className='tre-home-link'>
-              <Icon iconName="TestBeakerSolid" style={{ marginLeft: '10px', marginRight: '10px', verticalAlign: 'middle' }} />
+              <img src={imperialLogo} alt="Imperial College Logo" height="25" style={{ marginLeft: '5px', marginRight: '10px', verticalAlign: 'middle' }} />
               <h5 style={{display: 'inline'}}>Azure TRE</h5>
             </Link>
           </Stack.Item>
@@ -30,7 +31,8 @@ export const TopNav: React.FunctionComponent = () => {
 const theme = getTheme();
 const contentClass = mergeStyles([
   {
-    backgroundColor: theme.palette.themeDark,
+    // backgroundColor: theme.palette.themeDark,
+    backgroundColor: '#0000CD',
     color: theme.palette.white,
     lineHeight: '50px',
     padding: '0 10px 0 10px'

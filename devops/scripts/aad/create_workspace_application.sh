@@ -121,6 +121,8 @@ source "${DIR}/update_resource_access.sh"
 
 # Default of new UUIDs
 researcherRoleId=$(cat /proc/sys/kernel/random/uuid)
+researchLeadRoleId=$(cat /proc/sys/kernel/random/uuid)
+dataEngineerRoleId=$(cat /proc/sys/kernel/random/uuid)
 ownerRoleId=$(cat /proc/sys/kernel/random/uuid)
 airlockManagerRoleId=$(cat /proc/sys/kernel/random/uuid)
 userImpersonationScopeId=$(cat /proc/sys/kernel/random/uuid)
@@ -132,10 +134,14 @@ if [ -n "${existingApp}" ]; then
     appObjectId=$(echo "${existingApp}" | jq -r '.id')
 
     researcherRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "WorkspaceResearcher").id')
+    researchLeadRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "WorkspaceResearchLead").id')
+    dataEngineerRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "WorkspaceDataEngineer").id')
     ownerRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "WorkspaceOwner").id')
     airlockManagerRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "AirlockManager").id')
     userImpersonationScopeId=$(echo "$existingApp" | jq -r '.api.oauth2PermissionScopes[] | select(.value == "user_impersonation").id')
     if [[ -z "${researcherRoleId}" ]]; then researcherRoleId=$(cat /proc/sys/kernel/random/uuid); fi
+    if [[ -z "${researchLeadRoleId}" ]]; then researchLeadRoleId=$(cat /proc/sys/kernel/random/uuid); fi
+    if [[ -z "${dataEngineerRoleId}" ]]; then dataEngineerRoleId=$(cat /proc/sys/kernel/random/uuid); fi
     if [[ -z "${ownerRoleId}" ]]; then ownerRoleId=$(cat /proc/sys/kernel/random/uuid); fi
     if [[ -z "${airlockManagerRoleId}" ]]; then airlockManagerRoleId=$(cat /proc/sys/kernel/random/uuid); fi
     if [[ -z "${userImpersonationScopeId}" ]]; then userImpersonationScopeId=$(cat /proc/sys/kernel/random/uuid); fi
@@ -184,6 +190,24 @@ appDefinition=$(jq -c . << JSON
         "isEnabled": true,
         "origin": "Application",
         "value": "WorkspaceResearcher"
+    },
+    {
+        "id": "${researchLeadRoleId}",
+        "allowedMemberTypes": [ "User", "Application" ],
+        "description": "Provides Imperial researchers access to the Workspace.",
+        "displayName": "Research Lead",
+        "isEnabled": true,
+        "origin": "Application",
+        "value": "WorkspaceResearchLead"
+    },
+    {
+        "id": "${dataEngineerRoleId}",
+        "allowedMemberTypes": [ "User", "Application" ],
+        "description": "Provides Imperial Data Engineer access to the Workspace.",
+        "displayName": "Workspace Data Engineer",
+        "isEnabled": true,
+        "origin": "Application",
+        "value": "WorkspaceDataEngineer"
     },
     {
         "id": "${airlockManagerRoleId}",
@@ -328,6 +352,14 @@ if [[ -n ${automationClientId} ]]; then
                 "type": "Role"
             },
             {
+                "id": "${researchLeadRoleId}",
+                "type": "Role"
+            },
+            {
+                "id": "${dataEngineerRoleId}",
+                "type": "Role"
+            },
+            {
                 "id": "${airlockManagerRoleId}",
                 "type": "Role"
             }
@@ -351,6 +383,8 @@ JSON
       grant_admin_consent "${automationSpId}" "${workspaceSpId}" "${ownerRoleId}"
       grant_admin_consent "${automationSpId}" "${workspaceSpId}" "${airlockManagerRoleId}"
       grant_admin_consent "${automationSpId}" "${workspaceSpId}" "${researcherRoleId}"
+      grant_admin_consent "${automationSpId}" "${workspaceSpId}" "${researchLeadRoleId}"
+      grant_admin_consent "${automationSpId}" "${workspaceSpId}" "${dataEngineerRoleId}"
       az ad app permission grant --id "$automationSpId" --api "$workspaceAppId" --scope "user_impersonation" --only-show-errors
   fi
 fi

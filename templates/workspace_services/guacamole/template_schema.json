@@ -32,14 +32,16 @@
       "type": "boolean",
       "title": "Disable 'Copy'",
       "description": "Disable Copy functionality",
-      "updateable": true
+      "updateable": true,
+      "default": true
     },
     "guac_disable_paste": {
       "$id": "#/properties/guac_disable_paste",
       "type": "boolean",
       "title": "Disable 'Paste'",
       "description": "Disable Paste functionality",
-      "updateable": true
+      "updateable": true,
+      "default": false
     },
     "guac_enable_drive": {
       "$id": "#/properties/guac_enable_drive",

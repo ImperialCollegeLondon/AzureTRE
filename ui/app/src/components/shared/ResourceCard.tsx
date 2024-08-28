@@ -40,10 +40,10 @@ export const ResourceCard: React.FunctionComponent<ResourceCardProps> = (props: 
   const navigate = useNavigate();
 
   const costTagRolesByResourceType = {
-    [ResourceType.Workspace]: [RoleName.TREAdmin, WorkspaceRoleName.WorkspaceOwner],
+    [ResourceType.Workspace]: [RoleName.TREAdmin, RoleName.ImperialTREAdmin, WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearchLead],
     [ResourceType.SharedService]: [RoleName.TREAdmin],
-    [ResourceType.WorkspaceService]: [WorkspaceRoleName.WorkspaceOwner],
-    [ResourceType.UserResource]: [WorkspaceRoleName.WorkspaceOwner] // when implemented WorkspaceRoleName.WorkspaceResearcher]
+    [ResourceType.WorkspaceService]: [RoleName.ImperialTREAdmin, WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearchLead],
+    [ResourceType.UserResource]: [RoleName.ImperialTREAdmin, WorkspaceRoleName.WorkspaceOwner, WorkspaceRoleName.WorkspaceResearchLead] // when implemented WorkspaceRoleName.WorkspaceResearcher]
   };
 
   const costsTagsRoles = costTagRolesByResourceType[props.resource.resourceType];
@@ -86,7 +86,7 @@ export const ResourceCard: React.FunctionComponent<ResourceCardProps> = (props: 
 
   const appRoles = useContext(AppRolesContext);
   const authNotProvisioned = props.resource.resourceType === ResourceType.Workspace && !props.resource.properties.scope_id;
-  const enableClickOnCard = !authNotProvisioned || appRoles.roles.includes(RoleName.TREAdmin);
+  const enableClickOnCard = !authNotProvisioned || appRoles.roles.includes(RoleName.TREAdmin) || appRoles.roles.includes(RoleName.ImperialTREAdmin);
   const workspaceId = props.resource.resourceType === ResourceType.Workspace ? props.resource.id : "";
   const cardStyles = enableClickOnCard ? noNavCardStyles : clickableCardStyles;
 

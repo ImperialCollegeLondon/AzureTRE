@@ -14,6 +14,7 @@ import { AirlockNewRequest } from './AirlockNewRequest';
 import { WorkspaceRoleName } from '../../../models/roleNames';
 import { useAccount, useMsal } from '@azure/msal-react';
 import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
+import { SecuredByRole } from '../SecuredByRole';
 
 export const Airlock: React.FunctionComponent = () => {
   const [airlockRequests, setAirlockRequests] = useState([] as AirlockRequest[]);
@@ -303,15 +304,17 @@ export const Airlock: React.FunctionComponent = () => {
             <CommandBarButton
               iconProps={{ iconName: 'refresh' }}
               text="Refresh"
-              style={{ background: 'none', color: theme.palette.themePrimary }}
+              style={{ background: 'none', color: '#006EAF' }}
               onClick={() => getAirlockRequests()}
             />
-            <CommandBarButton
-              iconProps={{ iconName: 'add' }}
-              text="New request"
-              style={{ background: 'none', color: theme.palette.themePrimary }}
-              onClick={() => navigate('new')}
-            />
+            <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.AirlockManager, WorkspaceRoleName.WorkspaceDataEngineer]} element={
+              <CommandBarButton
+                iconProps={{ iconName: 'add' }}
+                text="New request"
+                style={{ background: 'none', color: '#006EAF' }}
+                onClick={() => navigate('new')}
+              />
+            } />
           </Stack>
         </Stack.Item>
       </Stack>
@@ -344,12 +347,12 @@ export const Airlock: React.FunctionComponent = () => {
       </div>
 
       <Routes>
-        <Route path="new" element={
-          <AirlockNewRequest onCreateRequest={handleNewRequest}/>
-        } />
-        <Route path=":requestId" element={
-          <AirlockViewRequest requests={airlockRequests} onUpdateRequest={getAirlockRequests}/>
-        } />
+        <Route path="new" element={ <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.AirlockManager, WorkspaceRoleName.WorkspaceDataEngineer]} element={
+          <AirlockNewRequest onCreateRequest={handleNewRequest} />
+        } /> } />
+        <Route path=":requestId" element={ <SecuredByRole allowedWorkspaceRoles={[WorkspaceRoleName.AirlockManager, WorkspaceRoleName.WorkspaceDataEngineer]} element={
+          <AirlockViewRequest requests={airlockRequests} onUpdateRequest={getAirlockRequests} />
+        } /> } />
       </Routes>
     </>
   );
