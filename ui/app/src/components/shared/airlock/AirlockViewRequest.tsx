@@ -1,4 +1,4 @@
-import { DefaultButton, Dialog, DialogFooter, DocumentCard, DocumentCardActivity, DocumentCardDetails, DocumentCardTitle, DocumentCardType, FontIcon, getTheme, IStackItemStyles, IStackStyles, IStackTokens, mergeStyles, MessageBar, MessageBarType, Modal, Panel, PanelType, Persona, PersonaSize, PrimaryButton, Spinner, SpinnerSize, Stack } from "@fluentui/react";
+import { DefaultButton, Dialog, DialogFooter, DocumentCard, DocumentCardActivity, DocumentCardDetails, DocumentCardTitle, DocumentCardType, FontIcon, getTheme, IStackItemStyles, IStackStyles, IStackTokens, mergeStyles, MessageBar, MessageBarType, Modal, Panel, PanelType, Persona, PersonaSize, PrimaryButton, Spinner, SpinnerSize, Stack} from "@fluentui/react";
 import moment from "moment";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -19,7 +19,7 @@ interface AirlockViewRequestProps {
 }
 
 export const AirlockViewRequest: React.FunctionComponent<AirlockViewRequestProps> = (props: AirlockViewRequestProps) => {
-  const { requestId } = useParams();
+  const {requestId} = useParams();
   const [request, setRequest] = useState<AirlockRequest>();
   const [hideSubmitDialog, setHideSubmitDialog] = useState(true);
   const [reviewIsOpen, setReviewIsOpen] = useState(false);
@@ -49,7 +49,6 @@ export const AirlockViewRequest: React.FunctionComponent<AirlockViewRequestProps
     } else {
       setRequest(req);
     }
-
     config.debug && console.log(req);  // Added this line, removed the commented line.
 
   }, [apiCall, requestId, props.requests, workspaceCtx.workspace.id, workspaceCtx.workspaceApplicationIdURI]);
@@ -106,29 +105,29 @@ export const AirlockViewRequest: React.FunctionComponent<AirlockViewRequestProps
     if (request) {
       footer = <>
         {
-          request.status === AirlockRequestStatus.Draft && <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+          request.status === AirlockRequestStatus.Draft && <div style={{marginTop: '10px', marginBottom: '10px'}}>
             <MessageBar>
               This request is currently in draft. Add a file to the request's storage container and submit when ready.
             </MessageBar>
           </div>
         }
         {
-          request.statusMessage && <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+          request.statusMessage && <div style={{marginTop: '10px', marginBottom: '10px'}}>
             <MessageBar messageBarType={MessageBarType.error}>{request.statusMessage}</MessageBar>
           </div>
         }
-        <div style={{ textAlign: 'end' }}>
+        <div style={{textAlign: 'end'}}>
           {
             request.allowedUserActions?.includes(AirlockRequestAction.Cancel) &&
-            <DefaultButton onClick={() => { setSubmitError(false); setHideCancelDialog(false) }} styles={destructiveButtonStyles}>Cancel request</DefaultButton>
+              <DefaultButton onClick={() => {setSubmitError(false); setHideCancelDialog(false)}} styles={destructiveButtonStyles}>Cancel request</DefaultButton>
           }
           {
             request.allowedUserActions?.includes(AirlockRequestAction.Submit) &&
-            <PrimaryButton onClick={() => { setSubmitError(false); setHideSubmitDialog(false) }}>Submit</PrimaryButton>
+              <PrimaryButton onClick={() => {setSubmitError(false); setHideSubmitDialog(false)}}>Submit</PrimaryButton>
           }
           {
             request.allowedUserActions?.includes(AirlockRequestAction.Review) &&
-            <PrimaryButton onClick={() => setReviewIsOpen(true)}>Review</PrimaryButton>
+              <PrimaryButton onClick={() => setReviewIsOpen(true)}>Review</PrimaryButton>
           }
         </div>
       </>
@@ -149,143 +148,143 @@ export const AirlockViewRequest: React.FunctionComponent<AirlockViewRequestProps
         type={PanelType.custom}
         customWidth="450px"
       > {
-          request ? <>
-            <Stack horizontal horizontalAlign="space-between" style={{ marginTop: '40px' }} styles={underlineStackStyles}>
-              <Stack.Item styles={stackItemStyles}>
-                <b>Id</b>
-              </Stack.Item>
-              <Stack.Item styles={stackItemStyles}>
-                <p>{request.id}</p>
-              </Stack.Item>
-            </Stack>
+        request ? <>
+          <Stack horizontal horizontalAlign="space-between" style={{marginTop: '40px'}} styles={underlineStackStyles}>
+            <Stack.Item styles={stackItemStyles}>
+              <b>Id</b>
+            </Stack.Item>
+            <Stack.Item styles={stackItemStyles}>
+            <p>{request.id}</p>
+            </Stack.Item>
+          </Stack>
 
-            <Stack horizontal horizontalAlign="space-between" styles={underlineStackStyles}>
-              <Stack.Item styles={stackItemStyles}>
-                <b>Creator</b>
-              </Stack.Item>
-              <Stack.Item styles={stackItemStyles}>
-                <Persona size={PersonaSize.size32} text={request.createdBy?.name} />
-              </Stack.Item>
-            </Stack>
+          <Stack horizontal horizontalAlign="space-between" styles={underlineStackStyles}>
+            <Stack.Item styles={stackItemStyles}>
+              <b>Creator</b>
+            </Stack.Item>
+            <Stack.Item styles={stackItemStyles}>
+              <Persona size={PersonaSize.size32} text={request.createdBy?.name} />
+            </Stack.Item>
+          </Stack>
 
-            <Stack horizontal horizontalAlign="space-between" styles={underlineStackStyles}>
-              <Stack.Item styles={stackItemStyles}>
-                <b>Type</b>
-              </Stack.Item>
-              <Stack.Item styles={stackItemStyles}>
-                <p>{request.type}</p>
-              </Stack.Item>
-            </Stack>
+          <Stack horizontal horizontalAlign="space-between" styles={underlineStackStyles}>
+            <Stack.Item styles={stackItemStyles}>
+              <b>Type</b>
+            </Stack.Item>
+            <Stack.Item styles={stackItemStyles}>
+              <p>{request.type}</p>
+            </Stack.Item>
+          </Stack>
 
-            <Stack horizontal horizontalAlign="space-between" styles={underlineStackStyles}>
-              <Stack.Item styles={stackItemStyles}>
-                <b>Status</b>
-              </Stack.Item>
-              <Stack.Item styles={stackItemStyles}>
-                <p>{request.status.replace("_", " ")}</p>
-              </Stack.Item>
-            </Stack>
+          <Stack horizontal horizontalAlign="space-between" styles={underlineStackStyles}>
+            <Stack.Item styles={stackItemStyles}>
+              <b>Status</b>
+            </Stack.Item>
+            <Stack.Item styles={stackItemStyles}>
+              <p>{request.status.replace("_", " ")}</p>
+            </Stack.Item>
+          </Stack>
 
-            <Stack horizontal horizontalAlign="space-between" styles={underlineStackStyles}>
-              <Stack.Item styles={stackItemStyles}>
-                <b>Workspace</b>
-              </Stack.Item>
-              <Stack.Item styles={stackItemStyles}>
-                <p>{workspaceCtx.workspace?.properties?.display_name}</p>
-              </Stack.Item>
-            </Stack>
+          <Stack horizontal horizontalAlign="space-between" styles={underlineStackStyles}>
+            <Stack.Item styles={stackItemStyles}>
+              <b>Workspace</b>
+            </Stack.Item>
+            <Stack.Item styles={stackItemStyles}>
+              <p>{workspaceCtx.workspace?.properties?.display_name}</p>
+            </Stack.Item>
+          </Stack>
 
-            <Stack horizontal horizontalAlign="space-between" styles={underlineStackStyles}>
-              <Stack.Item styles={stackItemStyles}>
-                <b>Created</b>
-              </Stack.Item>
-              <Stack.Item styles={stackItemStyles}>
-                <p>{moment.unix(request.createdWhen).format('DD/MM/YYYY')}</p>
-              </Stack.Item>
-            </Stack>
+          <Stack horizontal horizontalAlign="space-between" styles={underlineStackStyles}>
+            <Stack.Item styles={stackItemStyles}>
+              <b>Created</b>
+            </Stack.Item>
+            <Stack.Item styles={stackItemStyles}>
+              <p>{moment.unix(request.createdWhen).format('DD/MM/YYYY')}</p>
+            </Stack.Item>
+          </Stack>
 
-            <Stack horizontal horizontalAlign="space-between" styles={underlineStackStyles}>
-              <Stack.Item styles={stackItemStyles}>
-                <b>Updated</b>
-              </Stack.Item>
-              <Stack.Item styles={stackItemStyles}>
-                <p>{moment.unix(request.updatedWhen).fromNow()}</p>
-              </Stack.Item>
-            </Stack>
+          <Stack horizontal horizontalAlign="space-between" styles={underlineStackStyles}>
+            <Stack.Item styles={stackItemStyles}>
+              <b>Updated</b>
+            </Stack.Item>
+            <Stack.Item styles={stackItemStyles}>
+              <p>{moment.unix(request.updatedWhen).fromNow()}</p>
+            </Stack.Item>
+          </Stack>
 
-            <Stack style={{ marginTop: '20px' }} styles={underlineStackStyles}>
-              <Stack.Item styles={stackItemStyles}>
-                <b>Business Justification</b>
-              </Stack.Item>
-            </Stack>
-            <Stack>
-              <Stack.Item styles={stackItemStyles}>
-                <p>{request.businessJustification}</p>
-              </Stack.Item>
-            </Stack>
-            {
-              AirlockFilesLinkValidStatus.includes(request.status) && <>
-                <Stack style={{ marginTop: '20px' }} styles={underlineStackStyles}>
-                  <Stack.Item styles={stackItemStyles}>
-                    <b>Files</b>
-                  </Stack.Item>
-                </Stack>
-                <AirlockRequestFilesSection request={request} workspaceApplicationIdURI={workspaceCtx.workspaceApplicationIdURI} />
-              </>
-            }
-            {
-              request.reviews && request.reviews.length > 0 && <>
-                <Stack style={{ marginTop: '20px', marginBottom: '20px' }} styles={underlineStackStyles}>
-                  <Stack.Item styles={stackItemStyles}>
-                    <b>Reviews</b>
-                  </Stack.Item>
-                </Stack>
-                <Stack tokens={stackTokens}>
-                  {
-                    request.reviews.map((review, i) => {
-                      return <DocumentCard
-                        key={i}
-                        aria-label="Review"
-                        type={DocumentCardType.compact}>
-                        <DocumentCardDetails>
-                          <DocumentCardActivity
-                            activity={moment.unix(review.dateCreated).fromNow()}
-                            people={[{ name: review.reviewer.name, profileImageSrc: '' }]}
-                          />
-                          <DocumentCardTitle
-                            title={review.decisionExplanation}
-                            shouldTruncate
-                            showAsSecondaryTitle
-                          />
-                        </DocumentCardDetails>
-                        <div style={{ margin: 10 }}>
-                          {
-                            review.reviewDecision === AirlockReviewDecision.Approved && <>
-                              <FontIcon aria-label="Approved" iconName="Completed" className={approvedIcon} />
-                              Approved
-                            </>
-                          }
-                          {
-                            review.reviewDecision === AirlockReviewDecision.Rejected && <>
-                              <FontIcon aria-label="Rejected" iconName="ErrorBadge" className={rejectedIcon} />
-                              Rejected
-                            </>
-                          }
-                        </div>
-                      </DocumentCard>
-                    })
-                  }
-                </Stack>
-              </>
-            }
-          </>
-            : <div style={{ marginTop: '70px' }}>
-              <Spinner label="Loading..." ariaLive="assertive" labelPosition="top" size={SpinnerSize.large} />
-            </div>
-        }
+          <Stack style={{marginTop: '20px'}} styles={underlineStackStyles}>
+            <Stack.Item styles={stackItemStyles}>
+              <b>Business Justification</b>
+            </Stack.Item>
+          </Stack>
+          <Stack>
+            <Stack.Item styles={stackItemStyles}>
+              <p>{request.businessJustification}</p>
+            </Stack.Item>
+          </Stack>
+          {
+            AirlockFilesLinkValidStatus.includes(request.status) && <>
+              <Stack style={{marginTop: '20px'}} styles={underlineStackStyles}>
+                <Stack.Item styles={stackItemStyles}>
+                  <b>Files</b>
+                </Stack.Item>
+              </Stack>
+              <AirlockRequestFilesSection request={request} workspaceApplicationIdURI={workspaceCtx.workspaceApplicationIdURI}/>
+            </>
+          }
+          {
+            request.reviews && request.reviews.length > 0 && <>
+              <Stack style={{marginTop: '20px', marginBottom: '20px'}} styles={underlineStackStyles}>
+                <Stack.Item styles={stackItemStyles}>
+                  <b>Reviews</b>
+                </Stack.Item>
+              </Stack>
+              <Stack tokens={stackTokens}>
+                {
+                  request.reviews.map((review, i) => {
+                    return <DocumentCard
+                      key={i}
+                      aria-label="Review"
+                      type={DocumentCardType.compact}>
+                      <DocumentCardDetails>
+                        <DocumentCardActivity
+                          activity={moment.unix(review.dateCreated).fromNow()}
+                          people={[{name: review.reviewer.name, profileImageSrc: ''}]}
+                        />
+                        <DocumentCardTitle
+                          title={review.decisionExplanation}
+                          shouldTruncate
+                          showAsSecondaryTitle
+                        />
+                      </DocumentCardDetails>
+                      <div style={{margin:10}}>
+                        {
+                          review.reviewDecision === AirlockReviewDecision.Approved && <>
+                            <FontIcon aria-label="Approved" iconName="Completed" className={approvedIcon} />
+                            Approved
+                          </>
+                        }
+                        {
+                          review.reviewDecision === AirlockReviewDecision.Rejected && <>
+                            <FontIcon aria-label="Rejected" iconName="ErrorBadge" className={rejectedIcon} />
+                            Rejected
+                          </>
+                        }
+                      </div>
+                    </DocumentCard>
+                  })
+                }
+              </Stack>
+            </>
+          }
+        </>
+        : <div style={{ marginTop: '70px' }}>
+          <Spinner label="Loading..." ariaLive="assertive" labelPosition="top" size={SpinnerSize.large} />
+        </div>
+      }
         <Dialog
           hidden={hideSubmitDialog}
-          onDismiss={() => { setHideSubmitDialog(true); setSubmitError(false) }}
+          onDismiss={() => {setHideSubmitDialog(true); setSubmitError(false)}}
           dialogContentProps={{
             title: 'Submit request?',
             subText: 'Make sure you have uploaded your file to the request\'s storage account before submitting.',
@@ -296,17 +295,17 @@ export const AirlockViewRequest: React.FunctionComponent<AirlockViewRequestProps
           }
           {
             submitting
-              ? <Spinner label="Submitting..." ariaLive="assertive" labelPosition="top" size={SpinnerSize.large} />
-              : <DialogFooter>
-                <DefaultButton onClick={() => { setHideSubmitDialog(true); setSubmitError(false) }} text="Cancel" />
-                <PrimaryButton onClick={submitRequest} text="Submit" />
-              </DialogFooter>
+            ? <Spinner label="Submitting..." ariaLive="assertive" labelPosition="top" size={SpinnerSize.large} />
+            : <DialogFooter>
+              <DefaultButton onClick={() => {setHideSubmitDialog(true); setSubmitError(false)}} text="Cancel" />
+              <PrimaryButton onClick={submitRequest} text="Submit" />
+            </DialogFooter>
           }
         </Dialog>
 
         <Dialog
           hidden={hideCancelDialog}
-          onDismiss={() => { setHideCancelDialog(true); setSubmitError(false) }}
+          onDismiss={() => {setHideCancelDialog(true); setSubmitError(false)}}
           dialogContentProps={{
             title: 'Cancel Airlock Request?',
             subText: 'Are you sure you want to cancel this airlock request?',
@@ -317,11 +316,11 @@ export const AirlockViewRequest: React.FunctionComponent<AirlockViewRequestProps
           }
           {
             submitting
-              ? <Spinner label="Cancelling..." ariaLive="assertive" labelPosition="top" size={SpinnerSize.large} />
-              : <DialogFooter>
-                <DefaultButton onClick={cancelRequest} text="Cancel Request" styles={destructiveButtonStyles} />
-                <DefaultButton onClick={() => { setHideCancelDialog(true); setSubmitError(false) }} text="Back" />
-              </DialogFooter>
+            ? <Spinner label="Cancelling..." ariaLive="assertive" labelPosition="top" size={SpinnerSize.large} />
+            : <DialogFooter>
+              <DefaultButton onClick={cancelRequest} text="Cancel Request" styles={destructiveButtonStyles} />
+              <DefaultButton onClick={() => {setHideCancelDialog(true); setSubmitError(false)}} text="Back" />
+            </DialogFooter>
           }
         </Dialog>
 
@@ -334,7 +333,7 @@ export const AirlockViewRequest: React.FunctionComponent<AirlockViewRequestProps
           <AirlockReviewRequest
             request={request}
             onUpdateRequest={props.onUpdateRequest}
-            onReviewRequest={(request) => { props.onUpdateRequest(request); setReviewIsOpen(false) }}
+            onReviewRequest={(request) => {props.onUpdateRequest(request); setReviewIsOpen(false)}}
             onClose={() => setReviewIsOpen(false)}
           />
         </Modal>
