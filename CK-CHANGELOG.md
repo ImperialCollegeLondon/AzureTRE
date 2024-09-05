@@ -15,3 +15,6 @@ COMPONENTS:
 
 ENHANCEMENTS:
 * Removed console.log() client code (https://cloudkubed.atlassian.net/browse/IATP-84)
+
+BUG FIXES:
+* Update pip dependencies
