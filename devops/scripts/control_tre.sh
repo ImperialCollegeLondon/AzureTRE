@@ -142,9 +142,9 @@ fi
 AGW_STATE=$(az network application-gateway list --query "[?resourceGroup=='${core_rg_name}'&&name=='${agw_name}'].operationalState | [0]" -o tsv)
 
 # Report final App Service Status
-API_STATE=$(az webapp show --name "${api_name}" --resource-group "${core_rg_name}" --query "state" -o tsv) | true
+# API_STATE=$(az webapp show --name "${api_name}" --resource-group "${core_rg_name}" --query "state" -o tsv) | true
 
 echo -e "\n\e[34m»»» 🔨 \e[96mTRE Status for $TRE_ID\e[0m"
 echo -e "\e[34m»»»   • \e[96mFirewall:              \e[33m$FW_STATE\e[0m"
 echo -e "\e[34m»»»   • \e[96mApplication Gateway:   \e[33m$AGW_STATE\e[0m"
-echo -e "\e[34m»»»   • \e[96mApp Service:           \e[33m$API_STATE\e[0m\n"
+# echo -e "\e[34m»»»   • \e[96mApp Service:           \e[33m$API_STATE\e[0m\n"
