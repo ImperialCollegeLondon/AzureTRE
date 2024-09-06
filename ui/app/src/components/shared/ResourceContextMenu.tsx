@@ -20,6 +20,7 @@ import { AppRolesContext } from '../../contexts/AppRolesContext';
 import { useAppDispatch } from '../../hooks/customReduxHooks';
 import { addUpdateOperation } from '../shared/notifications/operationsSlice';
 import { ConfirmUpgradeResource } from './ConfirmUpgradeResource';
+import config from '../../config.json';
 
 interface ResourceContextMenuProps {
   resource: Resource,
@@ -137,7 +138,9 @@ export const ResourceContextMenu: React.FunctionComponent<ResourceContextMenuPro
     //   currentUserRoles = currentUserRoles.concat(workspaceCtx.roles);
     // }
     const currentUserRoles = wsAuth ? workspaceCtx.roles : appRoles.roles;
-    console.log(action + " role " + type + " : " + r + " : " + currentUserRoles)
+
+    config.debug && console.log(action + " role " + type + " : " + r + " : " + currentUserRoles);  // Added this line, removed the commented line.
+
     return r.some(role => currentUserRoles.includes(role));
   }
 
