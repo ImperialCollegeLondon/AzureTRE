@@ -5,6 +5,13 @@
     "aliases": []
   },
   {
+    "version": "dev-temp",
+    "title": "dev-temp",
+    "aliases": [
+      "latest"
+    ]
+  },
+  {
     "version": "0.8.0",
     "title": "0.8.0",
     "aliases": [
@@ -44,9 +51,7 @@
   {
     "version": "v0.16.0.4",
     "title": "v0.16.0.4",
-    "aliases": [
-      "latest"
-    ]
+    "aliases": []
   },
   {
     "version": "v0.16.0.3",
