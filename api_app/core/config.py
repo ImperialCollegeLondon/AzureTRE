@@ -2,7 +2,11 @@ from typing import List
 from starlette.config import Config
 from _version import __version__
 
-config = Config(".env")
+try:
+    config = Config('.env')
+# Workaround needed until FastAPI uses Starlette >= 3.7.1
+except FileNotFoundError:
+    config = Config()
 
 # API settings
 API_PREFIX = "/api"
@@ -66,5 +70,6 @@ AAD_TENANT_ID: str = config("AAD_TENANT_ID", default="")
 API_AUDIENCE: str = config("API_AUDIENCE", default=API_CLIENT_ID)
 
 AIRLOCK_SAS_TOKEN_EXPIRY_PERIOD_IN_HOURS: int = config("AIRLOCK_SAS_TOKEN_EXPIRY_PERIOD_IN_HOURS", default=48)
+ENABLE_AIRLOCK_EMAIL_CHECK: bool = config("ENABLE_AIRLOCK_EMAIL_CHECK", cast=bool, default=False)
 
 API_ROOT_SCOPE: str = f"api://{API_CLIENT_ID}/user_impersonation"
