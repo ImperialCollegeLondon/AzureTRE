@@ -11,6 +11,7 @@ import { destructiveButtonStyles } from "../../../styles";
 import { ExceptionLayout } from "../ExceptionLayout";
 import { AirlockRequestFilesSection } from "./AirlockRequestFilesSection";
 import { AirlockReviewRequest } from "./AirlockReviewRequest";
+import config from '../../../config.json';
 
 interface AirlockViewRequestProps {
   requests: AirlockRequest[];
@@ -48,7 +49,8 @@ export const AirlockViewRequest: React.FunctionComponent<AirlockViewRequestProps
     } else {
       setRequest(req);
     }
-    console.log(req);
+    config.debug && console.log(req);  // Added this line, removed the commented line.
+
   }, [apiCall, requestId, props.requests, workspaceCtx.workspace.id, workspaceCtx.workspaceApplicationIdURI]);
 
   const dismissPanel = useCallback(() => navigate('../'), [navigate]);

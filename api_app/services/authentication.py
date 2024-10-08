@@ -21,37 +21,40 @@ def get_access_service(provider: str = AuthProvider.AAD) -> AccessService:
     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=strings.INVALID_AUTH_PROVIDER)
 
 
-get_current_tre_user = AzureADAuthorization(require_one_of_roles=['TREUser'])
+get_current_tre_user = AzureADAuthorization(require_one_of_roles=['TREUser', 'ImperialTREAdmin'])
 
 
-get_current_admin_user = AzureADAuthorization(require_one_of_roles=['TREAdmin'])
+get_current_admin_user = AzureADAuthorization(require_one_of_roles=['TREAdmin', 'ImperialTREAdmin'])
 
 
-get_current_tre_user_or_tre_admin = AzureADAuthorization(require_one_of_roles=['TREUser', 'TREAdmin'])
+get_current_imperial_admin_user = AzureADAuthorization(require_one_of_roles=['TREAdmin', 'ImperialTREAdmin'])
+
+
+get_current_tre_user_or_tre_admin = AzureADAuthorization(require_one_of_roles=['TREUser', 'TREAdmin', 'ImperialTREAdmin'])
 
 
 get_current_workspace_owner_user = AzureADAuthorization(require_one_of_roles=['WorkspaceOwner'])
 
 
-get_current_workspace_researcher_user = AzureADAuthorization(require_one_of_roles=['WorkspaceResearcher'])
+get_current_workspace_researcher_user = AzureADAuthorization(require_one_of_roles=['WorkspaceResearcher', 'WorkspaceResearchLead', 'WorkspaceDataEngineer'])
 
 
 get_current_airlock_manager_user = AzureADAuthorization(require_one_of_roles=['AirlockManager'])
 
 
-get_current_workspace_owner_or_researcher_user = AzureADAuthorization(require_one_of_roles=['WorkspaceOwner', 'WorkspaceResearcher'])
+get_current_workspace_owner_or_researcher_user = AzureADAuthorization(require_one_of_roles=['WorkspaceOwner', 'WorkspaceResearcher', 'WorkspaceResearchLead', 'WorkspaceDataEngineer'])
 
 
-get_current_workspace_owner_or_airlock_manager = AzureADAuthorization(require_one_of_roles=['WorkspaceOwner', 'AirlockManager'])
+get_current_workspace_owner_or_airlock_manager = AzureADAuthorization(require_one_of_roles=['WorkspaceOwner', 'AirlockManager', 'WorkspaceDataEngineer'])
 
 
-get_current_workspace_owner_or_researcher_user_or_airlock_manager = AzureADAuthorization(require_one_of_roles=['WorkspaceOwner', 'WorkspaceResearcher', 'AirlockManager'])
+get_current_workspace_owner_or_researcher_user_or_airlock_manager = AzureADAuthorization(require_one_of_roles=['WorkspaceOwner', 'WorkspaceResearcher', 'AirlockManager', 'WorkspaceResearchLead', 'WorkspaceDataEngineer'])
 
 
-get_current_workspace_owner_or_researcher_user_or_tre_admin = AzureADAuthorization(require_one_of_roles=["TREAdmin", "WorkspaceOwner", "WorkspaceResearcher"])
+get_current_workspace_owner_or_researcher_user_or_tre_admin = AzureADAuthorization(require_one_of_roles=["TREAdmin", "ImperialTREAdmin", "WorkspaceOwner", "WorkspaceResearcher", "WorkspaceResearchLead", "WorkspaceDataEngineer"])
 
 
-get_current_workspace_owner_or_researcher_user_or_airlock_manager_or_tre_admin = AzureADAuthorization(require_one_of_roles=["TREAdmin", "WorkspaceOwner", "WorkspaceResearcher", "AirlockManager"])
+get_current_workspace_owner_or_researcher_user_or_airlock_manager_or_tre_admin = AzureADAuthorization(require_one_of_roles=["TREAdmin", "ImperialTREAdmin", "WorkspaceOwner", "WorkspaceResearcher", "AirlockManager", "WorkspaceResearchLead", "WorkspaceDataEngineer"])
 
 
-get_current_workspace_owner_or_tre_admin = AzureADAuthorization(require_one_of_roles=["TREAdmin", "WorkspaceOwner"])
+get_current_workspace_owner_or_tre_admin = AzureADAuthorization(require_one_of_roles=["TREAdmin", "ImperialTREAdmin", "WorkspaceOwner", "WorkspaceDataEngineer", "WorkspaceResearchLead"])

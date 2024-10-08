@@ -24,7 +24,7 @@ from models.schemas.resource_template import ResourceTemplateInformationInList
 from models.schemas.users import UsersInResponse
 from resources import strings
 from services.access_service import AuthConfigValidationError
-from services.authentication import get_current_admin_user, \
+from services.authentication import get_current_imperial_admin_user, \
     get_access_service, get_current_workspace_owner_user, get_current_workspace_owner_or_researcher_user, get_current_tre_user_or_tre_admin, \
     get_current_workspace_owner_or_tre_admin, \
     get_current_workspace_owner_or_researcher_user_or_airlock_manager, \
@@ -49,9 +49,18 @@ def validate_user_has_valid_role_for_user_resource(user, user_resource):
     if "WorkspaceOwner" in user.roles:
         return
 
-    if ("WorkspaceResearcher" in user.roles or "AirlockManager" in user.roles) and user_resource.ownerId == user.id:
+    if "WorkspaceResearchLead" in user.roles:
         return
 
+    if "WorkspaceDataEngineer" in user.roles:
+        return
+    
+    if "WorkspaceResearcher" in user.roles:
+        return
+            
+    if ("WorkspaceResearcher" in user.roles or "AirlockManager" in user.roles or "WorkspaceResearchLead" in user.roles or "WorkspaceDataEngineer" in user.roles) and user_resource.ownerId == user.id:
+        return
+    
     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=strings.ACCESS_USER_IS_NOT_OWNER_OR_RESEARCHER)
 
 
@@ -60,7 +69,7 @@ def validate_user_has_valid_role_for_user_resource(user, user_resource):
 async def retrieve_users_active_workspaces(request: Request, user=Depends(get_current_tre_user_or_tre_admin), workspace_repo=Depends(get_repository(WorkspaceRepository)), resource_template_repo=Depends(get_repository(ResourceTemplateRepository))) -> WorkspacesInList:
 
     try:
-        user = await get_current_admin_user(request)
+        user = await get_current_imperial_admin_user(request)
         workspaces = await workspace_repo.get_active_workspaces()
         await asyncio.gather(*[enrich_resource_with_available_upgrades(workspace, resource_template_repo) for workspace in workspaces])
         return WorkspacesInList(workspaces=workspaces)
@@ -97,8 +106,8 @@ async def retrieve_workspace_scope_id_by_workspace_id(workspace=Depends(get_work
     return WorkspaceAuthInResponse(workspaceAuth=wsAuth)
 
 
-@workspaces_core_router.post("/workspaces", status_code=status.HTTP_202_ACCEPTED, response_model=OperationInResponse, name=strings.API_CREATE_WORKSPACE, dependencies=[Depends(get_current_admin_user)])
-async def create_workspace(workspace_create: WorkspaceInCreate, response: Response, user=Depends(get_current_admin_user), workspace_repo=Depends(get_repository(WorkspaceRepository)), resource_template_repo=Depends(get_repository(ResourceTemplateRepository)), operations_repo=Depends(get_repository(OperationRepository)), resource_history_repo=Depends(get_repository(ResourceHistoryRepository))) -> OperationInResponse:
+@workspaces_core_router.post("/workspaces", status_code=status.HTTP_202_ACCEPTED, response_model=OperationInResponse, name=strings.API_CREATE_WORKSPACE, dependencies=[Depends(get_current_imperial_admin_user)])
+async def create_workspace(workspace_create: WorkspaceInCreate, response: Response, user=Depends(get_current_imperial_admin_user), workspace_repo=Depends(get_repository(WorkspaceRepository)), resource_template_repo=Depends(get_repository(ResourceTemplateRepository)), operations_repo=Depends(get_repository(OperationRepository)), resource_history_repo=Depends(get_repository(ResourceHistoryRepository))) -> OperationInResponse:
     try:
         # TODO: This requires Directory.ReadAll ( Application.Read.All ) to be enabled in the Azure AD application to enable a users workspaces to be listed. This should be made optional.
         auth_info = extract_auth_information(workspace_create.properties)
@@ -125,8 +134,8 @@ async def create_workspace(workspace_create: WorkspaceInCreate, response: Respon
     return OperationInResponse(operation=operation)
 
 
-@workspaces_core_router.patch("/workspaces/{workspace_id}", status_code=status.HTTP_202_ACCEPTED, response_model=OperationInResponse, name=strings.API_UPDATE_WORKSPACE, dependencies=[Depends(get_current_admin_user)])
-async def patch_workspace(resource_patch: ResourcePatch, response: Response, user=Depends(get_current_admin_user), workspace=Depends(get_workspace_by_id_from_path), workspace_repo: WorkspaceRepository = Depends(get_repository(WorkspaceRepository)), resource_template_repo=Depends(get_repository(ResourceTemplateRepository)), operations_repo=Depends(get_repository(OperationRepository)), resource_history_repo=Depends(get_repository(ResourceHistoryRepository)), etag: str = Header(...), force_version_update: bool = False) -> OperationInResponse:
+@workspaces_core_router.patch("/workspaces/{workspace_id}", status_code=status.HTTP_202_ACCEPTED, response_model=OperationInResponse, name=strings.API_UPDATE_WORKSPACE, dependencies=[Depends(get_current_imperial_admin_user)])
+async def patch_workspace(resource_patch: ResourcePatch, response: Response, user=Depends(get_current_imperial_admin_user), workspace=Depends(get_workspace_by_id_from_path), workspace_repo: WorkspaceRepository = Depends(get_repository(WorkspaceRepository)), resource_template_repo=Depends(get_repository(ResourceTemplateRepository)), operations_repo=Depends(get_repository(OperationRepository)), resource_history_repo=Depends(get_repository(ResourceHistoryRepository)), etag: str = Header(...), force_version_update: bool = False) -> OperationInResponse:
     try:
         is_disablement = resource_patch.isEnabled is not None and not resource_patch.isEnabled
         if is_disablement:
@@ -153,8 +162,8 @@ async def patch_workspace(resource_patch: ResourcePatch, response: Response, use
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 
-@workspaces_core_router.delete("/workspaces/{workspace_id}", response_model=OperationInResponse, name=strings.API_DELETE_WORKSPACE, dependencies=[Depends(get_current_admin_user)])
-async def delete_workspace(response: Response, user=Depends(get_current_admin_user), workspace=Depends(get_workspace_by_id_from_path), operations_repo=Depends(get_repository(OperationRepository)), workspace_repo=Depends(get_repository(WorkspaceRepository)), resource_template_repo=Depends(get_repository(ResourceTemplateRepository)), resource_history_repo=Depends(get_repository(ResourceHistoryRepository))) -> OperationInResponse:
+@workspaces_core_router.delete("/workspaces/{workspace_id}", response_model=OperationInResponse, name=strings.API_DELETE_WORKSPACE, dependencies=[Depends(get_current_imperial_admin_user)])
+async def delete_workspace(response: Response, user=Depends(get_current_imperial_admin_user), workspace=Depends(get_workspace_by_id_from_path), operations_repo=Depends(get_repository(OperationRepository)), workspace_repo=Depends(get_repository(WorkspaceRepository)), resource_template_repo=Depends(get_repository(ResourceTemplateRepository)), resource_history_repo=Depends(get_repository(ResourceHistoryRepository))) -> OperationInResponse:
     if await delete_validation(workspace, workspace_repo):
         operation = await send_uninstall_message(
             resource=workspace,
@@ -171,8 +180,8 @@ async def delete_workspace(response: Response, user=Depends(get_current_admin_us
         return OperationInResponse(operation=operation)
 
 
-@workspaces_core_router.post("/workspaces/{workspace_id}/invoke-action", status_code=status.HTTP_202_ACCEPTED, response_model=OperationInResponse, name=strings.API_INVOKE_ACTION_ON_WORKSPACE, dependencies=[Depends(get_current_admin_user)])
-async def invoke_action_on_workspace(response: Response, action: str, user=Depends(get_current_admin_user), workspace=Depends(get_workspace_by_id_from_path), resource_template_repo=Depends(get_repository(ResourceTemplateRepository)), operations_repo=Depends(get_repository(OperationRepository)), workspace_repo=Depends(get_repository(WorkspaceRepository)), resource_history_repo=Depends(get_repository(ResourceHistoryRepository))) -> OperationInResponse:
+@workspaces_core_router.post("/workspaces/{workspace_id}/invoke-action", status_code=status.HTTP_202_ACCEPTED, response_model=OperationInResponse, name=strings.API_INVOKE_ACTION_ON_WORKSPACE, dependencies=[Depends(get_current_imperial_admin_user)])
+async def invoke_action_on_workspace(response: Response, action: str, user=Depends(get_current_imperial_admin_user), workspace=Depends(get_workspace_by_id_from_path), resource_template_repo=Depends(get_repository(ResourceTemplateRepository)), operations_repo=Depends(get_repository(OperationRepository)), workspace_repo=Depends(get_repository(WorkspaceRepository)), resource_history_repo=Depends(get_repository(ResourceHistoryRepository))) -> OperationInResponse:
     operation = await send_custom_action_message(
         resource=workspace,
         resource_repo=workspace_repo,
@@ -375,12 +384,12 @@ async def retrieve_user_resources_for_workspace_service(
     user_resources = await user_resource_repo.get_user_resources_for_workspace_service(workspace_id, service_id)
 
     # filter only to the user - for researchers
-    if ("WorkspaceResearcher" in user.roles or "AirlockManager" in user.roles) and "WorkspaceOwner" not in user.roles:
+    if ("AirlockManager" in user.roles) and ("WorkspaceOwner" not in user.roles or "WorkspaceResearchLead" not in user.roles or "WorkspaceResearcher" not in user.roles or "WorkspaceDataEngineer" not in user.roles):
         user_resources = [resource for resource in user_resources if resource.ownerId == user.id]
 
     for user_resource in user_resources:
-        if 'azure_resource_id' in user_resource.properties:
-            user_resource.azureStatus = get_azure_resource_status(user_resource.properties['azure_resource_id'])
+       if 'azure_resource_id' in user_resource.properties:
+           user_resource.azureStatus = get_azure_resource_status(user_resource.properties['azure_resource_id'])
 
     await asyncio.gather(*[enrich_resource_with_available_upgrades(user_resource, resource_template_repo) for user_resource in user_resources])
 

@@ -90,8 +90,9 @@ const contentStyles = mergeStyleSets({
     theme.fonts.xxLarge,
     {
       flex: '1 1 auto',
-      borderTop: `4px solid ${theme.palette.themePrimary}`,
-      color: theme.palette.neutralPrimary,
+      // borderTop: `4px solid ${theme.palette.themePrimary}`,
+      borderTop: `4px solid #0000CD`,
+      color: '#0000CD',
       display: 'flex',
       alignItems: 'center',
       fontWeight: FontWeights.semibold,
@@ -111,12 +112,12 @@ const contentStyles = mergeStyleSets({
 });
 const iconButtonStyles: Partial<IButtonStyles> = {
   root: {
-    color: theme.palette.neutralPrimary,
+    color: '#0000CD',
     marginLeft: 'auto',
     marginTop: '4px',
     marginRight: '2px',
   },
   rootHovered: {
-    color: theme.palette.neutralDark,
+    color: '#161A1D',
   },
 };

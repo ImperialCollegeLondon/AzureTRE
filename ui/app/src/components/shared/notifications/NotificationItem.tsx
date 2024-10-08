@@ -83,7 +83,7 @@ export const NotificationItem: React.FunctionComponent<NotificationItemProps> = 
     if (failedStates.includes(status)) return ['ErrorBadge', 'red'];
     if (completedStates.includes(status)) return ['SkypeCheck', 'green'];
     if (awaitingStates.includes(status)) return ['Clock', '#cccccc'];
-    return ['ProgressLoopInner', DefaultPalette.themePrimary];
+    return ['ProgressLoopInner', '#006EAF'];
   };
 
   const updateOperation = (operation: Operation) => {

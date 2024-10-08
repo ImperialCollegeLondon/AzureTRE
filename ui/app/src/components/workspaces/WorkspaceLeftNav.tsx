@@ -5,6 +5,7 @@ import { ApiEndpoint } from '../../models/apiEndpoints';
 import { WorkspaceService } from '../../models/workspaceService';
 import { WorkspaceContext } from '../../contexts/WorkspaceContext';
 import { SharedService } from '../../models/sharedService';
+import { RoleName, WorkspaceRoleName } from '../../models/roleNames';
 
 // TODO:
 // - active item is sometimes lost
@@ -80,7 +81,7 @@ export const WorkspaceLeftNav: React.FunctionComponent<WorkspaceLeftNavProps> = 
       ];
 
       // Only show airlock link if enabled for workspace
-      if (workspaceCtx.workspace.properties !== undefined && workspaceCtx.workspace.properties.enable_airlock) {
+      if (workspaceCtx.workspace.properties !== undefined && workspaceCtx.workspace.properties.enable_airlock && (workspaceCtx.roles.includes(WorkspaceRoleName.AirlockManager) ||  workspaceCtx.roles.includes(WorkspaceRoleName.WorkspaceDataEngineer))) {
         serviceNavLinks[0].links.push({
           name: 'Airlock',
           key: `/${ApiEndpoint.Workspaces}/${workspaceCtx.workspace.id}/${ApiEndpoint.AirlockRequests}`,

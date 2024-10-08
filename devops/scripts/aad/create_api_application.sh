@@ -127,6 +127,7 @@ source "${DIR}/update_resource_access.sh"
 # Generate GUIDS
 userRoleId=$(cat /proc/sys/kernel/random/uuid)
 adminRoleId=$(cat /proc/sys/kernel/random/uuid)
+impAdminRoleId=$(cat /proc/sys/kernel/random/uuid)
 userImpersonationScopeId=$(cat /proc/sys/kernel/random/uuid)
 appObjectId=""
 
@@ -136,9 +137,11 @@ if [[ -n ${existingApp} ]]; then
     appObjectId=$(echo "${existingApp}" | jq -r '.id')
     userRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "TREUser").id')
     adminRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "TREAdmin").id')
+    impAdminRoleId=$(echo "$existingApp" | jq -r '.appRoles[] | select(.value == "ImperialTREAdmin").id')
     userImpersonationScopeId=$(echo "$existingApp" | jq -r '.api.oauth2PermissionScopes[] | select(.value == "user_impersonation").id')
     if [[ -z "${userRoleId}" ]]; then userRoleId=$(cat /proc/sys/kernel/random/uuid); fi
     if [[ -z "${adminRoleId}" ]]; then adminRoleId=$(cat /proc/sys/kernel/random/uuid); fi
+    if [[ -z "${impAdminRoleId}" ]]; then impAdminRoleId=$(cat /proc/sys/kernel/random/uuid); fi
     if [[ -z "${userImpersonationScopeId}" ]]; then userImpersonationScopeId=$(cat /proc/sys/kernel/random/uuid); fi
 fi
 
@@ -188,6 +191,15 @@ appDefinition=$(jq -c . << JSON
         "isEnabled": true,
         "origin": "Application",
         "value": "TREAdmin"
+    },
+    {
+        "id": "${impAdminRoleId}",
+        "allowedMemberTypes": [ "User", "Application" ],
+        "description": "Provides resource administrator access to the ${appName}.",
+        "displayName": "Imperial TRE Administrators",
+        "isEnabled": true,
+        "origin": "Application",
+        "value": "ImperialTREAdmin"
     }
   ],
   "signInAudience": "AzureADMyOrg",
@@ -340,6 +352,10 @@ if [[ -n ${automationAppId} ]]; then
         },
         {
             "id": "${adminRoleId}",
+            "type": "Role"
+        },
+        {
+            "id": "${impAdminRoleId}",
             "type": "Role"
         }
       ]
