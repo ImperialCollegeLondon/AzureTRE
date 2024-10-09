@@ -146,9 +146,10 @@ fi
 AGW_STATE=$(az network application-gateway list --query "[?resourceGroup=='${core_rg_name}'&&name=='${agw_name}'].operationalState | [0]" -o tsv)
 
 # Report final App Service Status
-API_STATE=$(az webapp list --query "[?resourceGroup=='${core_rg_name}'&&name=='${api_name}'].state | [0]" -o tsv)
+#Commenting out API_STATE as it doesn't appear to work, its not essential and its not in the main branch any more DRC
+#API_STATE=$(az webapp list --query "[?resourceGroup=='${core_rg_name}'&&name=='${api_name}'].state | [0]" -o tsv)
 
 echo -e "\n\e[34m»»» 🔨 \e[96mTRE Status for $TRE_ID\e[0m"
 echo -e "\e[34m»»»   • \e[96mFirewall:              \e[33m$FW_STATE\e[0m"
 echo -e "\e[34m»»»   • \e[96mApplication Gateway:   \e[33m$AGW_STATE\e[0m"
-echo -e "\e[34m»»»   • \e[96mApp Service:           \e[33m$API_STATE\e[0m\n"
+#echo -e "\e[34m»»»   • \e[96mApp Service:           \e[33m$API_STATE\e[0m\n"
