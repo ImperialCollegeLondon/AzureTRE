@@ -3,7 +3,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = ">= 3.8"
+      version = ">= 3.112"
     }
     random = {
       source  = "hashicorp/random"
@@ -107,8 +107,8 @@ resource "azurerm_linux_virtual_machine_scale_set" "vm_linux" {
 
   source_image_reference {
     publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "18.04-LTS"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts"
     version   = "latest"
   }
 
