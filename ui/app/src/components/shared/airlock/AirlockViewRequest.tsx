@@ -26,6 +26,7 @@ export const AirlockViewRequest: React.FunctionComponent<AirlockViewRequestProps
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(false);
   const [hideCancelDialog, setHideCancelDialog] = useState(true);
+  const [hideDeleteDialog, setHideDeleteDialog] = useState(true);
   const [apiError, setApiError] = useState({} as APIError);
   const workspaceCtx = useContext(WorkspaceContext);
   const apiCall = useAuthApiCall();
@@ -99,6 +100,28 @@ export const AirlockViewRequest: React.FunctionComponent<AirlockViewRequestProps
     }
   }, [apiCall, request, props, workspaceCtx.workspaceApplicationIdURI]);
 
+  // Delete an airlock request
+  const deleteRequest = useCallback(async () => {
+    if (request && request.workspaceId) {
+      setSubmitting(true);
+      setSubmitError(false);
+      try {
+        await apiCall(
+          `${ApiEndpoint.Workspaces}/${request.workspaceId}/${ApiEndpoint.AirlockRequests}/${request.id}`,
+          HttpMethod.Delete,
+          workspaceCtx.workspaceApplicationIdURI
+        );
+        setHideDeleteDialog(true);
+        dismissPanel();
+      } catch (err: any) {
+        err.userMessage = 'Error deleting airlock request';
+        setApiError(err);
+        setSubmitError(true);
+      }
+      setSubmitting(false);
+    }
+  }, [apiCall, request, dismissPanel, workspaceCtx.workspaceApplicationIdURI]);
+
   // Render the panel footer along with buttons that the signed-in user is allowed to see according to the API
   const renderFooter = useCallback(() => {
     let footer = <></>
@@ -128,6 +151,10 @@ export const AirlockViewRequest: React.FunctionComponent<AirlockViewRequestProps
           {
             request.allowedUserActions?.includes(AirlockRequestAction.Review) &&
               <PrimaryButton onClick={() => setReviewIsOpen(true)}>Review</PrimaryButton>
+          }
+          {
+            request.allowedUserActions?.includes(AirlockRequestAction.Delete) &&
+              <DefaultButton onClick={() => {setSubmitError(false); setHideDeleteDialog(false)}} styles={destructiveButtonStyles}>Delete request</DefaultButton>
           }
         </div>
       </>
@@ -324,6 +351,28 @@ export const AirlockViewRequest: React.FunctionComponent<AirlockViewRequestProps
           }
         </Dialog>
 
+
+        <Dialog
+          hidden={hideDeleteDialog}
+          onDismiss={() => {setHideDeleteDialog(true); setSubmitError(false)}}
+          dialogContentProps={{
+            title: 'Delete Airlock Request?',
+            subText: 'Are you sure you want to delete this airlock request? This action cannot be undone.',
+          }}
+        >
+          {
+            submitError && <ExceptionLayout e={apiError} />
+          }
+          {
+            submitting
+            ? <Spinner label="Deleting..." ariaLive="assertive" labelPosition="top" size={SpinnerSize.large} />
+            : <DialogFooter>
+              <DefaultButton onClick={deleteRequest} text="Delete Request" styles={destructiveButtonStyles} />
+              <DefaultButton onClick={() => {setHideDeleteDialog(true); setSubmitError(false)}} text="Back" />
+            </DialogFooter>
+          }
+        </Dialog>
+        
         <Modal
           titleAriaId={`title-${request?.id}`}
           isOpen={reviewIsOpen}

@@ -56,7 +56,8 @@ export interface NewAirlockRequest {
 export enum AirlockRequestAction {
   Cancel = 'cancel',
   Submit = 'submit',
-  Review = 'review'
+  Review = 'review',
+  Delete = 'delete'
 }
 
 export const AirlockFilesLinkValidStatus = [
