@@ -390,6 +390,12 @@ api-healthcheck:
 	&& . ${MAKEFILE_DIR}/devops/scripts/load_env.sh ${MAKEFILE_DIR}/core/private.env \
 	&& ${MAKEFILE_DIR}/devops/scripts/api_healthcheck.sh
 
+delete-endpoint-healthcheck:
+	$(call target_title,"Checking Delete Endpoint Health") \
+	&& . ${MAKEFILE_DIR}/devops/scripts/check_dependencies.sh nodocker,env \
+	&& . ${MAKEFILE_DIR}/devops/scripts/load_env.sh ${MAKEFILE_DIR}/core/private.env \
+	&& ${MAKEFILE_DIR}/devops/scripts/delete_endpoint_healthcheck.sh
+	
 db-migrate: api-healthcheck ## 🗄️ Run database migrations
 	$(call target_title,"Migrating Cosmos Data") \
 	&& . ${MAKEFILE_DIR}/devops/scripts/check_dependencies.sh nodocker,env \
