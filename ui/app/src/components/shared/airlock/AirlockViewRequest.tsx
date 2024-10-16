@@ -24,6 +24,8 @@ export const AirlockViewRequest: React.FunctionComponent<AirlockViewRequestProps
   const [hideSubmitDialog, setHideSubmitDialog] = useState(true);
   const [reviewIsOpen, setReviewIsOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [isDeleting, setIsDelete] = useState(false);
+  const [hideDeletingDialog, setHideDeletingDialog] = useState(true)
   const [submitError, setSubmitError] = useState(false);
   const [hideCancelDialog, setHideCancelDialog] = useState(true);
   const [apiError, setApiError] = useState({} as APIError);
@@ -98,7 +100,9 @@ export const AirlockViewRequest: React.FunctionComponent<AirlockViewRequestProps
       setSubmitting(false);
     }
   }, [apiCall, request, props, workspaceCtx.workspaceApplicationIdURI]);
-
+  
+  // Function for delete data can be added here 
+  
   // Render the panel footer along with buttons that the signed-in user is allowed to see according to the API
   const renderFooter = useCallback(() => {
     let footer = <></>
@@ -117,6 +121,9 @@ export const AirlockViewRequest: React.FunctionComponent<AirlockViewRequestProps
           </div>
         }
         <div style={{textAlign: 'end'}}>
+          {
+            <DefaultButton onClick={() => {setHideDeletingDialog(false)}} styles={destructiveButtonStyles}>Delete Data</DefaultButton>
+          }
           {
             request.allowedUserActions?.includes(AirlockRequestAction.Cancel) &&
               <DefaultButton onClick={() => {setSubmitError(false); setHideCancelDialog(false)}} styles={destructiveButtonStyles}>Cancel request</DefaultButton>
@@ -323,7 +330,32 @@ export const AirlockViewRequest: React.FunctionComponent<AirlockViewRequestProps
             </DialogFooter>
           }
         </Dialog>
-
+        <Dialog
+          hidden={hideDeletingDialog}
+          onDismiss={() => {setHideDeletingDialog(true)}}
+          dialogContentProps={{
+            title: 'Delete Data?',
+            subText: 'This action will force delete all the data associated with this request.',
+          }}
+        >
+         {/* <!-- Data goes here --> */}
+          <DialogFooter>
+            <PrimaryButton
+              onClick={() => {
+                /* Delete data function here */
+              }}
+              text="Delete"
+              styles={destructiveButtonStyles}
+            />
+            <DefaultButton
+              onClick={() => {
+                setHideDeletingDialog(true);
+                setSubmitError(false);
+              }}
+              text="Back"
+            />
+          </DialogFooter>
+        </Dialog>
         <Modal
           titleAriaId={`title-${request?.id}`}
           isOpen={reviewIsOpen}
