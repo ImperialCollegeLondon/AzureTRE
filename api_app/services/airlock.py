@@ -373,6 +373,7 @@ def get_allowed_actions(request: AirlockRequest, user: User, airlock_request_rep
     can_review_request = airlock_request_repo.validate_status_update(request.status, AirlockRequestStatus.ApprovalInProgress)
     can_cancel_request = airlock_request_repo.validate_status_update(request.status, AirlockRequestStatus.Cancelled)
     can_submit_request = airlock_request_repo.validate_status_update(request.status, AirlockRequestStatus.Submitted)
+    can_delete_request = airlock_request_repo.validate_status_update(request.status, AirlockRequestStatus.Deleted)
 
     if can_review_request and "AirlockManager" in user.roles:
         allowed_actions.append(AirlockActions.Review)
@@ -382,6 +383,9 @@ def get_allowed_actions(request: AirlockRequest, user: User, airlock_request_rep
 
     if can_submit_request and ("WorkspaceOwner" in user.roles or "WorkspaceResearcher" in user.roles or "WorkspaceDataEngineer" in user.roles):
         allowed_actions.append(AirlockActions.Submit)
+
+    if can_delete_request and ("AirlockManager" in user.roles or "WorkspaceDataEngineer" in user.roles):
+        allowed_actions.append(AirlockActions.Delete)
 
     return allowed_actions
 
@@ -475,6 +479,14 @@ async def cancel_request(airlock_request: AirlockRequest, user: User, workspace:
     updated_request = await update_and_publish_event_airlock_request(airlock_request=airlock_request, airlock_request_repo=airlock_request_repo, updated_by=user, workspace=workspace, new_status=AirlockRequestStatus.Cancelled)
     await delete_all_review_user_resources(airlock_request, user_resource_repo, workspace_service_repo, resource_template_repo, operations_repo, resource_history_repo, user)
     return updated_request
+
+async def delete_airlock_request_and_data(airlock_request: AirlockRequest, airlock_request_repo: AirlockRequestRepository, user: User, workspace: Workspace):
+    try:
+        await airlock_request_repo.delete_airlock_request_and_blobs(airlock_request)
+        logger.info(f"Deleted airlock request {airlock_request.id} and its associated data")
+    except Exception as e:
+        logger.exception(f"Failed to delete airlock request {airlock_request.id} and its associated data: {str(e)}")
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=strings.AIRLOCK_REQUEST_DELETE_FAILED)
 
 
 def _user_has_one_of_roles(user: User, roles) -> bool:

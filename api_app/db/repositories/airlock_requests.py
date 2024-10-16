@@ -16,7 +16,8 @@ from core import config
 from resources import strings
 from db.repositories.base import BaseRepository
 from services.logging import logger
-
+from azure.storage.blob import BlobServiceClient
+from services.airlock import get_account_url, get_credential
 
 class AirlockRequestRepository(BaseRepository):
     @classmethod
@@ -217,3 +218,20 @@ class AirlockRequestRepository(BaseRepository):
     def _validate_status_update(self, current_status, new_status):
         if not self.validate_status_update(current_status=current_status, new_status=new_status):
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=strings.AIRLOCK_REQUEST_ILLEGAL_STATUS_CHANGE)
+
+
+    async def delete_airlock_request_and_blobs(self, airlock_request: AirlockRequest):
+        account_name = get_account_url(airlock_request)
+        blob_service_client = BlobServiceClient(account_url=account_name, credential=get_credential())
+        container_client = blob_service_client.get_container_client(airlock_request.id)
+
+        # Delete all blobs in the container
+        async for blob in container_client.list_blobs():
+            blob_client = container_client.get_blob_client(blob)
+            await blob_client.delete_blob()
+
+        # Delete the container
+        await container_client.delete_container()
+
+        # Delete the airlock request item from the database
+        await self.delete_item(airlock_request.id)

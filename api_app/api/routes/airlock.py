@@ -25,7 +25,7 @@ from services.authentication import get_current_workspace_owner_or_researcher_us
 from .resource_helpers import construct_location_header
 
 from services.airlock import create_review_vm, review_airlock_request, get_airlock_container_link, get_allowed_actions, save_and_publish_event_airlock_request, update_and_publish_event_airlock_request, \
-    enrich_requests_with_allowed_actions, get_airlock_requests_by_user_and_workspace, cancel_request
+   enrich_requests_with_allowed_actions, get_airlock_requests_by_user_and_workspace, cancel_request, delete_airlock_request_and_data
 from services.logging import logger
 
 airlock_workspace_router = APIRouter(dependencies=[Depends(get_current_workspace_owner_or_researcher_user_or_airlock_manager)])
@@ -184,3 +184,14 @@ async def get_airlock_container_link_method(workspace=Depends(get_deployed_works
                                             user=Depends(get_current_workspace_owner_or_researcher_user_or_airlock_manager)) -> AirlockRequestTokenInResponse:
     container_url = get_airlock_container_link(airlock_request, user, workspace)
     return AirlockRequestTokenInResponse(containerUrl=container_url)
+
+
+@airlock_workspace_router.delete("/workspaces/{workspace_id}/requests/{airlock_request_id}", status_code=status_code.HTTP_204_NO_CONTENT,
+                                 name="delete_airlock_request",
+                                 dependencies=[Depends(get_current_airlock_manager_user)])
+async def delete_airlock_request(airlock_request=Depends(get_airlock_request_by_id_from_path),
+                                 user=Depends(get_current_airlock_manager_user),
+                                 airlock_request_repo=Depends(get_repository(AirlockRequestRepository)),
+                                 workspace=Depends(get_workspace_by_id_from_path)) -> Response:
+    await delete_airlock_request_and_data(airlock_request, airlock_request_repo, user, workspace)
+    return Response(status_code=status_code.HTTP_204_NO_CONTENT)

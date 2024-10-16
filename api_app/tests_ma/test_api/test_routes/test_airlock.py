@@ -7,6 +7,7 @@ from azure.core.exceptions import HttpResponseError
 from azure.cosmos.exceptions import CosmosResourceNotFoundError
 
 from tests_ma.test_api.conftest import create_test_user, get_required_roles
+from api.routes.airlock import create_draft_request, delete_airlock_request
 from api.routes.airlock import create_draft_request
 from db.errors import EntityDoesNotExist, UnableToAccessDatabase
 from models.domain.airlock_request import AirlockRequest, AirlockRequestStatus, AirlockReview, AirlockReviewDecision, AirlockReviewUserResource
@@ -276,6 +277,30 @@ class TestAirlockRoutesThatRequireOwnerOrResearcherRights():
                                                      airlock_request_id=AIRLOCK_REQUEST_ID))
         assert response.status_code == status.HTTP_400_BAD_REQUEST
 
+    # [DELETE] /workspaces/{workspace_id}/requests/{airlock_request_id}
+    @patch("api.routes.airlock.AirlockRequestRepository.read_item_by_id", return_value=sample_airlock_request_object())
+    @patch("api.routes.airlock.AirlockRequestRepository.delete_airlock_request_and_blobs")
+    async def test_delete_airlock_request_deletes_request_and_data_returns_204(self, delete_airlock_request_and_blobs_mock, _, app, client):
+        response = await client.delete(app.url_path_for("delete_airlock_request", workspace_id=WORKSPACE_ID, airlock_request_id=AIRLOCK_REQUEST_ID))
+        assert response.status_code == status.HTTP_204_NO_CONTENT
+        delete_airlock_request_and_blobs_mock.assert_called_once_with(sample_airlock_request_object())
+
+    @patch("api.routes.airlock.AirlockRequestRepository.read_item_by_id", side_effect=EntityDoesNotExist)
+    async def test_delete_airlock_request_if_request_not_found_returns_404(self, _, app, client):
+        response = await client.delete(app.url_path_for("delete_airlock_request", workspace_id=WORKSPACE_ID, airlock_request_id=AIRLOCK_REQUEST_ID))
+        assert response.status_code == status.HTTP_404_NOT_FOUND
+
+    @patch("api.routes.airlock.AirlockRequestRepository.read_item_by_id", side_effect=UnableToAccessDatabase)
+    async def test_delete_airlock_request_with_state_store_endpoint_not_responding_returns_503(self, _, app, client):
+        response = await client.delete(app.url_path_for("delete_airlock_request", workspace_id=WORKSPACE_ID, airlock_request_id=AIRLOCK_REQUEST_ID))
+        assert response.status_code == status.HTTP_503_SERVICE_UNAVAILABLE
+
+    @patch("api.routes.airlock.AirlockRequestRepository.read_item_by_id", return_value=sample_airlock_request_object())
+    @patch("api.routes.airlock.AirlockRequestRepository.delete_airlock_request_and_blobs", side_effect=Exception)
+    async def test_delete_airlock_request_with_deletion_failure_returns_500(self, _, __, app, client):
+        response = await client.delete(app.url_path_for("delete_airlock_request", workspace_id=WORKSPACE_ID, airlock_request_id=AIRLOCK_REQUEST_ID))
+        assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
+        
     @patch("api.routes.airlock.AirlockRequestRepository.read_item_by_id",
            return_value=sample_airlock_request_object(status=AirlockRequestStatus.Cancelled))
     async def test_get_airlock_container_link_cancelled_request_returns_400(self, _, app, client):

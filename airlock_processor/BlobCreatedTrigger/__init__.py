@@ -9,7 +9,8 @@ import os
 import azure.functions as func
 
 from shared_code import constants
-from shared_code.blob_operations import get_blob_info_from_topic_and_subject, get_blob_client_from_blob_info
+from shared_code.blob_operations import get_blob_info_from_topic_and_subject, get_blob_client_from_blob_info, get_blob_info_from_blob_url
+from azure.storage.blob import BlobServiceClient
 
 
 def main(msg: func.ServiceBusMessage,
@@ -89,3 +90,31 @@ def send_delete_event(dataDeletionEvent: func.Out[func.EventGridOutputEvent], js
             data_version=constants.DATA_DELETION_EVENT_DATA_VERSION
         )
     )
+
+def handle_delete_event(blob_url: str):
+    storage_account_name, container_name, blob_name = get_blob_info_from_blob_url(blob_url=blob_url)
+    credential = get_credential()
+    blob_service_client = BlobServiceClient(
+        account_url=get_account_url(storage_account_name),
+        credential=credential)
+    container_client = blob_service_client.get_container_client(container_name)
+
+    if not blob_name:
+        logging.info(f'No specific blob specified, deleting the entire container: {container_name}')
+        container_client.delete_container()
+        return
+
+    # If it's the only blob in the container, we need to delete the container too
+    # Check how many blobs are in the container (note: this exhausts the generator)
+    blobs_num = sum(1 for _ in container_client.list_blobs())
+    logging.info(f'Found {blobs_num} blobs in the container')
+
+    # Deleting blob
+    logging.info(f'Deleting blob {blob_name}...')
+    blob_client = container_client.get_blob_client(blob_name)
+    blob_client.delete_blob()
+
+    if blobs_num == 1:
+        # Need to delete the container too
+        logging.info(f'There was one blob in the container. Deleting container {container_name}...')
+        container_client.delete_container()
