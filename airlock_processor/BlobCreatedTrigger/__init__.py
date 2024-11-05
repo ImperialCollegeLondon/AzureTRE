@@ -9,7 +9,7 @@ import os
 import azure.functions as func
 
 from shared_code import constants
-from shared_code.blob_operations import get_blob_info_from_topic_and_subject, get_blob_client_from_blob_info, get_blob_info_from_blob_url
+from shared_code.blob_operations import get_blob_info_from_topic_and_subject, get_blob_client_from_blob_info, get_blob_info_from_blob_url, get_credential, get_account_url
 from azure.storage.blob import BlobServiceClient
 
 

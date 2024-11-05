@@ -19,6 +19,7 @@ class AirlockRequestStatus(str, Enum):
     RejectionInProgress = strings.AIRLOCK_RESOURCE_STATUS_REJECTION_INPROGRESS
     Rejected = strings.AIRLOCK_RESOURCE_STATUS_REJECTED
     Cancelled = strings.AIRLOCK_RESOURCE_STATUS_CANCELLED
+    Deleted = strings.AIRLOCK_RESOURCE_STATUS_DELETED
 
     Blocked = strings.AIRLOCK_RESOURCE_STATUS_BLOCKED
     BlockingInProgress = strings.AIRLOCK_RESOURCE_STATUS_BLOCKING_INPROGRESS
@@ -34,6 +35,7 @@ class AirlockActions(str, Enum):
     Review = strings.AIRLOCK_ACTION_REVIEW
     Cancel = strings.AIRLOCK_ACTION_CANCEL
     Submit = strings.AIRLOCK_ACTION_SUBMIT
+    Delete = strings.AIRLOCK_ACTION_DELETE
 
 
 class AirlockFile(AzureTREModel):

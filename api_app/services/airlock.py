@@ -486,7 +486,7 @@ async def delete_airlock_request_and_data(airlock_request: AirlockRequest, airlo
         logger.info(f"Deleted airlock request {airlock_request.id} and its associated data")
     except Exception as e:
         logger.exception(f"Failed to delete airlock request {airlock_request.id} and its associated data: {str(e)}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=strings.AIRLOCK_REQUEST_DELETE_FAILED)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=strings.RESOURCE_STATUS_DELETING_FAILED)
 
 
 def _user_has_one_of_roles(user: User, roles) -> bool:

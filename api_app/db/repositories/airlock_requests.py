@@ -17,7 +17,8 @@ from resources import strings
 from db.repositories.base import BaseRepository
 from services.logging import logger
 from azure.storage.blob import BlobServiceClient
-from services.airlock import get_account_url, get_credential
+from services.airlock import get_account_url
+from airlock_processor.shared_code.blob_operations import get_credential
 
 class AirlockRequestRepository(BaseRepository):
     @classmethod
