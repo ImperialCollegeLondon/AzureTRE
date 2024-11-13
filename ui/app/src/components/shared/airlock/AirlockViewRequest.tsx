@@ -26,7 +26,7 @@ export const AirlockViewRequest: React.FunctionComponent<AirlockViewRequestProps
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(false);
   const [hideCancelDialog, setHideCancelDialog] = useState(true);
-  const [hideDeleteDialog, setHideDeleteDialog] = useState(true);
+  const [hideDeleteDialog, setHideDeleteDialog] = useState(false);
   const [apiError, setApiError] = useState({} as APIError);
   const workspaceCtx = useContext(WorkspaceContext);
   const apiCall = useAuthApiCall();
@@ -372,7 +372,7 @@ export const AirlockViewRequest: React.FunctionComponent<AirlockViewRequestProps
             </DialogFooter>
           }
         </Dialog>
-        
+
         <Modal
           titleAriaId={`title-${request?.id}`}
           isOpen={reviewIsOpen}
