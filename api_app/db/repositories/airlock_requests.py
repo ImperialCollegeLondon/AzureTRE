@@ -17,8 +17,8 @@ from resources import strings
 from db.repositories.base import BaseRepository
 from services.logging import logger
 from azure.storage.blob import BlobServiceClient
-from services.airlock import get_account_url
-from airlock_processor.shared_code.blob_operations import get_credential
+from services.airlock_new import get_account_url
+from core import config, credentials
 
 class AirlockRequestRepository(BaseRepository):
     @classmethod
@@ -223,7 +223,7 @@ class AirlockRequestRepository(BaseRepository):
 
     async def delete_airlock_request_and_blobs(self, airlock_request: AirlockRequest):
         account_name = get_account_url(airlock_request)
-        blob_service_client = BlobServiceClient(account_url=account_name, credential=get_credential())
+        blob_service_client = BlobServiceClient(account_url=account_name, credential=credentials.get_credential())
         container_client = blob_service_client.get_container_client(airlock_request.id)
 
         # Delete all blobs in the container
